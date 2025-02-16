@@ -1,0 +1,42 @@
+﻿<Window x:Class="CompModeling.SpecialistInterface"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompModeling"
+        mc:Ignorable="d"
+        Title="Специалист" Height="600" Width="600" ResizeMode="NoResize">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Концентрации">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="79*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="inputConcentrations" Margin="10,37,325,365" AutoGenerateColumns="True" Grid.ColumnSpan="2" CanUserResizeRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False"/>
+                    <Label Content="Исходные концентрации" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Label Content="Общие концентрации" HorizontalAlignment="Left" Margin="187,6,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <DataGrid x:Name="inputConcentrationsOverall" Margin="187,37,28,365" AutoGenerateColumns="False" Grid.Column="1"/>
+                    <Button x:Name="addInputConcentrations"  Content="Добавить" HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top" Click="addInputConcentrations_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Константы">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="11*"/>
+                        <ColumnDefinition Width="183*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Концентрационные константы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+                    <DataGrid x:Name="ConcConstants" Margin="2,36,297,393" AutoGenerateColumns="False" Grid.ColumnSpan="2" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Параметры методов решения">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
