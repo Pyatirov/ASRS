@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CompModeling")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0446b6759df0ef09ba6ce5b2c555467ff1a47380")]
 [assembly: System.Reflection.AssemblyProductAttribute("CompModeling")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CompModeling")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
