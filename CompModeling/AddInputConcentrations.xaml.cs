@@ -22,34 +22,31 @@ namespace CompModeling
     {
         ApplicationContext Context = new ApplicationContext();
 
-        public InputConcentrations? Input { get; private set; }
-
         public AddInputConcentrations()
         {
             InitializeComponent();
-            DataContext = Input;
         }
 
         private void addConcentration_Click(object sender, RoutedEventArgs e)
         {
-            var Formname = addedName.Text;
-            var FormValue = addedValue.Text;
-            var FormPhase = addedPhase.Text;
+            //var Formname = addedName.Text;
+            //var FormValue = addedValue.Text;
+            //var FormPhase = addedPhase.Text;
 
-            InputConcentrations inputConcentrations = new InputConcentrations();
-            inputConcentrations.BaseForm = Formname;
-            inputConcentrations.Value = double.Parse(FormValue);
-            inputConcentrations.Phase = int.Parse(FormPhase);
+            //InputConcentrations inputConcentrations = new InputConcentrations();
+            //inputConcentrations.BaseForm = Formname;
+            //inputConcentrations.Value = double.Parse(FormValue);
+            //inputConcentrations.Phase = int.Parse(FormPhase);
 
-            Context.InputConcentrations.Add(inputConcentrations);
-            Context.SaveChanges();
+            //Context.InputConcentrations.Add(inputConcentrations);
+            //Context.SaveChanges();
         }
 
         private void clearAll_Click(object sender, RoutedEventArgs e)
         {
-            addedName.Clear();
-            addedPhase.Clear();
-            addedValue.Clear();
+            //addedName.Clear();
+            //addedPhase.Clear();
+            //addedValue.Clear();
         }
     }
 }

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace CompModeling
 {
 
-    public class BaseForms
+    public class BaseForm
     {
         [Key]
         public string? Name { get; set; }
     }
 
-    public class FormingForms
+    public class FormingForm
     {
         [Key]
         public int ID { get; set; }
@@ -23,7 +23,7 @@ namespace CompModeling
         public string? Component2 { get; set; }
         public string? Component3 { get; set; }
     }
-    public class InputConcentrations
+    public class InputConcentration
     {
         [Key]
         public int ID { get; set; }
@@ -32,7 +32,14 @@ namespace CompModeling
         public int Phase { get; set; }
     }
 
-    public class ConcentrationConstants
+    public class Phase
+    {
+        [Key]
+        public int ID { get; set; }
+        public string? Name { get; set; }
+    }
+
+    public class ConcentrationConstant
     {
         [Key]
         public int ID { get; set; }

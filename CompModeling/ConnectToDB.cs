@@ -11,10 +11,11 @@ namespace CompModeling
     {
         public class ApplicationContext : DbContext
         {
-            public DbSet<InputConcentrations> InputConcentrations { get; set; } = null!;
-            public DbSet<BaseForms> BaseForms { get; set; } = null!;
-            public DbSet<FormingForms> FormingForms { get; set; } = null!;
-            public DbSet<ConcentrationConstants> ConcentrationConstants { get; set; } = null!;
+            public DbSet<InputConcentration> InputConcentrations { get; set; } = null!;
+            public DbSet<Phase> Phases { get; set; } = null!;
+            public DbSet<BaseForm> BaseForms { get; set; } = null!;
+            public DbSet<FormingForm> FormingForms { get; set; } = null!;
+            public DbSet<ConcentrationConstant> ConcentrationConstants { get; set; } = null!;
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {

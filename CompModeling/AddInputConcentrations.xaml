@@ -8,12 +8,12 @@
         Title="Добавить исходную концентрацию" Height="200" Width="300">
     <Grid>
         <Label Content="Название формы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Значение" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxFormName" HorizontalAlignment="Left" Margin="150,14,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Концентрация, моль/л" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
         <Label Content="Фаза" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="addedName"  HorizontalAlignment="Left" Margin="131,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="addedValue"  HorizontalAlignment="Left" Margin="131,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="addedPhase"  HorizontalAlignment="Left" Margin="131,87,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="addedValue"  HorizontalAlignment="Left" Margin="150,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="addConcentration" Content="Добавить" HorizontalAlignment="Left" Margin="63,128,0,0" VerticalAlignment="Top" Click="addConcentration_Click"/>
         <Button x:Name="clearAll" Content="Очистить" HorizontalAlignment="Left" Margin="163,128,0,0" VerticalAlignment="Top" Click="clearAll_Click"/>
+        <ComboBox x:Name="comboBoxPhase" HorizontalAlignment="Left" Margin="150,87,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
