@@ -43,8 +43,6 @@ namespace CompModeling
 
             Context.InputConcentrations.Add(inputConcentrations);
             Context.SaveChanges();
-
-            DialogResult = true;
         }
 
         private void clearAll_Click(object sender, RoutedEventArgs e)

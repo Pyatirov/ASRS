@@ -19,7 +19,6 @@ namespace CompModeling
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlite("Data Source=compmodeling.db");
-                //commentary from PC
             }
         }
     }

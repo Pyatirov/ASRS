@@ -1,0 +1,120 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Projects\\CompModeling\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\specialistinterface.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\specialistinterface.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\addinputconcentrations.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\addinputconcentrations.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\dbtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\dbtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\specialistinterface.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\specialistinterface.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\connecttodb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\connecttodb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\researcherinterface.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcherinterface.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AddInputConcentrations.xaml.cs",
+              "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\AddInputConcentrations.xaml.cs",
+              "RelativeDocumentMoniker": "CompModeling\\AddInputConcentrations.xaml.cs",
+              "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\AddInputConcentrations.xaml.cs",
+              "RelativeToolTip": "CompModeling\\AddInputConcentrations.xaml.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAhwCwAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T09:46:44.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DBTables.cs",
+              "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\DBTables.cs",
+              "RelativeDocumentMoniker": "CompModeling\\DBTables.cs",
+              "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\DBTables.cs",
+              "RelativeToolTip": "CompModeling\\DBTables.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T08:43:26.719Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SpecialistInterface.xaml.cs",
+              "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml.cs",
+              "RelativeDocumentMoniker": "CompModeling\\SpecialistInterface.xaml.cs",
+              "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml.cs",
+              "RelativeToolTip": "CompModeling\\SpecialistInterface.xaml.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACkAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T08:44:33.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SpecialistInterface.xaml",
+              "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml",
+              "RelativeDocumentMoniker": "CompModeling\\SpecialistInterface.xaml",
+              "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml",
+              "RelativeToolTip": "CompModeling\\SpecialistInterface.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-17T08:44:21.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ResearcherInterface.xaml",
+              "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\ResearcherInterface.xaml",
+              "RelativeDocumentMoniker": "CompModeling\\ResearcherInterface.xaml",
+              "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\ResearcherInterface.xaml",
+              "RelativeToolTip": "CompModeling\\ResearcherInterface.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-17T08:44:16.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ConnectToDB.cs",
+              "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\ConnectToDB.cs",
+              "RelativeDocumentMoniker": "CompModeling\\ConnectToDB.cs",
+              "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\ConnectToDB.cs",
+              "RelativeToolTip": "CompModeling\\ConnectToDB.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T08:43:28.353Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

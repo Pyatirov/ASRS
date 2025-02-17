@@ -11,7 +11,6 @@ namespace CompModeling
     public class BaseForms
     {
         [Key]
-        public int ID { get; set; }
         public string? Name { get; set; }
     }
 
@@ -20,6 +19,9 @@ namespace CompModeling
         [Key]
         public int ID { get; set; }
         public string? Name { get; set; }
+        public string? Component1 { get; set; }
+        public string? Component2 { get; set; }
+        public string? Component3 { get; set; }
     }
     public class InputConcentrations
     {
@@ -34,7 +36,7 @@ namespace CompModeling
     {
         [Key]
         public int ID { get; set; }
-        public string? Form { get; set; }
+        public string? FormName { get; set; }
         public double Value { get; set; }
     }
 

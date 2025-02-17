@@ -16,11 +16,6 @@ namespace CompModeling
 
         public SpecialistInterface()
         {
-            //db.Database.EnsureCreated();
-            //InitializeComponent();
-            //LoadData();
-            //inputConcentrations.DataContext = Concentrations;
-            //inputConcentrations.ItemsSource = Concentrations;
             InitializeComponent();
             Loaded += AddInputConcentrations_Loaded;
         }
@@ -32,7 +27,7 @@ namespace CompModeling
             // загружаем данные из БД
             db.InputConcentrations.Load();
             // и устанавливаем данные в качестве контекста
-            DataContext = db.InputConcentrations.Local.ToObservableCollection();
+            LoadData();
         }
 
         // добавление
@@ -48,8 +43,7 @@ namespace CompModeling
             var inputConc = db.InputConcentrations;
 
             Concentrations = inputConc.Local.ToObservableCollection();
-
+            inputConcentrations.ItemsSource = Concentrations;
         }
-
     }
 }
