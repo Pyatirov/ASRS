@@ -15,25 +15,20 @@ namespace CompModeling
     public partial class SpecialistInterface : Window
     {
         ApplicationContext db = new ApplicationContext();
+        private static ObservableCollection<InputConcentration>? InputConcentrations { get; set; }
 
+        public static ObservableCollection<InputConcentration> inputConcentrationsProp => InputConcentrations!;
 
+        enum SolutionMethods
+        {
+            INTERATION,
+            NEWTON_RAPHSON
+        }
         public SpecialistInterface()
         {
             InitializeComponent();
             LoadDataAsync();
         }
-        /// <summary>
-        /// Загрузка данных из БД при загрузке окна
-        /// </summary>
-        //private void SpecialistInterface_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    // гарантируем, что база данных создана
-        //    db.Database.EnsureCreated();
-        //    // загружаем данные из БД
-        //    db.InputConcentrations.Load();
-        //    // и устанавливаем данные в качестве контекста
-        //    LoadDataAsync();
-        //}
 
         /// <summary>
         /// Добавление концентрации в DataGrid
@@ -42,6 +37,10 @@ namespace CompModeling
         {
             AddInputConcentrations AddInputConcentrations = new AddInputConcentrations();
             AddInputConcentrations.ShowDialog();
+            if (AddInputConcentrations.DialogResult == true) 
+            {
+                inputConcentrations.Items.Refresh();   
+            }
         }
 
         private async void LoadDataAsync()
@@ -52,11 +51,12 @@ namespace CompModeling
                 {
                     // Получаем данные из таблицы InputConcentrations
                     var concentrations = await context.InputConcentrations.ToListAsync();
+                    InputConcentrations = new ObservableCollection<InputConcentration>(concentrations);
                     var forms = await context.BaseForms.ToListAsync();
                     var phases = await context.Phases.ToListAsync();
-
+                    
                     // Привязываем данные к DataGrid
-                    inputConcentrations.ItemsSource = concentrations;
+                    inputConcentrations.ItemsSource = InputConcentrations;
                     filterForm.ItemsSource = forms;
                     filterPhase.ItemsSource = phases;
                 }
@@ -65,6 +65,20 @@ namespace CompModeling
             {
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
+        }
+
+        private void deleteInputConcentrations_Click(object sender, RoutedEventArgs e)
+        {
+            var listToDelete = inputConcentrations.SelectedItems;
+            int max = listToDelete.Count;
+
+            for( int i = 0; i < max; i++) 
+            {
+                db.InputConcentrations.Remove((InputConcentration)listToDelete[0]!);
+                db.SaveChanges();
+                InputConcentrations!.Remove((InputConcentration)listToDelete[0]!);
+            }
+            db.SaveChanges();
         }
     }
 }

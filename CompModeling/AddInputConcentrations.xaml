@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompModeling"
         mc:Ignorable="d"
-        Title="Добавить исходную концентрацию" Height="200" Width="300">
+        Title="Добавить исходную концентрацию" Height="180" Width="300">
     <Grid>
         <Label Content="Название формы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBoxFormName" HorizontalAlignment="Left" Margin="150,14,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="comboBoxFormName" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="150,14,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="comboBoxPhase" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="150,87,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Концентрация, моль/л" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
         <Label Content="Фаза" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="addedValue"  HorizontalAlignment="Left" Margin="150,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="addConcentration" Content="Добавить" HorizontalAlignment="Left" Margin="63,128,0,0" VerticalAlignment="Top" Click="addConcentration_Click"/>
-        <Button x:Name="clearAll" Content="Очистить" HorizontalAlignment="Left" Margin="163,128,0,0" VerticalAlignment="Top" Click="clearAll_Click"/>
-        <ComboBox x:Name="comboBoxPhase" HorizontalAlignment="Left" Margin="150,87,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="addConcentration" Content="Добавить" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Click="addConcentration_Click"/>
     </Grid>
 </Window>

@@ -15,12 +15,13 @@
                         <ColumnDefinition Width="79*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Исходные концентрации" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <DataGrid x:Name="inputConcentrations" Margin="10,99,10,150" AutoGenerateColumns="True" Grid.ColumnSpan="2" CanUserResizeRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False"/>
-                    <Button x:Name="addInputConcentrations"  Content="Добавить" HorizontalAlignment="Left" Margin="62,405,0,0" VerticalAlignment="Top" Click="addInputConcentrations_Click" Grid.Column="1" Height="28" Width="76"/>
+                    <DataGrid x:Name="inputConcentrations" Margin="10,99,10,150" IsReadOnly="True" AutoGenerateColumns="True" Grid.ColumnSpan="2" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False"/>
+                    <Button x:Name="addInputConcentrations"  Content="Добавить" HorizontalAlignment="Left" Margin="42,409,0,0" VerticalAlignment="Top" Click="addInputConcentrations_Click" Height="28" Width="76" Grid.ColumnSpan="2"/>
                     <Label Content="Форма:" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
                     <ComboBox x:Name="filterForm" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="66" Grid.ColumnSpan="2"/>
                     <Label Content="Фаза:" HorizontalAlignment="Left" Margin="32,37,0,0" VerticalAlignment="Top" Grid.Column="1"/>
                     <ComboBox x:Name="filterPhase" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="33,65,0,0" VerticalAlignment="Top" Width="125" Grid.Column="1"/>
+                    <Button x:Name="deleteInputConcentrations_Копировать"  Content="Удалить" HorizontalAlignment="Left" Margin="143,409,0,0" VerticalAlignment="Top" Click="deleteInputConcentrations_Click" Height="28" Width="76" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Константы">
@@ -37,6 +38,8 @@
             </TabItem>
             <TabItem Header="Параметры методов решения">
                 <Grid>
+                    <Label Content="Метод решения:" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="comboBoxSolutionMethod" HorizontalAlignment="Left" Margin="129,18,0,0" VerticalAlignment="Top" Width="120"/>
 
                 </Grid>
             </TabItem>

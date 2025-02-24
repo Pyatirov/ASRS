@@ -294,3 +294,5 @@ D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\refint\CompModel
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.pdb
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.genruntimeconfig.cache
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\ref\CompModeling.dll
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.g.cs
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.baml

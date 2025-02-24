@@ -10,6 +10,9 @@
     <Compile Update="AddInputConcentrations.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="DeleteInputConcentration.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ResearcherInterface.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="AddInputConcentrations.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="DeleteInputConcentration.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
