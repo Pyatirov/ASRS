@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\Projects\\CompModeling\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\specialistinterface.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\specialistinterface.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\specialistinterface.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\specialistinterface.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\specialistinterface.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\specialistinterface.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\compmodeling\\compmodeling\\connecttodb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,29 +30,29 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "SpecialistInterface.xaml",
               "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml",
               "RelativeDocumentMoniker": "CompModeling\\SpecialistInterface.xaml",
               "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml",
               "RelativeToolTip": "CompModeling\\SpecialistInterface.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-17T15:34:00.755Z",
+              "WhenOpened": "2025-02-24T12:02:54.507Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "SpecialistInterface.xaml.cs",
               "DocumentMoniker": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml.cs",
               "RelativeDocumentMoniker": "CompModeling\\SpecialistInterface.xaml.cs",
               "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\SpecialistInterface.xaml.cs",
               "RelativeToolTip": "CompModeling\\SpecialistInterface.xaml.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAxwBgAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAxwCUAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-17T15:34:22.424Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "CompModeling\\ConnectToDB.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T15:34:02.998Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T15:34:02.998Z"
             },
             {
               "$type": "Document",
@@ -79,8 +78,7 @@
               "ToolTip": "D:\\Projects\\CompModeling\\CompModeling\\DeleteInputConcentration.xaml",
               "RelativeToolTip": "CompModeling\\DeleteInputConcentration.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-24T08:32:14.651Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-24T08:32:14.651Z"
             },
             {
               "$type": "Document",

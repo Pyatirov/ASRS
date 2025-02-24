@@ -19,6 +19,12 @@ namespace CompModeling
 
         public static ObservableCollection<InputConcentration> inputConcentrationsProp => InputConcentrations!;
 
+        public ObservableCollection<string> MethodsSol { get; set; } = new ObservableCollection<string>
+        {
+            "Итерационный",
+            "Метод Ньютона-Рафсона"
+        };
+
         enum SolutionMethods
         {
             INTERATION,
@@ -28,6 +34,8 @@ namespace CompModeling
         {
             InitializeComponent();
             LoadDataAsync();
+
+            comboBoxSolutionMethod.ItemsSource = MethodsSol;
         }
 
         /// <summary>
