@@ -273,15 +273,11 @@ D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\browser
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.AssemblyReference.cache
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.g.cs
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.g.cs
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\App.g.cs
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.cache
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.lref
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.baml
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.baml
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.baml
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.baml
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.g.resources
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfoInputs.cache
@@ -296,3 +292,9 @@ D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.gen
 D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\ref\CompModeling.dll
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.g.cs
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.baml
+D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.g.cs
+D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.baml
+D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Researcher.g.cs
+D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Specialist.g.cs
+D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Researcher.baml
+D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Specialist.baml

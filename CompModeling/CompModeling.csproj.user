@@ -13,10 +13,10 @@
     <Compile Update="DeleteInputConcentration.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ResearcherInterface.xaml.cs">
+    <Compile Update="Specialist.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SpecialistInterface.xaml.cs">
+    <Compile Update="Researcher.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -30,10 +30,10 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="ResearcherInterface.xaml">
+    <Page Update="Specialist.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SpecialistInterface.xaml">
+    <Page Update="Researcher.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
