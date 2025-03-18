@@ -68,22 +68,8 @@
             </TabItem>
             <TabItem Header="Механизм реакции">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="349*"/>
-                        <ColumnDefinition Width="945*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="96*"/>
-                        <RowDefinition Height="318*"/>
-                        <RowDefinition Height="155*"/>
-                        <RowDefinition Height="155*"/>
-                        <RowDefinition Height="155*"/>
-                        <RowDefinition Height="0*"/>
-                        <RowDefinition Height="517*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel VerticalAlignment="Center">
-                        <Button x:Name="add_Mechanism" Content="Добавить механизм" VerticalAlignment="Center" Click="add_Mechanism_Click" Margin="10,0,10,0"/>
-                    </StackPanel>
+                    <StackPanel VerticalAlignment="Top">
+                        <Button x:Name="add_Mechanism" Content="Добавить механизм" VerticalAlignment="Center" Click="add_Mechanism_Click" Margin="10,0,10,0" Height="40"/>
                     <DataGrid x:Name="dataGrid_Mechanisms" Grid.Column="1" Grid.RowSpan="2" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="30"/>
@@ -98,6 +84,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    </StackPanel>
 
                 </Grid>
             </TabItem>
