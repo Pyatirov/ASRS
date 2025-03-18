@@ -24,7 +24,7 @@ namespace CompModeling
     {
         ApplicationContext Context = new ApplicationContext();
 
-        ObservableCollection<InputConcentration> InputConcentrations { get; set; }
+        ObservableCollection<InputConcentration>? InputConcentrations { get; set; }
 
         public AddInputConcentrations()
         {
@@ -65,7 +65,7 @@ namespace CompModeling
             inputConcentrations.Phase = FormPhase;
 
             Context.InputConcentrations.Add(inputConcentrations);
-            SpecialistInterface.inputConcentrationsProp.Add(inputConcentrations);
+            ResearcherInterface.inputConcentrationsProp.Add(inputConcentrations);
             Context.SaveChanges();
 
             DialogResult = true;

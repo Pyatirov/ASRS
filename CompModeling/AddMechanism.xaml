@@ -1,0 +1,43 @@
+﻿<Window x:Class="CompModeling.AddMechanism"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompModeling"
+        mc:Ignorable="d"
+        Title="Добавить механизм" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="273*"/>
+            <ColumnDefinition Width="527*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="23*"/>
+            <RowDefinition Height="169*"/>
+            <RowDefinition Height="62*"/>
+            <RowDefinition Height="62*"/>
+            <RowDefinition Height="62*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Описание механизма:" VerticalAlignment="Center" Margin="10,0,0,0" Height="16"/>
+        <TextBox x:Name="txtMechanismName" Margin="5,5,5,5" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock Text="Выберите реакции:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Margin="10,0,0,0" Height="16" Width="106"/>
+        <DataGrid x:Name="dgReactions" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Margin="5,0,5,0">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Выбрать" Width="Auto" Binding ="{Binding IsSelected, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Реакция" Binding="{Binding DisplayReaction}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock Text="Выберите объемы органических фаз:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="16" Width="206"/>
+        <DataGrid x:Name="dgPhasesValues" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Grid.Row="3" Margin="5,0,0,0" Grid.RowSpan="2">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Выбрать" Width="Auto" Binding ="{Binding IsSelected, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Базовая форма" Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Объем фазы" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Создать механизм" Click="BtnCreateMechanism_Click" Padding="10 5" Grid.Row="5" Grid.ColumnSpan="2" Margin="5,5,5,0"/>
+        <Button Content="Добавить новую реакцию" Click="BtnAddReaction_Click" Padding="10 5" Grid.Row="6" Grid.ColumnSpan="2" Margin="5,10,5,0"/>
+    </Grid>
+</Window>

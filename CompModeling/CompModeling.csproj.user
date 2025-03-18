@@ -7,10 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AddMechanism.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AddInputConcentrations.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="DeleteInputConcentration.xaml.cs">
+    <Compile Update="AddReactionWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Specialist.xaml.cs">
@@ -21,10 +24,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AddMechanism.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="AddInputConcentrations.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="DeleteInputConcentration.xaml">
+    <Page Update="AddReactionWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

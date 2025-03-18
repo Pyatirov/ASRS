@@ -1,135 +1,3 @@
-C:\Users\denis\source\repos\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.exe
-C:\Users\denis\source\repos\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.deps.json
-C:\Users\denis\source\repos\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.runtimeconfig.json
-C:\Users\denis\source\repos\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.dll
-C:\Users\denis\source\repos\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.pdb
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.g.cs
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\App.g.cs
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.cache
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.lref
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.baml
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.g.resources
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfoInputs.cache
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfo.cs
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.CoreCompileInputs.cache
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.dll
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\refint\CompModeling.dll
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.pdb
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.genruntimeconfig.cache
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\ref\CompModeling.dll
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.g.cs
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.baml
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.g.cs
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.baml
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.AssemblyReference.cache
-C:\Users\denis\source\repos\CompModeling\CompModeling\bin\Debug\net8.0-windows\MathNet.Numerics.dll
-C:\Users\denis\source\repos\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompMode.0C9FAB9A.Up2Date
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.exe
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.deps.json
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.runtimeconfig.json
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.dll
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.pdb
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\MathNet.Numerics.dll
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.AssemblyReference.cache
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.g.cs
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.g.cs
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.g.cs
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\App.g.cs
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.cache
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.lref
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.baml
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.baml
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.baml
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.g.resources
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.GeneratedMSBuildEditorConfig.editorconfig
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfoInputs.cache
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfo.cs
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.CoreCompileInputs.cache
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompMode.0C9FAB9A.Up2Date
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.dll
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\refint\CompModeling.dll
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.pdb
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.genruntimeconfig.cache
-F:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\ref\CompModeling.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.exe
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\EntityFramework.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.Abstractions.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.Relational.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.Sqlite.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Abstractions.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Memory.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Options.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\System.Diagnostics.DiagnosticSource.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\System.Text.Json.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\EntityFramework.SqlServer.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\MathNet.Numerics.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyModel.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\System.Data.SqlClient.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-arm64\native\sni.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x64\native\sni.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite3.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.AssemblyReference.cache
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.g.cs
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.g.cs
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.g.cs
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.g.cs
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\App.g.cs
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.cache
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.lref
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.baml
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.baml
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.baml
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.baml
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.g.resources
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.GeneratedMSBuildEditorConfig.editorconfig
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfoInputs.cache
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfo.cs
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.CoreCompileInputs.cache
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompMode.0C9FAB9A.Up2Date
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\refint\CompModeling.dll
-E:\Денис\Учеба\4 курс\I семестр\КМвХиХТ\КП\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.pdb
 D:\Projects\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.exe
 D:\Projects\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.deps.json
 D:\Projects\CompModeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.runtimeconfig.json
@@ -190,16 +58,20 @@ D:\Projects\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win\lib\
 D:\Projects\CompModeling\CompModeling\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.AssemblyReference.cache
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.g.cs
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddMechanism.g.cs
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddReactionWindow.g.cs
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.g.cs
-D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.g.cs
-D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.g.cs
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\Researcher.g.cs
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\Specialist.g.cs
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\App.g.cs
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.cache
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.lref
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.baml
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddMechanism.baml
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\AddReactionWindow.baml
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.baml
-D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\ResearcherInterface.baml
-D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\SpecialistInterface.baml
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\Researcher.baml
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\Specialist.baml
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.g.resources
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfoInputs.cache
@@ -212,89 +84,3 @@ D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\refint\CompModeli
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.pdb
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.genruntimeconfig.cache
 D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\ref\CompModeling.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.exe
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.deps.json
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.runtimeconfig.json
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\CompModeling.pdb
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\EntityFramework.SqlServer.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\EntityFramework.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\MathNet.Numerics.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.Abstractions.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.Relational.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.Sqlite.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Abstractions.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Memory.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyModel.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Options.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\System.Data.SqlClient.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\System.Diagnostics.DiagnosticSource.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\System.Text.Json.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-arm64\native\sni.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x64\native\sni.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite3.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
-D:\Projects\comp_modeling\CompModeling\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.AssemblyReference.cache
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\App.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.cache
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling_MarkupCompile.lref
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\AddInputConcentrations.baml
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\MainWindow.baml
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.g.resources
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.GeneratedMSBuildEditorConfig.editorconfig
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfoInputs.cache
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.AssemblyInfo.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.csproj.CoreCompileInputs.cache
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.sourcelink.json
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompMode.0C9FAB9A.Up2Date
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.dll
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\refint\CompModeling.dll
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.pdb
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\CompModeling.genruntimeconfig.cache
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\ref\CompModeling.dll
-D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.g.cs
-D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.baml
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\DeleteInputConcentration.baml
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Researcher.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Specialist.g.cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Researcher.baml
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\Specialist.baml

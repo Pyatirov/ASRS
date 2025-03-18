@@ -18,9 +18,9 @@ namespace CompModeling
     /// <summary>
     /// Логика взаимодействия для ResearcherInterface.xaml
     /// </summary>
-    public partial class ResearcherInterface : Window
+    public partial class SpecialistInterface : Window
     {
-        public ResearcherInterface()
+        public SpecialistInterface()
         {
             InitializeComponent();
             // Исходные данные

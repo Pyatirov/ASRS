@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\
+D:\Projects\CompModeling\CompModeling\obj\Debug\net8.0-windows\
 CompModeling
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-D:\Projects\comp_modeling\CompModeling\App.xaml
-5-1356464515
+D:\Projects\CompModeling\CompModeling\App.xaml
+6-1476790039
 
-131981559079
-222-491836479
-AddInputConcentrations.xaml;DeleteInputConcentration.xaml;MainWindow.xaml;Researcher.xaml;Specialist.xaml;
+14223035753
+222-2023914578
+AddInputConcentrations.xaml;AddMechanism.xaml;AddReactionWindow.xaml;MainWindow.xaml;Researcher.xaml;Specialist.xaml;
 
 True
 

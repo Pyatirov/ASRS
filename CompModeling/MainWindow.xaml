@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompModeling"
         mc:Ignorable="d"
-        Title="CompModeling" Height="250" Width="250" ResizeMode="NoResize">
+        Title="АСНИ" Height="250" Width="250" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -14,7 +14,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button x:Name="researcherInterfaceButton" Content="Специалист по мат. обеспечению" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="190" Height="53" Click="researcherInterfaceButton_Click" Margin="0,0,0,5"/>
-        <Button x:Name="specialistInterfaceButton" Content="Исследователь" HorizontalAlignment="Center" VerticalAlignment="Top" Height="52" Click="specialistInterfaceButton_Click" Width="190" Grid.Row="1" Margin="0,5,0,0"/>
+        <Button x:Name="specialistInterfaceButton" Content="СПЕЦИАЛИСТ" FontWeight="Bold"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="190" Height="53" Click="specialistInterfaceButton_Click" Margin="0,0,0,5"/>
+        <Button x:Name="researcherInterfaceButton" Content="ИССЛЕДОВАТЕЛЬ" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Height="52" Click="researcherInterfaceButton_Click" Width="190" Grid.Row="1" Margin="0,5,0,0"/>
     </Grid>
 </Window>

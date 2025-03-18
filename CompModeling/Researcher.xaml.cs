@@ -14,21 +14,12 @@ namespace CompModeling
     /// <summary>
     /// Логика взаимодействия для SpecialistInterface.xaml
     /// </summary>
-    public partial class SpecialistInterface : Window
+    public partial class ResearcherInterface : Window
     {
         ApplicationContext db = new ApplicationContext();
         private static ObservableCollection<InputConcentration>? InputConcentrations { get; set; }
-
+        private static ObservableCollection<Mechanisms>? Mechanisms { get; set; }
         public static ObservableCollection<InputConcentration> inputConcentrationsProp => InputConcentrations!;
-
-        public ObservableCollection<string> MethodsSol { get; set; } = new ObservableCollection<string>
-        {
-            "La + TBP",
-        };
-
-        // Представление коллекции для фильтрации
-        //private ICollectionView _collectionView;
-        //List<double>? lgs;
 
         enum SolutionMethods
         {
@@ -36,41 +27,47 @@ namespace CompModeling
             NEWTON_RAPHSON
         }
 
-        public SpecialistInterface()
+        private async void LoadDataAsync()
+        {
+            try
+            {
+                using (var context = new ApplicationContext())
+                {
+                    // Получаем данные из таблицы InputConcentrations
+                    var concentrations = await context.InputConcentrations.ToListAsync();
+                    InputConcentrations = new ObservableCollection<InputConcentration>(concentrations);
+                    var forms = await context.BaseForms.ToListAsync();
+                    var phases = await context.Phases.ToListAsync();
+                    var mechanismsNames = await context.Mechanisms.ToListAsync();
+                    cb_mechanismName.ItemsSource = mechanismsNames;
+
+                    // Обновляем существующую коллекцию, а не пересоздаем
+                    if (Mechanisms == null)
+                    {
+                        Mechanisms = new ObservableCollection<Mechanisms>(mechanismsNames);
+                    }
+                    else
+                    {
+                        Mechanisms.Clear();
+                        foreach (var mechanism in mechanismsNames)
+                        {
+                            Mechanisms.Add(mechanism);
+                        }
+                    }
+                    dataGrid_Mechanisms.ItemsSource = Mechanisms;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+        }
+
+        public ResearcherInterface()
         {
             InitializeComponent();
             LoadDataAsync();
-            cb_mechanismName.ItemsSource = MethodsSol;
-            tb_LgK6.Text = "-1,530";
-            tb_LgK7.Text = "-9,5";
-            tb_LgK8.Text = "1,3";
-            tb_LgK9.Text = "-3,39";
-            tb_LgK10.Text = "-2,931";
-            tb_LgK11.Text = "0,1374";
-            tb_LgK12.Text = "2,003";
-            tb_LgK13.Text = "-0,805";
-            tb_LgK14.Text = "-0,008";
-            tb_LgK15.Text = "-0,620";
-            var lgs = new List<double>()
-            {
-                1,
-                1,
-                1,
-                1,
-                1,
-                Math.Pow(10, double.Parse(tb_LgK6.Text)),
-                Math.Pow(10, double.Parse(tb_LgK7.Text)),
-                Math.Pow(10, double.Parse(tb_LgK8.Text)),
-                Math.Pow(10, double.Parse(tb_LgK9.Text)),
-                Math.Pow(10, double.Parse(tb_LgK10.Text)),
-                Math.Pow(10, double.Parse(tb_LgK11.Text)),
-                Math.Pow(10, double.Parse(tb_LgK12.Text)),
-                Math.Pow(10, double.Parse(tb_LgK13.Text)),
-                Math.Pow(10, double.Parse(tb_LgK14.Text)),
-                Math.Pow(10, double.Parse(tb_LgK15.Text))
-            };
-            IteratonMethod(lgs);
-            //comboBoxSolutionMethod.ItemsSource = MethodsSol;
         }
 
         /// <summary>
@@ -78,12 +75,91 @@ namespace CompModeling
         /// </summary>
         private void addInputConcentrations_Click(object sender, RoutedEventArgs e)
         {
-            AddInputConcentrations AddInputConcentrations = new AddInputConcentrations();
-            AddInputConcentrations.ShowDialog();
-            if (AddInputConcentrations.DialogResult == true) 
+            //AddInputConcentrations AddInputConcentrations = new AddInputConcentrations();
+            //AddInputConcentrations.ShowDialog();
+            //if (AddInputConcentrations.DialogResult == true) 
+            //{
+            //    inputConcentrations.Items.Refresh();   
+            //}
+        }
+
+        private async void cb_mechanismName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
             {
-                inputConcentrations.Items.Refresh();   
+                using (var context = new ApplicationContext())
+                {
+                    if (cb_mechanismName.SelectedItem is Mechanisms selectedMechanism)
+                    {
+                        var reactions = await context.ReactionMechanism
+                        .Where(rm => rm.Mechanism_ID == selectedMechanism.ID)
+                        .Join(context.Reactions,
+                            rm => rm.Reaction_ID,
+                            r => r.ID,
+                            (rm, r) => new { r.Prod })
+                        .ToListAsync();
+
+                        // Очищаем панель
+                        reactionInputsPanel.Children.Clear();
+
+                        foreach (var reaction in reactions)
+                        {
+                            var grid = new Grid();
+                            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(40, GridUnitType.Auto) });
+                            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100, GridUnitType.Auto) });
+                            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(70, GridUnitType.Auto) });
+                            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(30, GridUnitType.Auto) });
+
+                            //lgK
+                            var labelLg = new TextBlock
+                            {
+                                Text = "lg K",
+                                FontSize = 20,
+                                FontStyle = FontStyles.Italic,
+                                Width = 40
+                            };
+
+                            //Название формы
+                            var textBlock = new TextBlock
+                            {
+                                Text = reaction.Prod,
+                                FontStyle = FontStyles.Italic,
+                                Width = 100
+                            };
+
+                            //Константа
+                            var valueBox = new TextBox
+                            {
+                                Width = 70
+                            };
+
+                            //Единица измерения
+                            var label = new Label
+                            {
+                                Content = "моль/см^3",
+                                Margin = new Thickness(0, 0, 20, 0)
+                            };
+
+                            Grid.SetColumn(labelLg, 0);
+                            Grid.SetColumn(textBlock, 1);
+                            Grid.SetColumn(valueBox, 2);
+                            Grid.SetColumn(label, 3);
+
+                            grid.Children.Add(labelLg);
+                            grid.Children.Add(textBlock);
+                            grid.Children.Add(valueBox);
+                            grid.Children.Add(label);
+
+                            reactionInputsPanel.Children.Add(grid);
+                        }
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+
         }
 
         private void IteratonMethod(List<double> lgs)
@@ -153,6 +229,14 @@ namespace CompModeling
             while (diff > epsilon && iteration < maxIterations);
 
             // Вывод результатов
+            string result = "Итераций выполнено: ";
+            result += iteration;
+            result += "\nРезультаты:";
+            for (int i = 0; i < 5; i++)
+            {
+                result += $"\nx{i + 1} = {XNew[i]:E4}";
+            }
+            tb_result.Text = result;
             Console.WriteLine($"Итераций выполнено: {iteration}");
             Console.WriteLine("Результаты:");
             for (int i = 0; i < 5; i++)
@@ -162,42 +246,147 @@ namespace CompModeling
 
         }
 
-        private async void LoadDataAsync()
-        {
-            try
-            {
-                using (var context = new ApplicationContext())
-                {
-                    // Получаем данные из таблицы InputConcentrations
-                    var concentrations = await context.InputConcentrations.ToListAsync();
-                    InputConcentrations = new ObservableCollection<InputConcentration>(concentrations);
-                    var forms = await context.BaseForms.ToListAsync();
-                    var phases = await context.Phases.ToListAsync();
-                    
-                    // Привязываем данные к DataGrid
-                    inputConcentrations.ItemsSource = InputConcentrations;
-                    //filterForm.ItemsSource = forms;
-                    //filterPhase.ItemsSource = phases;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-        }
 
         private void deleteInputConcentrations_Click(object sender, RoutedEventArgs e)
         {
-            var listToDelete = inputConcentrations.SelectedItems;
-            int max = listToDelete.Count;
+            //var listToDelete = inputConcentrations.SelectedItems;
+            //int max = listToDelete.Count;
 
-            for( int i = 0; i < max; i++) 
-            {
-                db.InputConcentrations.Remove((InputConcentration)listToDelete[0]!);
-                db.SaveChanges();
-                InputConcentrations!.Remove((InputConcentration)listToDelete[0]!);
-            }
-            db.SaveChanges();
+            //for( int i = 0; i < max; i++) 
+            //{
+            //    db.InputConcentrations.Remove((InputConcentration)listToDelete[0]!);
+            //    db.SaveChanges();
+            //    InputConcentrations!.Remove((InputConcentration)listToDelete[0]!);
+            //}
+            //db.SaveChanges();
         }
+
+        private void calculate_Click(object sender, RoutedEventArgs e)
+        {
+            var lgs = new List<double>()
+            {
+                1,
+                1,
+                1,
+                1,
+                1,
+                //Math.Pow(10, double.Parse(tb_LgK6.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK7.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK8.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK9.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK10.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK11.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK12.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK13.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK14.Text)),
+                //Math.Pow(10, double.Parse(tb_LgK15.Text))
+            };
+            IteratonMethod(lgs);
+        }
+
+        private void add_Mechanism_Click(object sender, RoutedEventArgs e)
+        {
+            AddMechanism addMechanism = new AddMechanism();
+
+            addMechanism.Show();
+        }
+
+        //private async void delete_Mechanism_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var button = (Button)sender;
+        //    var mechanismId = (int)button.Tag;
+
+        //    // Подтверждение удаления
+        //    var result = MessageBox.Show("Удалить этот механизм?", "Подтверждение",
+        //                                MessageBoxButton.YesNo,
+        //                                MessageBoxImage.Warning);
+
+        //    if (result != MessageBoxResult.Yes) return;
+
+        //    try
+        //    {
+        //        using (var context = new ApplicationContext())
+        //        {
+        //            // Находим механизм и связанные реакции
+        //            var mechanism = await context.Mechanisms
+        //                .Include(m => m.ReactionMechanism)
+        //                .FirstOrDefaultAsync(m => m.ID == mechanismId);
+
+        //            if (mechanism == null)
+        //            {
+        //                MessageBox.Show("Механизм не найден!");
+        //                return;
+        //            }
+
+        //            // Удаляем связи с реакциями
+        //            context.ReactionMechanism.RemoveRange(mechanism.ReactionMechanisms);
+
+        //            // Удаляем сам механизм
+        //            context.Mechanisms.Remove(mechanism);
+
+        //            await context.SaveChangesAsync();
+
+        //            // Обновляем список
+        //            await LoadDataAsync();
+        //            dataGrid_Mechanisms.ItemsSource = _mechanisms;
+
+        //            MessageBox.Show("Механизм успешно удален!");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Ошибка удаления: {ex.Message}");
+        //    }
+        //}
+
+
+        //private async void delete_Mechanism_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var button = (Button)sender;
+        //    if (button.Tag is int mechanismId)
+        //    {
+        //        var result = MessageBox.Show("Вы уверены, что хотите удалить этот механизм?",
+        //                                   "Подтверждение удаления",
+        //                                   MessageBoxButton.YesNo,
+        //                                   MessageBoxImage.Warning);
+
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            try
+        //            {
+        //                using (var context = new ApplicationContext())
+        //                {
+        //                    // Находим механизм с зависимостями
+        //                    var mechanism = await context.Mechanisms
+        //                        .Where(m => m.ID == mechanismId)
+        //                        .FirstOrDefaultAsync(m => m.ID == mechanismId);
+        //                    var _mechanisms = await context.ReactionMechanism
+        //                        .Where(rm => rm.ID == mechanismId)
+        //                        .FirstOrDefaultAsync(m => m.ID == mechanismId);
+        //                    {
+        //                        // Удаляем связанные реакции
+        //                        context.ReactionMechanism.RemoveRange(mechanism.ReactionMechanism);
+
+        //                        // Удаляем сам механизм
+        //                        context.Mechanisms.Remove(mechanism);
+
+        //                        await context.SaveChangesAsync();
+
+        //                        // Обновляем список механизмов
+        //                        var mechanisms = await context.Mechanisms.ToListAsync();
+        //                        dataGrid_Mechanisms.ItemsSource = mechanisms;
+
+        //                        MessageBox.Show("Механизм успешно удален!");
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                MessageBox.Show($"Ошибка при удалении: {ex.Message}\n{ex.InnerException?.Message}");
+        //            }
+        //        }
+        //    }
+        //}
+
     }
 }
