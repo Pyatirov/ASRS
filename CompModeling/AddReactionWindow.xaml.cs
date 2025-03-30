@@ -23,7 +23,7 @@ namespace CompModeling
     /// </summary>
     public partial class AddReactionWindow : Window
     {
-        public event Action? ReactionAdded;
+        //public event Action? ReactionAdded;
         public ObservableCollection<Reaction>? allReactions { get; private set; }   
         public AddReactionWindow()
         {

@@ -68,9 +68,15 @@
             </TabItem>
             <TabItem Header="Механизм реакции">
                 <Grid>
-                    <StackPanel VerticalAlignment="Top">
-                        <Button x:Name="add_Mechanism" Content="Добавить механизм" VerticalAlignment="Center" Click="add_Mechanism_Click" Margin="10,0,10,0" Height="40"/>
-                    <DataGrid x:Name="dataGrid_Mechanisms" Grid.Column="1" Grid.RowSpan="2" AutoGenerateColumns="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="328*"/>
+                        <RowDefinition Height="21*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="dataGrid_Mechanisms" AutoGenerateColumns="False" Margin="10,0,10,0" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="30"/>
                             <DataGridTextColumn Header="Описание" Binding="{Binding Info}" Width="*"/>
@@ -78,14 +84,94 @@
                             <DataGridTemplateColumn Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Удалить" Padding="5 2" Margin="3" Tag="{Binding ID}"/>
+                                        <Button Content="Удалить" Padding="5 2" Margin="3" Click="delete_Mechanism_Click" Tag="{Binding ID}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Button x:Name="update_Mechanism" Content="Обновить список" Click="update_Mechanism_Click" Margin="10,10,10,10" Grid.Row="1" Grid.Column="1"/>
+                    <Button x:Name="add_Mechanism" Content="Добавить механизм" Click="add_Mechanism_Click" Margin="10,10,10,10" Grid.Row="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Точки">
+                <!--<Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="11*"/>
+                        <RowDefinition Height="11*"/>
+                        <RowDefinition Height="687*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Выберите механизм реакции" Margin="5,0,0,0"/>
+                    <ComboBox x:Name="cb_ChooseMechanism" Grid.Row="1" HorizontalAlignment="Left" Width="320" Margin="5,0,0,0"/>
+                    <ScrollViewer>
+                        
+                    </ScrollViewer>
+                </Grid>-->
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Выбор механизма -->
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="Выберите механизм:"/>
+                        <ComboBox x:Name="cbMechanisms" DisplayMemberPath="Info" SelectionChanged="cbMechanisms_SelectionChanged"/>
                     </StackPanel>
 
+                    <!-- Ввод данных для точки -->
+                    <GroupBox Grid.Row="1" Header="Новая точка" Margin="0 10">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.ColumnSpan="2">
+                            <WrapPanel x:Name="pointInputsPanel" Margin="10" ItemWidth="350">
+                                <WrapPanel.Resources>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Margin" Value="0,5"/>
+                                    </Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="0,0,10,0"/>
+                                        <Setter Property="Width" Value="100"/>
+                                    </Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Width" Value="70"/>
+                                    </Style>
+                                </WrapPanel.Resources>
+                            </WrapPanel>
+                        </ScrollViewer>
+                    </GroupBox>
+
+                    <!-- Список добавленных точек -->
+                    <!--<DataGrid Grid.Row="2" x:Name="dgPoints" AutoGenerateColumns="False" Margin="0 10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Механизм" Binding="{Binding Mechanism.Info}"/>
+                            <DataGridTemplateColumn Header="Данные">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Data}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding FormName}"/>
+                                                        <TextBlock Text="{Binding AqueousValue}"/>
+                                                        <TextBlock Text="{Binding OrganicValue}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>-->
+
+                    <!-- Управление -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Добавить точку" Margin="5" Padding="20 5"/>
+                        <Button Content="Сохранить" Margin="5" Padding="20 5"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>

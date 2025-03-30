@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using static CompModeling.ConnectToDB;
 using System.Windows.Data;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace CompModeling
 {
@@ -20,6 +21,12 @@ namespace CompModeling
         private static ObservableCollection<InputConcentration>? InputConcentrations { get; set; }
         private static ObservableCollection<Mechanisms>? Mechanisms { get; set; }
         public static ObservableCollection<InputConcentration> inputConcentrationsProp => InputConcentrations!;
+
+        private ObservableCollection<Mechanisms> _mechanisms = new();
+
+        private ObservableCollection<ExperimentalPoints> _points = new();
+
+        private List<BaseForm> _baseForms = new();
 
         enum SolutionMethods
         {
@@ -34,12 +41,8 @@ namespace CompModeling
                 using (var context = new ApplicationContext())
                 {
                     // Получаем данные из таблицы InputConcentrations
-                    var concentrations = await context.InputConcentrations.ToListAsync();
-                    InputConcentrations = new ObservableCollection<InputConcentration>(concentrations);
-                    var forms = await context.BaseForms.ToListAsync();
-                    var phases = await context.Phases.ToListAsync();
                     var mechanismsNames = await context.Mechanisms.ToListAsync();
-                    cb_mechanismName.ItemsSource = mechanismsNames;
+                    //Mechanisms = new ObservableCollection<Mechanisms>(mechanismsNames);
 
                     // Обновляем существующую коллекцию, а не пересоздаем
                     if (Mechanisms == null)
@@ -54,6 +57,8 @@ namespace CompModeling
                             Mechanisms.Add(mechanism);
                         }
                     }
+                    cb_mechanismName.ItemsSource = Mechanisms;
+                    cbMechanisms.ItemsSource = Mechanisms;
                     dataGrid_Mechanisms.ItemsSource = Mechanisms;
                 }
 
@@ -68,19 +73,6 @@ namespace CompModeling
         {
             InitializeComponent();
             LoadDataAsync();
-        }
-
-        /// <summary>
-        /// Добавление концентрации в DataGrid
-        /// </summary>
-        private void addInputConcentrations_Click(object sender, RoutedEventArgs e)
-        {
-            //AddInputConcentrations AddInputConcentrations = new AddInputConcentrations();
-            //AddInputConcentrations.ShowDialog();
-            //if (AddInputConcentrations.DialogResult == true) 
-            //{
-            //    inputConcentrations.Items.Refresh();   
-            //}
         }
 
         private async void cb_mechanismName_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -246,21 +238,6 @@ namespace CompModeling
 
         }
 
-
-        private void deleteInputConcentrations_Click(object sender, RoutedEventArgs e)
-        {
-            //var listToDelete = inputConcentrations.SelectedItems;
-            //int max = listToDelete.Count;
-
-            //for( int i = 0; i < max; i++) 
-            //{
-            //    db.InputConcentrations.Remove((InputConcentration)listToDelete[0]!);
-            //    db.SaveChanges();
-            //    InputConcentrations!.Remove((InputConcentration)listToDelete[0]!);
-            //}
-            //db.SaveChanges();
-        }
-
         private void calculate_Click(object sender, RoutedEventArgs e)
         {
             var lgs = new List<double>()
@@ -288,105 +265,259 @@ namespace CompModeling
         {
             AddMechanism addMechanism = new AddMechanism();
 
-            addMechanism.Show();
+            addMechanism.ShowDialog();
+            if (DialogResult == true) 
+            { 
+                LoadDataAsync();       
+            }
         }
 
-        //private async void delete_Mechanism_Click(object sender, RoutedEventArgs e)
+        private void update_Mechanism_Click(object sender, RoutedEventArgs e)
+        {
+            LoadDataAsync();
+        }
+
+        private async void delete_Mechanism_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var mechanismId = (int)button.Tag;
+
+            // Подтверждение удаления
+            var result = MessageBox.Show("Удалить этот механизм?", "Подтверждение",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                using (var context = new ApplicationContext())
+                {
+                    //Удаляем сам механизм (связанные реакции в RactionMechanism удалятся сами за счет ON DELETEE CASCADE
+                   var mechanisms = await context.Mechanisms
+                       .Where(m => m.ID == mechanismId)
+                       .ToListAsync();
+                    context.Mechanisms.RemoveRange(mechanisms);
+
+                    await context.SaveChangesAsync();
+
+                    LoadDataAsync();
+
+                    //_mechanisms = new ObservableCollection<Mechanisms>(context.Mechanisms); //НЕ РАБОТАЕТ, реализовать динамическое обновление DataGrid
+
+                    MessageBox.Show("Механизм успешно удален!");
+
+                    //dataGrid_Mechanisms.ItemsSource = _mechanisms;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
+            }
+        }
+
+        private void cbMechanisms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            using (var context = new ApplicationContext())
+            {
+                if (cbMechanisms.SelectedItem is Mechanisms selectedMechanism)
+                {
+                    var baseFormNames = context.BaseForms;
+
+                    // Очищаем панель
+                    pointInputsPanel.Children.Clear();
+
+                    foreach (var bFs in baseFormNames)
+                    {
+                        var grid = new Grid();
+                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(40, GridUnitType.Auto) });
+                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100, GridUnitType.Auto) });
+                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(70, GridUnitType.Auto) });
+                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(70, GridUnitType.Auto) });
+
+                        //lgK
+                        var bfName = new TextBlock
+                        {
+                            Text = bFs.Name,
+                            FontSize = 20,
+                            FontStyle = FontStyles.Italic,
+                            Width = 40
+                        };
+
+                        var labelAq = new TextBlock
+                        {
+                            Text = "Вода",
+                            Margin = new Thickness(0, 0, 0, 40)
+                        };
+
+                        var labelOrg = new TextBlock
+                        {
+                            Text = "Органика",
+                            Margin = new Thickness(0, 0, 0, 40)
+                        };
+
+                        var valueAquBox = new TextBox
+                        {
+                            Width = 70
+                        };
+
+                        var valueOrgBox = new TextBox
+                        {
+                            Width = 70
+                        };
+
+                        var edinica = new TextBlock
+                        {
+                            Text = "моль/дм^3"
+                        };
+
+                        Grid.SetColumn(bfName, 0);
+                        Grid.SetColumn(labelAq, 1);
+                        Grid.SetColumn(valueAquBox, 1);
+                        Grid.SetColumn(labelOrg, 2);
+                        Grid.SetColumn(valueOrgBox, 2);
+                        Grid.SetColumn(edinica, 3);
+
+                        grid.Children.Add(bfName);
+                        grid.Children.Add(labelAq);
+                        grid.Children.Add(labelOrg);
+                        grid.Children.Add(valueAquBox);
+                        grid.Children.Add(valueOrgBox);
+                        grid.Children.Add(edinica);
+                        pointInputsPanel.Children.Add(grid);
+
+                    }
+
+                }
+            }
+        }
+
+        //public async Task<List<string?>> GetBaseFormNamesForMechanismAsync(int mechanismId)
         //{
-        //    var button = (Button)sender;
-        //    var mechanismId = (int)button.Tag;
+        //    using (var context = new ApplicationContext())
+        //    {
+        //        return await context.ReactionMechanism
+        //            .Where(rm => rm.Mechanism_ID == mechanismId)
+        //            .Join(context.Reactions,
+        //                rm => rm.Reaction_ID,
+        //                r => r.ID,
+        //                (rm, r) => new { r.Inp1, r.Inp2, r.Inp3 })
+        //            .SelectMany(r => new[] { r.Inp1, r.Inp2, r.Inp3 })
+        //            .Join(context.BaseForms,
+        //                inp => inp,
+        //                bf => bf.Name,
+        //                (inp, bf) => bf.Name)
+        //            .Distinct()
+        //            .ToListAsync();
+        //    }
+        //}
 
-        //    // Подтверждение удаления
-        //    var result = MessageBox.Show("Удалить этот механизм?", "Подтверждение",
-        //                                MessageBoxButton.YesNo,
-        //                                MessageBoxImage.Warning);
+        //private void BtnAddPoint_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (cbMechanisms.SelectedItem is not Mechanisms mechanism)
+        //    {
+        //        MessageBox.Show("Выберите механизм!");
+        //        return;
+        //    }
 
-        //    if (result != MessageBoxResult.Yes) return;
+        //    var point = new ExperimentalPoints
+        //    {
+        //        ID = 1,
+        //    };
 
+        //    // Собираем данные из полей ввода
+        //    foreach (var container in icFormsInput.Items)
+        //    {
+        //        if (container is FormInput form)
+        //        {
+        //            var aqueous = FindAqueousValue(form.FormName);
+        //            var organic = FindOrganicValue(form.FormName);
+
+        //            point.Data.Add(new FormData
+        //            {
+        //                FormName = form.FormName,
+        //                AqueousValue = aqueous,
+        //                OrganicValue = organic
+        //            });
+        //        }
+        //    }
+
+        //    _points.Add(point);
+        //    dgPoints.ItemsSource = _points;
+        //}
+
+        //private double? FindAqueousValue(string formName)
+        //{
+        //    // Поиск значения в водной фазе по тегу
+        //    var txtBox = icFormsInput.Items
+        //        .OfType<FormInput>()
+        //        .Select(f => icFormsInput.ItemContainerGenerator.ContainerFromItem(f))
+        //        .Select(container => GetChild<TextBox>(container, "txtAqueous"))
+        //        .FirstOrDefault(t => t?.Tag?.ToString() == $"{formName}_Aqueous");
+
+        //    return double.TryParse(txtBox?.Text, out var value) ? value : null;
+        //}
+
+        //private T GetChild<T>(DependencyObject parent, string name) where T : FrameworkElement
+        //{
+        //    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+        //    {
+        //        var child = VisualTreeHelper.GetChild(parent, i);
+        //        if (child is T result && result.Name == name)
+        //            return result;
+
+        //        var descendant = GetChild<T>(child, name);
+        //        if (descendant != null)
+        //            return descendant;
+        //    }
+        //    return null;
+        //}
+
+        //private async void BtnSave_Click(object sender, RoutedEventArgs e)
+        //{
         //    try
         //    {
         //        using (var context = new ApplicationContext())
         //        {
-        //            // Находим механизм и связанные реакции
-        //            var mechanism = await context.Mechanisms
-        //                .Include(m => m.ReactionMechanism)
-        //                .FirstOrDefaultAsync(m => m.ID == mechanismId);
-
-        //            if (mechanism == null)
+        //            foreach (var point in _points)
         //            {
-        //                MessageBox.Show("Механизм не найден!");
-        //                return;
+        //                var experiment = new Experiment
+        //                {
+        //                    MechanismId = point.Mechanism.ID,
+        //                    Data = JsonConvert.SerializeObject(point.Data)
+        //                };
+
+        //                context.Experiments.Add(experiment);
         //            }
 
-        //            // Удаляем связи с реакциями
-        //            context.ReactionMechanism.RemoveRange(mechanism.ReactionMechanisms);
-
-        //            // Удаляем сам механизм
-        //            context.Mechanisms.Remove(mechanism);
-
         //            await context.SaveChangesAsync();
-
-        //            // Обновляем список
-        //            await LoadDataAsync();
-        //            dataGrid_Mechanisms.ItemsSource = _mechanisms;
-
-        //            MessageBox.Show("Механизм успешно удален!");
+        //            MessageBox.Show("Данные успешно сохранены!");
         //        }
         //    }
         //    catch (Exception ex)
         //    {
-        //        MessageBox.Show($"Ошибка удаления: {ex.Message}");
+        //        MessageBox.Show($"Ошибка сохранения: {ex.Message}");
         //    }
         //}
 
-
-        //private async void delete_Mechanism_Click(object sender, RoutedEventArgs e)
+        //// Вспомогательные классы
+        //public class FormInput
         //{
-        //    var button = (Button)sender;
-        //    if (button.Tag is int mechanismId)
-        //    {
-        //        var result = MessageBox.Show("Вы уверены, что хотите удалить этот механизм?",
-        //                                   "Подтверждение удаления",
-        //                                   MessageBoxButton.YesNo,
-        //                                   MessageBoxImage.Warning);
-
-        //        if (result == MessageBoxResult.Yes)
-        //        {
-        //            try
-        //            {
-        //                using (var context = new ApplicationContext())
-        //                {
-        //                    // Находим механизм с зависимостями
-        //                    var mechanism = await context.Mechanisms
-        //                        .Where(m => m.ID == mechanismId)
-        //                        .FirstOrDefaultAsync(m => m.ID == mechanismId);
-        //                    var _mechanisms = await context.ReactionMechanism
-        //                        .Where(rm => rm.ID == mechanismId)
-        //                        .FirstOrDefaultAsync(m => m.ID == mechanismId);
-        //                    {
-        //                        // Удаляем связанные реакции
-        //                        context.ReactionMechanism.RemoveRange(mechanism.ReactionMechanism);
-
-        //                        // Удаляем сам механизм
-        //                        context.Mechanisms.Remove(mechanism);
-
-        //                        await context.SaveChangesAsync();
-
-        //                        // Обновляем список механизмов
-        //                        var mechanisms = await context.Mechanisms.ToListAsync();
-        //                        dataGrid_Mechanisms.ItemsSource = mechanisms;
-
-        //                        MessageBox.Show("Механизм успешно удален!");
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                MessageBox.Show($"Ошибка при удалении: {ex.Message}\n{ex.InnerException?.Message}");
-        //            }
-        //        }
-        //    }
+        //    public string FormName { get; set; }
         //}
 
+        //public class ExperimentalPoint
+        //{
+        //    public Mechanisms Mechanism { get; set; }
+        //    public List<FormData> Data { get; set; }
+        //}
+
+        //public class FormData
+        //{
+        //    public string FormName { get; set; }
+        //    public double? AqueousValue { get; set; }
+        //    public double? OrganicValue { get; set; }
+        //}
     }
+ 
 }

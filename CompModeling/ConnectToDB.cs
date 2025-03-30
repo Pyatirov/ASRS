@@ -19,11 +19,20 @@ namespace CompModeling
             public DbSet<Mechanisms> Mechanisms { get; set; } = null!;
             public DbSet<ReactionMechanism> ReactionMechanism { get; set; } = null!;
             public DbSet<Reaction> Reactions { get; set; } = null!;
+            public DbSet<ExperimentalPoints> ExperimentalPoints { get; set; } = null!;
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlite("Data Source=compmodeling.db");
             }
+
+            //protected override void OnModelCreating(ModelBuilder modelBuilder)
+            //{
+            //    modelBuilder.Entity<Mechanisms>()
+            //        .HasMany(m => m.ReactionMechanisms)
+            //        .WithOne(rm => rm.Mechanism)
+            //        .HasForeignKey(rm => rm.Mechanism_ID);
+            //}
         }
     }
 }

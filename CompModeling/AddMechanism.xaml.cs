@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static CompModeling.ConnectToDB;
+using Microsoft.EntityFrameworkCore.Sqlite.Query.Internal;
 
 namespace CompModeling
 {
@@ -40,14 +41,72 @@ namespace CompModeling
                 _reactions = new ObservableCollection<ReactionWrapper>(
                     reactions.Select(r => new ReactionWrapper(r)));
 
-                _allReactions = new ObservableCollection<Reaction>(reactions);
-
                 dgReactions.ItemsSource = _reactions;
-                var baseforms = await context.BaseForms.ToListAsync();
-                _baseforms = new ObservableCollection<BaseForm>(baseforms);
-                dgPhasesValues.ItemsSource = _baseforms;
             }
+            //foreach (var reaction in _allReactions)
+            //{
+            //    var tb_KI1 = new TextBlock
+            //    {
+            //        Text = reaction.KInp1.ToString()
+            //    };
+            //    var tb_I1 = new TextBlock
+            //    {
+            //        Text = reaction.Inp1.ToString()
+            //    };
+            //    var tb_Ind1 = new TextBlock
+            //    {
+            //        Text = reaction.Ind1.ToString()
+            //    };
+            //    var tb_KI2 = new TextBlock
+            //    {
+            //        Text = reaction.KInp2.ToString()
+            //    };
+            //    var tb_I2 = new TextBlock
+            //    {
+            //        Text = reaction.Inp2.ToString()
+            //    };
+            //    var tb_Ind2 = new TextBlock
+            //    {
+            //        Text = reaction.Ind2.ToString()
+            //    };
+            //    var tb_KI3 = new TextBlock
+            //    {
+            //        Text = reaction.KInp3.ToString()
+            //    };
+            //    var tb_I3 = new TextBlock
+            //    {
+            //        Text = reaction.Inp3.ToString()
+            //    };
+            //    var tb_Ind3 = new TextBlock
+            //    {
+            //        Text = reaction.Ind3.ToString()
+            //    };
+
+            //    wp_Reactions.Children.Add(tb_KI1);
+            //    wp_Reactions.Children.Add(tb_I1);
+            //    wp_Reactions.Children.Add(tb_Ind1);
+            //    wp_Reactions.Children.Add(tb_KI2);
+            //    wp_Reactions.Children.Add(tb_I2);
+            //    wp_Reactions.Children.Add(tb_Ind2);
+            //    wp_Reactions.Children.Add(tb_KI3);
+            //    wp_Reactions.Children.Add(tb_I3);
+            //    wp_Reactions.Children.Add(tb_Ind3);
+            //}
         }
+
+        //string Check(Reaction reaction)
+        //{
+        //    if ( (reaction.Inp2 == null) || 
+        //        (reaction.Inp3 == null) || 
+        //        (reaction.KInp2 == null) ||
+        //        (reaction.KInp3 == null) ||
+        //        (reaction.Ind2 == null) ||
+        //        (reaction.Ind3 == null))
+        //    {
+        //        return " ";
+        //    }
+        //    return reaction.Inp3.ToString();
+        //}
 
         // Создание нового механизма
         private async void BtnCreateMechanism_Click(object sender, RoutedEventArgs e)
@@ -95,7 +154,7 @@ namespace CompModeling
                     // Обновляем UI
                     txtMechanismName.Clear();
                     MessageBox.Show("Механизм успешно создан!");
-
+                    
                 }
             }
             catch (Exception ex)
@@ -110,8 +169,13 @@ namespace CompModeling
         private void BtnAddReaction_Click(object sender, RoutedEventArgs e)
         {
             var addReactionWindow = new AddReactionWindow();
-            addReactionWindow.ReactionAdded += () => LoadData();
+            //addReactionWindow.ReactionAdded += () => LoadData();
             addReactionWindow.ShowDialog();
+        }
+
+        private void BtnCreatePoints_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

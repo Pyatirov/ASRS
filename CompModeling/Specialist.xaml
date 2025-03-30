@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CompModeling"
+        xmlns:local="clr-namespace:CompModeling" xmlns:sys="clr-namespace:System;assembly=netstandard"
         mc:Ignorable="d"
         Title="Специалист" Height="200" Width="350" ResizeMode="NoResize">
     <Grid>
@@ -19,7 +19,9 @@
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Метод решения:" VerticalAlignment="Center" Margin="10,0,0,0"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Точность решения:" VerticalAlignment="Center" Grid.Row="1" Margin="10,0,0,0"/>
         <TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Макс. число итераций:" VerticalAlignment="Center" Height="39" Width="111" Margin="10,0,0,0"/>
-        <ComboBox x:Name="cb_SolutionMethod" DisplayMemberPath="."  SelectedIndex="0" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" Width="195"/>
+        <ComboBox x:Name="cb_SolutionMethod" DisplayMemberPath="." Text="Метод Ньютона-Рафсона" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" Width="195">
+            <sys:String>Метод Ньютона-Рафсона</sys:String>
+        </ComboBox>
         <TextBox x:Name="tb_SolutionPrecision" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Margin="129,0,0,0"/>
         <TextBox x:Name="tb_MaxCountOfIterations" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Margin="129,0,0,0"/>
         <Button Content="Сохранить" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="81"/>

@@ -12,32 +12,27 @@
             <ColumnDefinition Width="527*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="32*"/>
             <RowDefinition Height="23*"/>
-            <RowDefinition Height="169*"/>
-            <RowDefinition Height="62*"/>
-            <RowDefinition Height="62*"/>
-            <RowDefinition Height="62*"/>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="263*"/>
+            <RowDefinition Height="87*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Описание механизма:" VerticalAlignment="Center" Margin="10,0,0,0" Height="16"/>
         <TextBox x:Name="txtMechanismName" Margin="5,5,5,5" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <TextBlock Text="Выберите реакции:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Margin="10,0,0,0" Height="16" Width="106"/>
-        <DataGrid x:Name="dgReactions" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Margin="5,0,5,0">
+        <TextBlock Text="Выберите реакции:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="16" Width="106"/>
+        <DataGrid x:Name="dgReactions" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Grid.Row="3" Margin="5,2,5,0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Header="Выбрать" Width="Auto" Binding ="{Binding IsSelected, Mode=TwoWay}"/>
                 <DataGridTextColumn Header="Реакция" Binding="{Binding DisplayReaction}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Text="Выберите объемы органических фаз:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="16" Width="206"/>
-        <DataGrid x:Name="dgPhasesValues" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Grid.Row="3" Margin="5,0,0,0" Grid.RowSpan="2">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Выбрать" Width="Auto" Binding ="{Binding IsSelected, Mode=TwoWay}"/>
-                <DataGridTextColumn Header="Базовая форма" Width="*" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Объем фазы" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="Создать механизм" Click="BtnCreateMechanism_Click" Padding="10 5" Grid.Row="5" Grid.ColumnSpan="2" Margin="5,5,5,0"/>
-        <Button Content="Добавить новую реакцию" Click="BtnAddReaction_Click" Padding="10 5" Grid.Row="6" Grid.ColumnSpan="2" Margin="5,10,5,0"/>
+        <!--<ScrollViewer Grid.Row="3" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+            <WrapPanel x:Name="wp_Reactions">
+                
+            </WrapPanel>
+        </ScrollViewer>-->
+        <Button Content="Создать механизм" Click="BtnCreateMechanism_Click" Padding="10 5" Grid.Row="4" Margin="5,0,5,5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Column="1" Width="166"/>
+        <Button Content="Добавить новую реакцию" Click="BtnAddReaction_Click" Padding="10 5" Grid.Row="4" Grid.ColumnSpan="2" Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </Grid>
 </Window>
