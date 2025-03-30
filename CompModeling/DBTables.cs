@@ -56,8 +56,7 @@ namespace CompModeling
         public int ID { get; set; }
         [DisplayName("Описание")]
         public string? Info { get; set; }
-        //Навигационное свойство
-        //public List<ReactionMechanism> ReactionMechanisms { get; set; } = new();
+
     }
 
 
@@ -85,7 +84,6 @@ namespace CompModeling
         public int? Mechanism_ID { get; set; }
         [ForeignKey("Reaction_ID")]
         public int? Reaction_ID { get; set; }
-        //public Reaction? Reaction { get; set; }
 
     }
 
@@ -95,10 +93,18 @@ namespace CompModeling
         public int ID { get; set; }
         public int ID_Point { get; set; }
         public int ID_InputConcentration { get; set; }
-        public int ID_Base_Form {  get; set; }  
-        public int ID_Phase { get; set; }   
+        public int ID_BaseForm {  get; set; }  
+        public int Phase { get; set; }   
         public int ID_Mechanism { get; set; }
 
     }
+
+    public class Points
+    {
+        [Key]
+        public int ID { get; set; }
+
+    }
+
 
 }

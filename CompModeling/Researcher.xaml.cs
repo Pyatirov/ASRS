@@ -28,11 +28,9 @@ namespace CompModeling
 
         private List<BaseForm> _baseForms = new();
 
-        enum SolutionMethods
-        {
-            INTERATION,
-            NEWTON_RAPHSON
-        }
+        private Dictionary<string, (TextBox AquaBox, TextBox OrgBox)> inputBoxes = new Dictionary<string, (TextBox, TextBox)>();
+
+        private int currentPointId = 1;
 
         private async void LoadDataAsync()
         {
@@ -40,7 +38,6 @@ namespace CompModeling
             {
                 using (var context = new ApplicationContext())
                 {
-                    // Получаем данные из таблицы InputConcentrations
                     var mechanismsNames = await context.Mechanisms.ToListAsync();
                     //Mechanisms = new ObservableCollection<Mechanisms>(mechanismsNames);
 
@@ -131,6 +128,7 @@ namespace CompModeling
                                 Content = "моль/см^3",
                                 Margin = new Thickness(0, 0, 20, 0)
                             };
+
 
                             Grid.SetColumn(labelLg, 0);
                             Grid.SetColumn(textBlock, 1);
@@ -238,29 +236,6 @@ namespace CompModeling
 
         }
 
-        private void calculate_Click(object sender, RoutedEventArgs e)
-        {
-            var lgs = new List<double>()
-            {
-                1,
-                1,
-                1,
-                1,
-                1,
-                //Math.Pow(10, double.Parse(tb_LgK6.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK7.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK8.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK9.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK10.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK11.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK12.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK13.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK14.Text)),
-                //Math.Pow(10, double.Parse(tb_LgK15.Text))
-            };
-            IteratonMethod(lgs);
-        }
-
         private void add_Mechanism_Click(object sender, RoutedEventArgs e)
         {
             AddMechanism addMechanism = new AddMechanism();
@@ -293,21 +268,15 @@ namespace CompModeling
             {
                 using (var context = new ApplicationContext())
                 {
-                    //Удаляем сам механизм (связанные реакции в RactionMechanism удалятся сами за счет ON DELETEE CASCADE
-                   var mechanisms = await context.Mechanisms
-                       .Where(m => m.ID == mechanismId)
-                       .ToListAsync();
+                    var mechanisms = await context.Mechanisms
+                        .Where(m => m.ID == mechanismId)
+                        .ToListAsync();
                     context.Mechanisms.RemoveRange(mechanisms);
 
                     await context.SaveChangesAsync();
 
-                    LoadDataAsync();
-
-                    //_mechanisms = new ObservableCollection<Mechanisms>(context.Mechanisms); //НЕ РАБОТАЕТ, реализовать динамическое обновление DataGrid
-
                     MessageBox.Show("Механизм успешно удален!");
 
-                    //dataGrid_Mechanisms.ItemsSource = _mechanisms;
                 }
             }
             catch (Exception ex)
@@ -318,6 +287,7 @@ namespace CompModeling
 
         private void cbMechanisms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             using (var context = new ApplicationContext())
             {
                 if (cbMechanisms.SelectedItem is Mechanisms selectedMechanism)
@@ -378,6 +348,8 @@ namespace CompModeling
                         Grid.SetColumn(valueOrgBox, 2);
                         Grid.SetColumn(edinica, 3);
 
+                        inputBoxes[bFs.Name] = (valueAquBox, valueOrgBox);
+
                         grid.Children.Add(bfName);
                         grid.Children.Add(labelAq);
                         grid.Children.Add(labelOrg);
@@ -388,6 +360,92 @@ namespace CompModeling
 
                     }
 
+                }
+            }
+        }
+
+        private void Button_add_Experimental_Point_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new ApplicationContext())
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var selectedMechanism = cbMechanisms.SelectedItem as Mechanisms;
+                        if (selectedMechanism == null)
+                        {
+                            MessageBox.Show("Выберите механизм!");
+                            return;
+                        }
+
+                        // Создаем новую точку
+                        var point = new Points();
+                        context.Points.Add(point);
+                        context.SaveChanges(); // Получаем ID точки
+
+                        foreach (var entry in inputBoxes)
+                        {
+                            var baseForm = context.BaseForms.FirstOrDefault(bf => bf.Name == entry.Key);
+                            if (baseForm == null) continue;
+
+                            // Сохраняем концентрацию для воды (фаза 1)
+                            if (double.TryParse(entry.Value.AquaBox.Text, out double aquaValue))
+                            {
+                                var inputAqua = new InputConcentration
+                                {
+                                    BaseForm = entry.Key,
+                                    Value = aquaValue,
+                                    Phase = 1
+                                };
+                                context.InputConcentrations.Add(inputAqua);
+                                context.SaveChanges();
+
+                                var expPointAqua = new ExperimentalPoints
+                                {
+                                    ID_Point = point.ID,
+                                    ID_InputConcentration = inputAqua.ID,
+                                    ID_BaseForm = baseForm.ID,
+                                    Phase = 1,
+                                    ID_Mechanism = selectedMechanism.ID
+                                };
+                                context.ExperimentalPoints.Add(expPointAqua);
+                            }
+
+                            // Сохраняем концентрацию для органики (фаза 2)
+                            if (double.TryParse(entry.Value.OrgBox.Text, out double orgValue))
+                            {
+                                var inputOrg = new InputConcentration
+                                {
+                                    BaseForm = entry.Key,
+                                    Value = orgValue,
+                                    Phase = 0,
+                                };
+                                context.InputConcentrations.Add(inputOrg);
+                                context.SaveChanges();
+
+                                var expPointOrg = new ExperimentalPoints
+                                {
+                                    ID_Point = point.ID,
+                                    ID_InputConcentration = inputOrg.ID,
+                                    ID_BaseForm = baseForm.ID,
+                                    Phase = 0,
+                                    ID_Mechanism = selectedMechanism.ID
+                                };
+                                context.ExperimentalPoints.Add(expPointOrg);
+                            }
+                        }
+
+                        context.SaveChanges();
+                        transaction.Commit();
+                        MessageBox.Show($"Точка №{currentPointId} успешно сохранена!");
+                        currentPointId++;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show($"Ошибка: {ex.Message}");
+                    }
                 }
             }
         }
