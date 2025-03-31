@@ -1,45 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
+  <ItemGroup />
   <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="AddMechanism.xaml.cs">
+    <Compile Update="Researcher\AddMechanism.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="AddInputConcentrations.xaml.cs">
+    <Compile Update="Researcher\AddReactionWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="AddReactionWindow.xaml.cs">
+    <Compile Update="Specialist\Specialist.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Specialist.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Researcher.xaml.cs">
+    <Compile Update="Researcher\Researcher.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="AddMechanism.xaml">
+    <Page Update="Researcher\AddMechanism.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="AddInputConcentrations.xaml">
+    <Page Update="Researcher\AddReactionWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="AddReactionWindow.xaml">
+    <Page Update="MainWindow\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MainWindow.xaml">
+    <Page Update="Specialist\Specialist.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Specialist.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Researcher.xaml">
+    <Page Update="Researcher\Researcher.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

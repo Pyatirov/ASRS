@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Projects\comp_modeling\CompModeling\App.xaml
-6-1476790039
+5-143814425
 
-121300934268
+11-325520793
 222-491836479
-AddInputConcentrations.xaml;AddMechanism.xaml;AddReactionWindow.xaml;MainWindow.xaml;Researcher.xaml;Specialist.xaml;
+MainWindow\MainWindow.xaml;Researcher\AddMechanism.xaml;Researcher\AddReactionWindow.xaml;Researcher\Researcher.xaml;Specialist\Specialist.xaml;
 
 False
 

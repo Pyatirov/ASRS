@@ -1,0 +1,72 @@
+﻿<Window x:Class="CompModeling.AddMechanism"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompModeling"
+        mc:Ignorable="d"
+        Title="Добавить механизм" Height="450" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Описание механизма:" VerticalAlignment="Center" Margin="10,10,0,5"/>
+        <TextBox x:Name="txtMechanismName" Margin="10,5,10,5" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock Text="Выберите реакции:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,5,0,0" Height="16" Width="106"/>
+        <DataGrid x:Name="dgReactions" AutoGenerateColumns="False" 
+          SelectionMode="Single" CanUserAddRows="False" 
+          Grid.Row="3" Margin="10,10,10,0" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Выбрать" Width="Auto" Binding="{Binding IsSelected, Mode=TwoWay}"/>
+                <DataGridTemplateColumn Header="Реакция" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid local:ReactionTemplate.HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Реагент 1 -->
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Reaction.KInp1}" FontSize="16"/>
+                                    <TextBlock Text="{Binding Reaction.Inp1}" FontSize="16"/>
+                                    <TextBlock Text="{Binding Reaction.Ind1}" FontSize="12" VerticalAlignment="Bottom" Margin="0,-2,0,0"/>
+                                </StackPanel>
+
+                                <!-- Разделители -->
+                                <TextBlock Text="+" Grid.Column="1" FontSize="16" VerticalAlignment="Center" Margin="5,0"/>
+
+                                <!-- Реагент 2 -->
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Reaction.KInp2}" FontSize="16"/>
+                                    <TextBlock Text="{Binding Reaction.Inp2}" FontSize="16"/>
+                                    <TextBlock Text="{Binding Reaction.Ind2}" FontSize="12" VerticalAlignment="Bottom" Margin="0,-2,0,0"/>
+                                </StackPanel>
+
+                                <!-- Продукт -->
+                                <StackPanel Orientation="Horizontal" Grid.Column="3" VerticalAlignment="Center" Margin="5,0">
+                                    <TextBlock Text="→" FontSize="16" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Reaction.KProd}" FontSize="16"/>
+                                    <TextBlock Text="{Binding Reaction.Prod}" FontSize="16"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Создать механизм" Click="BtnCreateMechanism_Click" Padding="10 5" Grid.Row="4" Margin="10,10,10,0" Grid.Column="0" Height="40" Width="200" HorizontalAlignment="Right"/>
+        <Button Content="Добавить новую реакцию" Click="BtnAddReaction_Click" Padding="10 5" Grid.Row="4" Margin="10,10,5,0" Grid.Column="1" Height="40" Width="200" HorizontalAlignment="Left"/>
+    </Grid>
+</Window>
