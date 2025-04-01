@@ -11,10 +11,19 @@
           "EntityFramework": "6.5.1",
           "MathNet.Numerics": "5.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.2",
-          "Microsoft.EntityFrameworkCore.Sqlite": "9.0.2"
+          "Microsoft.EntityFrameworkCore.Sqlite": "9.0.2",
+          "alglib.net": "3.19.0"
         },
         "runtime": {
           "CompModeling.dll": {}
+        }
+      },
+      "alglib.net/3.19.0": {
+        "runtime": {
+          "lib/net7.0/alglib.net.dll": {
+            "assemblyVersion": "3.19.0.0",
+            "fileVersion": "3.19.0.0"
+          }
         }
       },
       "EntityFramework/6.5.1": {
@@ -526,6 +535,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "alglib.net/3.19.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qWYQYLOvkw+EcciexaCcfBoekxV+YMaOfjJC9luIA7HJVntUvj4YTwJfWdPXJRVvnacAIkV0c94t61G771voqA==",
+      "path": "alglib.net/3.19.0",
+      "hashPath": "alglib.net.3.19.0.nupkg.sha512"
     },
     "EntityFramework/6.5.1": {
       "type": "package",

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CompModeling;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -34,6 +36,23 @@ namespace CompModeling
             throw new NotImplementedException();
         }
     }
+
+
+    // Добавить в пространство имен CompModeling
+    public class ChemicalReaction
+    {
+        public Dictionary<string, double> Reactants { get; } = new();
+        public Dictionary<string, double> Products { get; } = new();
+        public double EquilibriumConstant { get; set; }
+    }
+
+    public class EquilibriumSolution
+    {
+        public Dictionary<string, double> Concentrations { get; } = new();
+        public int Iterations { get; set; }
+        public double Error { get; set; }
+    }
+
     /// <summary>
     /// Логика взаимодействия для SpecialistInterface.xaml
     /// </summary>
@@ -85,6 +104,7 @@ namespace CompModeling
         {
             InitializeComponent();
             LoadDataAsync();
+            calculate.Click += Button_calculate_Click;
         }
 
         /// <summary>
@@ -108,36 +128,6 @@ namespace CompModeling
 
                         reactionInputsPanel.Children.Clear();
 
-                        //foreach (var reaction in reactions)
-                        //{
-                        //    var grid = new Grid
-                        //    {
-                        //        Margin = new Thickness(0, 5, 0, 0),
-                        //        VerticalAlignment = VerticalAlignment.Top
-                        //    };
-
-                        //    // Настройка колонок
-                        //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                        //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                        //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                        //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-                        //    UIElement[] elements =
-                        //    [
-                        //        new TextBlock { Text = "lg K", FontSize=16, Margin=new Thickness(0,0,10,0) },
-                        //        new TextBlock { Text = reaction.Prod, FontStyle=FontStyles.Italic, MinWidth=120 },
-                        //        new TextBox { Width=80, Margin=new Thickness(0,0,10,0) },
-                        //        new TextBlock { Text = "моль/cм³" }
-                        //    ];
-
-                        //    for (int i = 0; i < elements.Length; i++)
-                        //    {
-                        //        Grid.SetColumn(elements[i], i);
-                        //        grid.Children.Add(elements[i]);
-                        //    }
-
-                        //    reactionInputsPanel.Children.Add(grid);
-                        //}
                         foreach (var reaction in reactions)
                         {
                             var grid = new Grid
@@ -174,7 +164,8 @@ namespace CompModeling
                             var valueBox = new TextBox
                             {
                                 Width = 80,
-                                Margin = new Thickness(30, 5, 10, 0)
+                                Margin = new Thickness(30, 5, 10, 0),
+                                Tag = reaction.Prod
                             };
 
                             var unitBlock = new TextBlock
@@ -537,10 +528,319 @@ namespace CompModeling
             }
         }
 
-        private void Button_calculate_Click(object sender, RoutedEventArgs e)
+        private async void Button_calculate_Click(object sender, RoutedEventArgs e)
         {
+            var selectedMechanism = cb_mechanismName.SelectedItem as Mechanisms;
+            if (selectedMechanism == null)
+            {
+                MessageBox.Show("Выберите механизм!");
+                return;
+            }
+            using (var context = new ApplicationContext())
+            {
+                using (var transaction = await context.Database.BeginTransactionAsync())
+                {
+                    try
+                    {
+
+                        await context.SaveChangesAsync(); // Получаем ID серии
+
+                        foreach (var item in reactionInputsPanel.Children)
+                        {
+                            if (item is Grid grid)
+                            {
+                                var formNameBlock = grid.Children.OfType<TextBlock>()
+                                    .FirstOrDefault(tb => tb.FontStyle == FontStyles.Italic);
+                                var valueBox = grid.Children.OfType<TextBox>().FirstOrDefault();
+
+                                if (formNameBlock != null && valueBox != null &&
+                                    double.TryParse(valueBox.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+                                {
+                                    // Сохраняем константу
+                                    var constant = new ConcentrationConstant
+                                    {
+                                        FormName = formNameBlock.Text,
+                                        Value = value
+                                    };
+                                    context.ConcentrationConstants.Add(constant);
+                                    await context.SaveChangesAsync(); // Получаем ID константы
+
+                                    // Связываем с серией
+                                    var newSeries = new ConstantsSeries
+                                    {
+                                        ID_Const = constant.ID,
+                                        ID_Mechanism = selectedMechanism.ID
+                                    };
+                                    context.ConstantsSeries.Add(newSeries);
+                                    await context.SaveChangesAsync();
+                                }
+                            }
+                        }
+
+                        await transaction.CommitAsync();
+                        MessageBox.Show("Константы успешно сохранены!");
+                    }
+                    catch (Exception ex)
+                    {
+                        await transaction.RollbackAsync();
+                        MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+                    }
+                }
+
+            }
+            var concentrations = await GetConcentrationSumsPerPoint();
+            var test ="";
+            foreach (var item in concentrations)
+            {
+                 test += ($"Точка {item.PointId}, " + $"Форма: {item.FormName}, " + $"Общая концентрация: {item.TotalConcentration:F4}\n");
+            }
+            tb_result.Text = test;
 
         }
+        public async Task<List<ConcentrationSummary>> GetConcentrationSumsPerPoint()
+        {
+            using (var context = new ApplicationContext())
+            {
+                var query = context.ExperimentalPoints
+                    .Join(context.InputConcentrations,
+                        ep => ep.ID_InputConcentration,
+                        ic => ic.ID,
+                        (ep, ic) => new {
+                            ep.ID_Point,
+                            ic.BaseForm,
+                            ic.Value
+                        })
+                    .GroupBy(x => new { x.ID_Point, x.BaseForm })
+                    .Select(g => new ConcentrationSummary
+                    {
+                        PointId = g.Key.ID_Point,
+                        FormName = g.Key.BaseForm,
+                        TotalConcentration = g.Sum(x => x.Value)
+                    });
+
+                return await query.ToListAsync();
+            }
+        }
+
+        // Вспомогательный класс для результатов
+        public class ConcentrationSummary
+        {
+            public int PointId { get; set; }
+            public string? FormName { get; set; }
+            public double TotalConcentration { get; set; }
+        }
     }
- 
+
 }
+
+
+public class EquilibriumSolver
+{
+    private readonly List<ChemicalReaction> _reactions;
+    private readonly Dictionary<string, double> _initialConcentrations;
+    private readonly Dictionary<string, int> _componentIndexes;
+    private double[,] _stoichiometricMatrix;
+
+    public EquilibriumSolver(List<ChemicalReaction> reactions, Dictionary<string, double> initialConcentrations)
+    {
+        _reactions = reactions;
+        _initialConcentrations = initialConcentrations;
+        _componentIndexes = initialConcentrations.Keys
+            .Select((k, i) => (k, i))
+            .ToDictionary(x => x.k, x => x.i);
+        BuildMatrix();
+    }
+
+    private void BuildMatrix()
+    {
+        int n = _componentIndexes.Count;
+        int m = n + _reactions.Count;
+        _stoichiometricMatrix = new double[n, m];
+
+        // Заполнение матрицы стехиометрии
+        for (int r = 0; r < _reactions.Count; r++)
+        {
+            foreach (var reactant in _reactions[r].Reactants)
+            {
+                var key = $"{reactant.Key}_aq";
+                if (_componentIndexes.TryGetValue(key, out int idx))
+                    _stoichiometricMatrix[idx, n + r] -= reactant.Value;
+            }
+
+            foreach (var product in _reactions[r].Products)
+            {
+                var key = $"{product.Key}_org";
+                if (_componentIndexes.TryGetValue(key, out int idx))
+                    _stoichiometricMatrix[idx, n + r] += product.Value;
+            }
+        }
+    }
+
+    public EquilibriumSolution Solve(double tolerance = 1e-6, int maxIterations = 1000)
+    {
+        var solution = new EquilibriumSolution();
+        int n = _componentIndexes.Count;
+        int m = n + _reactions.Count;
+
+        double[] concentrations = new double[m];
+        foreach (var (key, idx) in _componentIndexes)
+            concentrations[idx] = _initialConcentrations[key];
+
+        for (int iter = 0; iter < maxIterations; iter++)
+        {
+            var residuals = CalculateResiduals(concentrations);
+            var jacobian = CalculateJacobian(concentrations);
+
+            if (!SolveLinearSystem(jacobian, residuals, out double[] delta))
+                break;
+
+            double maxError = UpdateConcentrations(concentrations, delta);
+
+            if (maxError < tolerance)
+            {
+                solution.Iterations = iter + 1;
+                solution.Error = maxError;
+                break;
+            }
+        }
+
+        foreach (var (key, idx) in _componentIndexes)
+            solution.Concentrations[key] = concentrations[idx];
+
+        return solution;
+    }
+
+    private double[] CalculateResiduals(double[] c)
+    {
+        double[] residuals = new double[c.Length];
+
+        // Уравнения баланса
+        for (int i = 0; i < _componentIndexes.Count; i++)
+        {
+            residuals[i] = -_initialConcentrations.Values.ElementAt(i);
+            for (int j = 0; j < c.Length; j++)
+                residuals[i] += _stoichiometricMatrix[i, j] * c[j];
+        }
+
+        // Уравнения равновесия
+        for (int r = 0; r < _reactions.Count; r++)
+        {
+            double lhs = 1.0;
+            foreach (var reactant in _reactions[r].Reactants)
+                lhs *= Math.Pow(c[_componentIndexes[$"{reactant.Key}_aq"]], reactant.Value);
+
+            double rhs = _reactions[r].EquilibriumConstant;
+            foreach (var product in _reactions[r].Products)
+                rhs *= Math.Pow(c[_componentIndexes[$"{product.Key}_org"]], product.Value);
+
+            residuals[_componentIndexes.Count + r] = rhs - lhs;
+        }
+
+        return residuals;
+    }
+
+    private double[,] CalculateJacobian(double[] c)
+    {
+        int size = c.Length;
+        double[,] J = new double[size, size];
+        double[] F0 = CalculateResiduals(c);
+
+        // Численное дифференцирование для устойчивости
+        double epsilon = 1e-8;
+        for (int j = 0; j < size; j++)
+        {
+            double[] cPlus = (double[])c.Clone();
+            cPlus[j] += epsilon;
+
+            double[] FPlus = CalculateResiduals(cPlus);
+
+            for (int i = 0; i < size; i++)
+                J[i, j] = (FPlus[i] - F0[i]) / epsilon;
+        }
+
+        return J;
+    }
+
+    private bool SolveLinearSystem(double[,] A, double[] b, out double[] x)
+    {
+        int n = b.Length;
+        x = new double[n];
+
+        // Метод Гаусса с выбором ведущего элемента
+        try
+        {
+            // Прямой ход
+            for (int i = 0; i < n; i++)
+            {
+                // Выбор ведущего элемента
+                int maxRow = i;
+                for (int k = i + 1; k < n; k++)
+                    if (Math.Abs(A[k, i]) > Math.Abs(A[maxRow, i]))
+                        maxRow = k;
+
+                // Перестановка строк
+                if (maxRow != i)
+                {
+                    for (int k = i; k < n; k++)
+                        (A[i, k], A[maxRow, k]) = (A[maxRow, k], A[i, k]);
+
+                    (b[i], b[maxRow]) = (b[maxRow], b[i]);
+                }
+
+                // Нормализация
+                double div = A[i, i];
+                if (Math.Abs(div) < 1e-12)
+                    return false;
+
+                for (int j = i; j < n; j++)
+                    A[i, j] /= div;
+
+                b[i] /= div;
+
+                // Обнуление нижних элементов
+                for (int k = i + 1; k < n; k++)
+                {
+                    double factor = A[k, i];
+                    for (int j = i; j < n; j++)
+                        A[k, j] -= factor * A[i, j];
+
+                    b[k] -= factor * b[i];
+                }
+            }
+
+            // Обратный ход
+            for (int i = n - 1; i >= 0; i--)
+            {
+                x[i] = b[i];
+                for (int j = i + 1; j < n; j++)
+                    x[i] -= A[i, j] * x[j];
+            }
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private double UpdateConcentrations(double[] concentrations, double[] delta)
+    {
+        double maxChange = 0;
+        for (int i = 0; i < concentrations.Length; i++)
+        {
+            // Применяем ограничение: концентрации не могут быть отрицательными
+            double newValue = concentrations[i] + delta[i];
+            if (newValue < 0)
+                newValue = 0;
+
+            double change = Math.Abs(newValue - concentrations[i]);
+            if (change > maxChange)
+                maxChange = change;
+
+            concentrations[i] = newValue;
+        }
+        return maxChange;
+    }
+}    
+

@@ -45,6 +45,14 @@ namespace CompModeling
         public double Value { get; set; }
     }
 
+    public class ConstantsSeries
+    {
+        [Key]
+        public int ID { get; set; }
+        public int ID_Const { get; set; }
+        public int ID_Mechanism { get; set; }
+    }
+
     public class Mechanisms
     {
         [Key]

@@ -60,6 +60,10 @@
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "alglib.net": {
+              "target": "Package",
+              "version": "[3.19.0, )"
             }
           },
           "imports": [

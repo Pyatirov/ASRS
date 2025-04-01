@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net8.0-windows7.0": {
+      "alglib.net/3.19.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/alglib.net.dll": {}
+        },
+        "runtime": {
+          "lib/net7.0/alglib.net.dll": {}
+        }
+      },
       "EntityFramework/6.5.1": {
         "type": "package",
         "dependencies": {
@@ -889,6 +898,28 @@
     }
   },
   "libraries": {
+    "alglib.net/3.19.0": {
+      "sha512": "qWYQYLOvkw+EcciexaCcfBoekxV+YMaOfjJC9luIA7HJVntUvj4YTwJfWdPXJRVvnacAIkV0c94t61G771voqA==",
+      "type": "package",
+      "path": "alglib.net/3.19.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "alglib.net.3.19.0.nupkg.sha512",
+        "alglib.net.nuspec",
+        "icon.png",
+        "lib/net45/alglib.net.dll",
+        "lib/net47/alglib.net.dll",
+        "lib/net48/alglib.net.dll",
+        "lib/net5.0/alglib.net.dll",
+        "lib/net6.0/alglib.net.dll",
+        "lib/net7.0/alglib.net.dll",
+        "lib/netstandard2.0/alglib.net.dll",
+        "lib/netstandard2.1/alglib.net.dll",
+        "license.txt"
+      ]
+    },
     "EntityFramework/6.5.1": {
       "sha512": "sQRP2lWg1i3aAGWqdliAM8zrGx7LHMUk+9/MoxUjwfTZYGMXvZ2JYZTlyTm1PqDxvn3c9E3U76TWDON7Y5+CVA==",
       "type": "package",
@@ -2350,7 +2381,8 @@
       "EntityFramework >= 6.5.1",
       "MathNet.Numerics >= 5.0.0",
       "Microsoft.EntityFrameworkCore >= 9.0.2",
-      "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.2"
+      "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.2",
+      "alglib.net >= 3.19.0"
     ]
   },
   "packageFolders": {
@@ -2412,6 +2444,10 @@
           "Microsoft.EntityFrameworkCore.Sqlite": {
             "target": "Package",
             "version": "[9.0.2, )"
+          },
+          "alglib.net": {
+            "target": "Package",
+            "version": "[3.19.0, )"
           }
         },
         "imports": [
