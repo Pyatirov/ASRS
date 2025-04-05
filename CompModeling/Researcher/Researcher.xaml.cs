@@ -504,6 +504,34 @@ namespace CompModeling
 
                 List<List<int>> ComponentMatrix = new List<List<int>>();
 
+                for (int i = 0; i < reactions.Count; i++)
+                {
+                    ComponentMatrix.Add(new List<int>());
+                    for (int j = 0; j < baseForms.Count; j++)
+                    {
+                        if (reactions[i].Inp1 == baseForms[j].Name)
+                        {
+                            ComponentMatrix[i].Add(reactions[i].KInp1!.Value);
+                            continue;
+                        }
+                        else if (reactions[i].Inp2 == baseForms[j].Name)
+                        {
+                            ComponentMatrix[i].Add(reactions[i].KInp2!.Value);
+                            continue;
+                        }
+                        else if (reactions[i].Inp3 == baseForms[j].Name)
+                        {
+                            ComponentMatrix[i].Add(reactions[i].KInp3!.Value);
+                            continue;
+                        }
+                        else
+                        {
+                            ComponentMatrix[i].Add(0);
+                        }
+                    }
+                }
+
+
 
 
                 using (var transaction = await context.Database.BeginTransactionAsync())
