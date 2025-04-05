@@ -1,20 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using static CompModeling.ConnectToDB;
-using static System.Collections.Specialized.BitVector32;
 
 namespace CompModeling
 {
@@ -23,14 +9,14 @@ namespace CompModeling
     /// </summary>
     public partial class AddReactionWindow : Window
     {
-        //public event Action? ReactionAdded;
-        public ObservableCollection<Reaction>? allReactions { get; private set; }   
+        public static event Action? ReactionAdded;
+
         public AddReactionWindow()
         {
             InitializeComponent();
         }
 
-        private async void BtnSave_Click(object sender, RoutedEventArgs e) //Динамическое обновление DataGrid
+        private async void bt_Save_Reaction_Click(object sender, RoutedEventArgs e) //Динамическое обновление DataGrid
         {
             using (var context = new ApplicationContext())
             {
@@ -62,6 +48,7 @@ namespace CompModeling
                 await transaction.CommitAsync();
 
                 MessageBox.Show("Реакция успешно сохранена!");
+                ReactionAdded?.Invoke();
             }
         }
 
