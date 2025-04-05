@@ -30,7 +30,7 @@ namespace CompModeling
             InitializeComponent();
         }
 
-        private async void BtnSave_Click(object sender, RoutedEventArgs e)
+        private async void BtnSave_Click(object sender, RoutedEventArgs e) //Динамическое обновление DataGrid
         {
             using (var context = new ApplicationContext())
             {
@@ -55,9 +55,6 @@ namespace CompModeling
                     KInp2 = int.Parse(txtKInp2.Text),
                     KInp3 = int.Parse(txtKInp3.Text),
                     KProd = int.Parse(txtKProd.Text),
-                    Ind1 = int.Parse(txtInd1.Text),
-                    Ind2 = int.Parse(txtInd2.Text),
-                    Ind3 = int.Parse(txtInd3.Text)
                 };
 
                 context.Reactions.Add(newReaction);

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\Projects\comp_modeling\CompModeling\obj\Debug\net8.0-windows\
+D:\Projects\cm\CompModeling\obj\Debug\net8.0-windows\
 CompModeling
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-D:\Projects\comp_modeling\CompModeling\App.xaml
+D:\Projects\cm\CompModeling\App.xaml
 5-143814425
 
-121321710395
-223-1811824841
+111460326402
+223951064356
 MainWindow\MainWindow.xaml;Researcher\AddMechanism.xaml;Researcher\AddReactionWindow.xaml;Researcher\Researcher.xaml;Specialist\Specialist.xaml;
 
 False

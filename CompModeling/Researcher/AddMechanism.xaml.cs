@@ -159,13 +159,10 @@ namespace CompModeling
         public bool ShowPlus2 => HasReagent2 && HasReagent3;
 
         public string? KInp1Display => Reaction.KInp1 != 1 ? Reaction.KInp1.ToString() : "";
-        public string? Ind1Display => Reaction.Ind1 != 1 ? Reaction.Ind1.ToString() : "";
 
         public string? KInp2Display => Reaction.KInp2 != 1 ? Reaction.KInp2?.ToString() : "";
-        public string? Ind2Display => Reaction.Ind2 != 1 ? Reaction.Ind2?.ToString() : "";
 
         public string? KInp3Display => Reaction.KInp3 != 1 ? Reaction.KInp3?.ToString() : "";
-        public string? Ind3Display => Reaction.Ind3 != 1 ? Reaction.Ind3?.ToString() : "";
 
         public string? KProdDisplay => Reaction.KProd != 1 ? Reaction.KProd.ToString() : "";
 

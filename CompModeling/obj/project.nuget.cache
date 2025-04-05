@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ejIsGh0l5kQ=",
+  "dgSpecHash": "SS2t3c0Aj40=",
   "success": true,
-  "projectFilePath": "D:\\Projects\\comp_modeling\\CompModeling\\CompModeling.csproj",
+  "projectFilePath": "D:\\Projects\\ASRS\\CompModeling\\CompModeling.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\denis\\.nuget\\packages\\alglib.net\\3.19.0\\alglib.net.3.19.0.nupkg.sha512",
     "C:\\Users\\denis\\.nuget\\packages\\entityframework\\6.5.1\\entityframework.6.5.1.nupkg.sha512",

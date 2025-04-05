@@ -75,9 +75,6 @@ namespace CompModeling
         public int? KInp2 { get; set; }
         public int? KInp3 { get; set; }
         public int? KProd { get; set; }
-        public int? Ind1 { get; set; }
-        public int? Ind2 { get; set; }
-        public int? Ind3 { get; set; }
     }
     public class ReactionMechanism
     {
