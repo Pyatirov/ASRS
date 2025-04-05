@@ -21,7 +21,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Механизм реакции" Margin="10,5"/>
+                    <TextBlock Grid.Row="0" Text="Модель реакции" Margin="10,5"/>
                     <ComboBox x:Name="cb_Mechanisms_Experiment" Grid.Row="1" Margin="10,0, 0, 10" Width="252" Height="25" DisplayMemberPath="Info" HorizontalAlignment="Left" SelectionChanged="cb_Mechanisms_Experiment_SelectionChanged"/>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -64,7 +64,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Выберите механизм:" Margin="10,5"/>
+                    <TextBlock Grid.Row="0" Text="Выберите модель реакции:" Margin="10,5"/>
                     <ComboBox x:Name="cb_Mechanisms_Points" Grid.Row="1" Margin="10,0,0,10" VerticalAlignment="Center" DisplayMemberPath="Info" SelectionChanged="cb_Mechanisms_Points_SelectionChanged" HorizontalAlignment="Left" Height="25" Width="252"/>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">

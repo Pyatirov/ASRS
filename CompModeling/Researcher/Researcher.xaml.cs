@@ -137,7 +137,7 @@ namespace CompModeling
         /// </summary>
         private void bt_Add_Experimental_Point_Click(object sender, RoutedEventArgs e)
         {
-            Add_Experimental_Point();
+            Add_Experimental_Points();
         }
 
         private async void bt_Calculate_Click(object sender, RoutedEventArgs e)
@@ -546,7 +546,7 @@ namespace CompModeling
             pointInputsPanel.Children.Clear();
         }
 
-        private async void Add_Experimental_Point()
+        private async void Add_Experimental_Points()
         {
             using (var context = new ApplicationContext())
             {
