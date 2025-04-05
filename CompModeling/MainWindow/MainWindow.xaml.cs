@@ -12,14 +12,14 @@ namespace CompModeling
             InitializeComponent();
         }
 
-        private void researcherInterfaceButton_Click(object sender, RoutedEventArgs e)
+        private void bt_Researcher_Interface_Click(object sender, RoutedEventArgs e)
         {
             ResearcherInterface newWindow = new ResearcherInterface();
 
             newWindow.Show();
         }
 
-        private void specialistInterfaceButton_Click(object sender, RoutedEventArgs e)
+        private void bt_Specialist_Interface_Click(object sender, RoutedEventArgs e)
         {
             SpecialistInterface newWindow = new SpecialistInterface();
 
