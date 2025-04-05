@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompModeling"
         mc:Ignorable="d"
-        Title="Исследователь" Height="700" Width="700" ResizeMode="NoResize" Closed="Reseacher_Closed">
+        Title="Исследователь" Height="700" Width="450" ResizeMode="NoResize" Closed="Reseacher_Closed">
         <Window.Resources>
             <local:RowToVisibilityConverter x:Key="RowToVisibilityConverter"/>
         </Window.Resources>
@@ -25,7 +25,7 @@
                     <ComboBox x:Name="cb_Mechanisms_Experiment" Grid.Row="1" Margin="10,0, 0, 10" Width="252" Height="25" DisplayMemberPath="Info" HorizontalAlignment="Left" SelectionChanged="cb_Mechanisms_Experiment_SelectionChanged"/>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                        <UniformGrid x:Name="reactionInputsPanel" Columns="1" Margin="10" VerticalAlignment="Top"/>
+                        <UniformGrid x:Name="reactionInputsPanel" Columns="1" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     </ScrollViewer>
 
                     <Button Click="bt_Calculate_Click" Grid.Row="3" Content="Расчет" Margin="10,10" Height="40" Width="200"/>
@@ -68,7 +68,7 @@
                     <ComboBox x:Name="cb_Mechanisms_Points" Grid.Row="1" Margin="10,0,0,10" VerticalAlignment="Center" DisplayMemberPath="Info" SelectionChanged="cb_Mechanisms_Points_SelectionChanged" HorizontalAlignment="Left" Height="25" Width="252"/>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                        <StackPanel x:Name="pointInputsPanel" Margin="10" VerticalAlignment="Top"/>
+                        <StackPanel x:Name="pointInputsPanel" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     </ScrollViewer>
 
                     <Button Grid.Row="3" Content="Добавить точку" Margin="10,10" Height="40" Width="200" Click="bt_Add_Experimental_Point_Click"/>
