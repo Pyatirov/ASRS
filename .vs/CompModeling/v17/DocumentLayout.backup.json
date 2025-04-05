@@ -1,38 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Projects\\cm\\",
+  "WorkspaceRootPath": "D:\\Projects\\ASRS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\researcher\\researcher.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\researcher.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\researcher.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\researcher\\researcher.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\researcher.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\researcher.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\nonlinearsystemsolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\nonlinearsystemsolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\calculationresults.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\calculationresults.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\researcher\\addreactionwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\addreactionwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\researcher\\addreactionwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\addreactionwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\database\\dbtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\database\\dbtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\database\\dbtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\researcher\\addmechanism.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\calculationresults.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\calculationresults.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\addmechanism.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\addmechanism.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\cm\\compmodeling\\database\\connecttodb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\database\\connecttodb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\addmechanism.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\addmechanism.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\addreactionwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\addreactionwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|d:\\projects\\asrs\\compmodeling\\researcher\\addreactionwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D887B010-E781-476B-AB59-43BBE883F74F}|CompModeling\\CompModeling.csproj|solutionrelative:compmodeling\\researcher\\addreactionwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,103 +46,124 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Researcher.xaml.cs",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\Researcher\\Researcher.xaml.cs",
-              "RelativeDocumentMoniker": "CompModeling\\Researcher\\Researcher.xaml.cs",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\Researcher\\Researcher.xaml.cs",
-              "RelativeToolTip": "CompModeling\\Researcher\\Researcher.xaml.cs",
-              "ViewState": "AgIAAEMEAAAAAAAAAAAmwFcEAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T13:24:08.461Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AddReactionWindow.xaml",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\Researcher\\AddReactionWindow.xaml",
-              "RelativeDocumentMoniker": "CompModeling\\Researcher\\AddReactionWindow.xaml",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\Researcher\\AddReactionWindow.xaml",
-              "RelativeToolTip": "CompModeling\\Researcher\\AddReactionWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-03T11:11:17.083Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DBTables.cs",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\Database\\DBTables.cs",
-              "RelativeDocumentMoniker": "CompModeling\\Database\\DBTables.cs",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\Database\\DBTables.cs",
-              "RelativeToolTip": "CompModeling\\Database\\DBTables.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAIwEwAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T14:34:45.969Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "NonLinearSystemSolver.cs",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\NonLinearSystemSolver.cs",
-              "RelativeDocumentMoniker": "CompModeling\\NonLinearSystemSolver.cs",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\NonLinearSystemSolver.cs",
-              "RelativeToolTip": "CompModeling\\NonLinearSystemSolver.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAAYAAAAAAAAAA==",
+              "Title": "CalculationResults.xaml.cs",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\CalculationResults.xaml.cs",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\CalculationResults.xaml.cs",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\CalculationResults.xaml.cs",
+              "RelativeToolTip": "CompModeling\\Researcher\\CalculationResults.xaml.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwB4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T18:39:43.018Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AddMechanism.xaml.cs",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\Researcher\\AddMechanism.xaml.cs",
-              "RelativeDocumentMoniker": "CompModeling\\Researcher\\AddMechanism.xaml.cs",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\Researcher\\AddMechanism.xaml.cs",
-              "RelativeToolTip": "CompModeling\\Researcher\\AddMechanism.xaml.cs",
-              "ViewState": "AgIAAIYAAAAAAAAAAAAWwKQAAABdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T11:26:04.764Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Researcher.xaml",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\Researcher\\Researcher.xaml",
-              "RelativeDocumentMoniker": "CompModeling\\Researcher\\Researcher.xaml",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\Researcher\\Researcher.xaml",
-              "RelativeToolTip": "CompModeling\\Researcher\\Researcher.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-01T13:55:02.033Z",
+              "WhenOpened": "2025-04-05T18:31:54.035Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AddReactionWindow.xaml.cs",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
-              "RelativeDocumentMoniker": "CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
-              "RelativeToolTip": "CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAgwEUAAABNAAAAAAAAAA==",
+              "Title": "CalculationResults.xaml",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\CalculationResults.xaml",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\CalculationResults.xaml",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\CalculationResults.xaml",
+              "RelativeToolTip": "CompModeling\\Researcher\\CalculationResults.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-05T18:32:08.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Researcher.xaml",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\Researcher.xaml",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\Researcher.xaml",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\Researcher.xaml",
+              "RelativeToolTip": "CompModeling\\Researcher\\Researcher.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-05T13:55:16.369Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Researcher.xaml.cs",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\Researcher.xaml.cs",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\Researcher.xaml.cs",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\Researcher.xaml.cs",
+              "RelativeToolTip": "CompModeling\\Researcher\\Researcher.xaml.cs",
+              "ViewState": "AgIAAPoBAAAAAAAAAAAuwAUCAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T11:11:20.714Z"
+              "WhenOpened": "2025-04-05T13:55:58.011Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DBTables.cs",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Database\\DBTables.cs",
+              "RelativeDocumentMoniker": "CompModeling\\Database\\DBTables.cs",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Database\\DBTables.cs",
+              "RelativeToolTip": "CompModeling\\Database\\DBTables.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAA8wEEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T15:58:28.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AddMechanism.xaml.cs",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddMechanism.xaml.cs",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\AddMechanism.xaml.cs",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddMechanism.xaml.cs",
+              "RelativeToolTip": "CompModeling\\Researcher\\AddMechanism.xaml.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAAwJUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T13:40:33.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AddMechanism.xaml",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddMechanism.xaml",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\AddMechanism.xaml",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddMechanism.xaml",
+              "RelativeToolTip": "CompModeling\\Researcher\\AddMechanism.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-05T13:37:38.7Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "ConnectToDB.cs",
-              "DocumentMoniker": "D:\\Projects\\cm\\CompModeling\\Database\\ConnectToDB.cs",
-              "RelativeDocumentMoniker": "CompModeling\\Database\\ConnectToDB.cs",
-              "ToolTip": "D:\\Projects\\cm\\CompModeling\\Database\\ConnectToDB.cs",
-              "RelativeToolTip": "CompModeling\\Database\\ConnectToDB.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAjwA4AAAAeAAAAAAAAAA==",
+              "Title": "AddReactionWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
+              "RelativeToolTip": "CompModeling\\Researcher\\AddReactionWindow.xaml.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAADIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T14:42:09.589Z"
+              "WhenOpened": "2025-04-05T13:34:35.12Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AddReactionWindow.xaml",
+              "DocumentMoniker": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddReactionWindow.xaml",
+              "RelativeDocumentMoniker": "CompModeling\\Researcher\\AddReactionWindow.xaml",
+              "ToolTip": "D:\\Projects\\ASRS\\CompModeling\\Researcher\\AddReactionWindow.xaml",
+              "RelativeToolTip": "CompModeling\\Researcher\\AddReactionWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-05T13:05:08.346Z",
+              "EditorCaption": ""
             }
           ]
         }

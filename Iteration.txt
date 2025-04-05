@@ -1,0 +1,293 @@
+private void IteratonMethod(List<double> lgs)
+{
+    var K = lgs;
+    List<double> b = [0.7298, 2.1994, 0.01, 3.661, Math.Pow(10, -6)];
+    // Параметры решения
+    int maxIterations = 5000;
+    double epsilon = 0.01;
+    //double[] XStart = new double[5] { 0.0233653054, 1.0715750606, 0.0023444158941, 1.6068767489, 0.00000099887410312 } ;
+    double[] XStart = [0.0233, 1.0715, 0.00234, 1.6068, 0.00000099887410];
+    double[] XNew = new double[5];
+    int iteration = 0;
+    double diff;
+    // Начальное приближение
+    //b.CopyTo(XStart, 0);
+
+    do
+    {
+        // Вычисление новых значений
+        XNew[0] = b[0] / (1 +
+            K[7] * XStart[1] +
+            K[12] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 3) +
+            K[13] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 4));
+
+        XNew[1] = b[1] / (1 +
+            K[5] * XStart[2] +
+            K[6] * XStart[4] +
+            K[7] * XStart[0] +
+            K[8] * Math.Pow(XStart[3], 2) * XStart[4] +
+            3 * (K[9] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[2], 3) * XStart[3]) +
+            K[10] * XStart[2] * XStart[3] +
+            2 * (K[11] * XStart[1] * Math.Pow(XStart[2], 2) * XStart[3]) +
+            3 * (K[12] * XStart[0] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[3], 3)) +
+            3 * (K[13] * XStart[0] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[3], 4)));
+
+        XNew[2] = b[2] / (1 +
+            K[5] * XStart[1] +
+            K[9] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[2], 2) * XStart[3] +
+            K[10] * XStart[1] * XStart[3] +
+            2 * (K[11] * Math.Pow(XStart[1], 2) * XStart[2] * XStart[3]));
+
+        XNew[3] = b[3] / (1 +
+            2 * (K[8] * XStart[1] * XStart[3] * XStart[4]) +
+            K[9] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[2], 3) +
+            K[10] * XStart[1] * XStart[2] +
+            K[11] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[2], 2) +
+            3 * (K[12] * XStart[0] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 2)) +
+            4 * (K[13] * XStart[0] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 3)) +
+            2 * (K[14] * XStart[3]));
+
+        XNew[4] = b[4] / (1 +
+            K[6] * XStart[1] +
+            K[8] * XStart[1] * Math.Pow(XStart[3], 2));
+
+        // Вычисление максимального изменения
+        diff = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            double currentDiff = Math.Abs(XNew[i] - XStart[i]);
+            if (currentDiff > diff) diff = currentDiff;
+            XStart[i] = XNew[i]; // Обновление значений для следующей итерации
+        }
+
+        iteration++;
+    }
+    while (diff > epsilon && iteration < maxIterations);
+
+    // Вывод результатов
+    string result = "Итераций выполнено: ";
+    result += iteration;
+    result += "\nРезультаты:";
+    for (int i = 0; i < 5; i++)
+    {
+        result += $"\nx{i + 1} = {XNew[i]:E4}";
+    }
+    //tb_result.Text = result;
+    Console.WriteLine($"Итераций выполнено: {iteration}");
+    Console.WriteLine("Результаты:");
+    for (int i = 0; i < 5; i++)
+    {
+        Console.WriteLine($"x{i + 1} = {XNew[i]:E4}");
+    }
+
+}
+
+//public class EquilibriumSolver
+//{
+//    private readonly List<ChemicalReaction> _reactions;
+//    private readonly Dictionary<string, double> _initialConcentrations;
+//    private readonly Dictionary<string, int> _componentIndexes;
+//    private double[,] _stoichiometricMatrix;
+
+//    public EquilibriumSolver(List<ChemicalReaction> reactions, Dictionary<string, double> initialConcentrations)
+//    {
+//        _reactions = reactions;
+//        _initialConcentrations = initialConcentrations;
+//        _componentIndexes = initialConcentrations.Keys
+//            .Select((k, i) => (k, i))
+//            .ToDictionary(x => x.k, x => x.i);
+//        BuildMatrix();
+//    }
+
+//    private void BuildMatrix()
+//    {
+//        int n = _componentIndexes.Count;
+//        int m = n + _reactions.Count;
+//        _stoichiometricMatrix = new double[n, m];
+
+//        // Заполнение матрицы стехиометрии
+//        for (int r = 0; r < _reactions.Count; r++)
+//        {
+//            foreach (var reactant in _reactions[r].Reactants)
+//            {
+//                var key = $"{reactant.Key}_aq";
+//                if (_componentIndexes.TryGetValue(key, out int idx))
+//                    _stoichiometricMatrix[idx, n + r] -= reactant.Value;
+//            }
+
+//            foreach (var product in _reactions[r].Products)
+//            {
+//                var key = $"{product.Key}_org";
+//                if (_componentIndexes.TryGetValue(key, out int idx))
+//                    _stoichiometricMatrix[idx, n + r] += product.Value;
+//            }
+//        }
+//    }
+
+//    public EquilibriumSolution Solve(double tolerance = 1e-6, int maxIterations = 1000)
+//    {
+//        var solution = new EquilibriumSolution();
+//        int n = _componentIndexes.Count;
+//        int m = n + _reactions.Count;
+
+//        double[] concentrations = new double[m];
+//        foreach (var (key, idx) in _componentIndexes)
+//            concentrations[idx] = _initialConcentrations[key];
+
+//        for (int iter = 0; iter < maxIterations; iter++)
+//        {
+//            var residuals = CalculateResiduals(concentrations);
+//            var jacobian = CalculateJacobian(concentrations);
+
+//            if (!SolveLinearSystem(jacobian, residuals, out double[] delta))
+//                break;
+
+//            double maxError = UpdateConcentrations(concentrations, delta);
+
+//            if (maxError < tolerance)
+//            {
+//                solution.Iterations = iter + 1;
+//                solution.Error = maxError;
+//                break;
+//            }
+//        }
+
+//        foreach (var (key, idx) in _componentIndexes)
+//            solution.Concentrations[key] = concentrations[idx];
+
+//        return solution;
+//    }
+
+//    private double[] CalculateResiduals(double[] c)
+//    {
+//        double[] residuals = new double[c.Length];
+
+//        // Уравнения баланса
+//        for (int i = 0; i < _componentIndexes.Count; i++)
+//        {
+//            residuals[i] = -_initialConcentrations.Values.ElementAt(i);
+//            for (int j = 0; j < c.Length; j++)
+//                residuals[i] += _stoichiometricMatrix[i, j] * c[j];
+//        }
+
+//        // Уравнения равновесия
+//        for (int r = 0; r < _reactions.Count; r++)
+//        {
+//            double lhs = 1.0;
+//            foreach (var reactant in _reactions[r].Reactants)
+//                lhs *= Math.Pow(c[_componentIndexes[$"{reactant.Key}_aq"]], reactant.Value);
+
+//            double rhs = _reactions[r].EquilibriumConstant;
+//            foreach (var product in _reactions[r].Products)
+//                rhs *= Math.Pow(c[_componentIndexes[$"{product.Key}_org"]], product.Value);
+
+//            residuals[_componentIndexes.Count + r] = rhs - lhs;
+//        }
+
+//        return residuals;
+//    }
+
+//    private double[,] CalculateJacobian(double[] c)
+//    {
+//        int size = c.Length;
+//        double[,] J = new double[size, size];
+//        double[] F0 = CalculateResiduals(c);
+
+//        // Численное дифференцирование для устойчивости
+//        double epsilon = 1e-8;
+//        for (int j = 0; j < size; j++)
+//        {
+//            double[] cPlus = (double[])c.Clone();
+//            cPlus[j] += epsilon;
+
+//            double[] FPlus = CalculateResiduals(cPlus);
+
+//            for (int i = 0; i < size; i++)
+//                J[i, j] = (FPlus[i] - F0[i]) / epsilon;
+//        }
+
+//        return J;
+//    }
+
+//    private bool SolveLinearSystem(double[,] A, double[] b, out double[] x)
+//    {
+//        int n = b.Length;
+//        x = new double[n];
+
+//        // Метод Гаусса с выбором ведущего элемента
+//        try
+//        {
+//            // Прямой ход
+//            for (int i = 0; i < n; i++)
+//            {
+//                // Выбор ведущего элемента
+//                int maxRow = i;
+//                for (int k = i + 1; k < n; k++)
+//                    if (Math.Abs(A[k, i]) > Math.Abs(A[maxRow, i]))
+//                        maxRow = k;
+
+//                // Перестановка строк
+//                if (maxRow != i)
+//                {
+//                    for (int k = i; k < n; k++)
+//                        (A[i, k], A[maxRow, k]) = (A[maxRow, k], A[i, k]);
+
+//                    (b[i], b[maxRow]) = (b[maxRow], b[i]);
+//                }
+
+//                // Нормализация
+//                double div = A[i, i];
+//                if (Math.Abs(div) < 1e-12)
+//                    return false;
+
+//                for (int j = i; j < n; j++)
+//                    A[i, j] /= div;
+
+//                b[i] /= div;
+
+//                // Обнуление нижних элементов
+//                for (int k = i + 1; k < n; k++)
+//                {
+//                    double factor = A[k, i];
+//                    for (int j = i; j < n; j++)
+//                        A[k, j] -= factor * A[i, j];
+
+//                    b[k] -= factor * b[i];
+//                }
+//            }
+
+//            // Обратный ход
+//            for (int i = n - 1; i >= 0; i--)
+//            {
+//                x[i] = b[i];
+//                for (int j = i + 1; j < n; j++)
+//                    x[i] -= A[i, j] * x[j];
+//            }
+
+//            return true;
+//        }
+//        catch
+//        {
+//            return false;
+//        }
+//    }
+
+//    private double UpdateConcentrations(double[] concentrations, double[] delta)
+//    {
+//        double maxChange = 0;
+//        for (int i = 0; i < concentrations.Length; i++)
+//        {
+//            // Применяем ограничение: концентрации не могут быть отрицательными
+//            double newValue = concentrations[i] + delta[i];
+//            if (newValue < 0)
+//                newValue = 0;
+
+//            double change = Math.Abs(newValue - concentrations[i]);
+//            if (change > maxChange)
+//                maxChange = change;
+
+//            concentrations[i] = newValue;
+//        }
+//        return maxChange;
+//    }
+//}    

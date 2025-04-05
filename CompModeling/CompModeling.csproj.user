@@ -3,6 +3,9 @@
   <PropertyGroup />
   <ItemGroup />
   <ItemGroup>
+    <Compile Update="Researcher\CalculationResults.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Researcher\AddMechanism.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -17,6 +20,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Researcher\CalculationResults.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Researcher\AddMechanism.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Projects\ASRS\CompModeling\App.xaml
-5-143814425
+6-488879301
 
-13382427887
-223951064356
-MainWindow\MainWindow.xaml;Researcher\AddMechanism.xaml;Researcher\AddReactionWindow.xaml;Researcher\Researcher.xaml;Specialist\Specialist.xaml;
+141463415035
+223-1811824841
+MainWindow\MainWindow.xaml;Researcher\AddMechanism.xaml;Researcher\AddReactionWindow.xaml;Researcher\CalculationResults.xaml;Researcher\Researcher.xaml;Specialist\Specialist.xaml;
 
 False
 
