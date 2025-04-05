@@ -9,7 +9,9 @@ using static CompModeling.ConnectToDB;
 
 namespace CompModeling
 {
-
+    /// <summary>
+    /// Конвертер для скрытия нуля в реакциях
+    /// </summary>
     public class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -23,6 +25,9 @@ namespace CompModeling
         }
     }
 
+    /// <summary>
+    /// Конвертер для скрытия единицы в реакциях
+    /// </summary>
     public class OneToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -44,13 +49,15 @@ namespace CompModeling
     public partial class AddMechanism : Window
     {
         private ObservableCollection<ReactionWrapper>? _reactions;
+
+
         public AddMechanism()
         {
             InitializeComponent();
-            LoadData();
+            LoadDataAsync();
         }
 
-        private async void LoadData()
+        private async void LoadDataAsync()
         {
             using (var context = new ApplicationContext())
             {
@@ -63,14 +70,14 @@ namespace CompModeling
         }
 
         // Создание нового механизма
-        private async void BtnCreateMechanism_Click(object sender, RoutedEventArgs e)
+        private async void bt_Create_Mechanism_Click(object sender, RoutedEventArgs e)
         {
             var selectedReactions = _reactions!
                 .Where(r => r.IsSelected)
                 .Select(r => r.Reaction)
                 .ToList();
 
-            if (string.IsNullOrWhiteSpace(txtMechanismName.Text) || !selectedReactions.Any())
+            if (string.IsNullOrWhiteSpace(txtMechanismName.Text) || selectedReactions.Count == 0)
             {
                 MessageBox.Show("Заполните название и выберите реакции!");
                 return;
@@ -120,31 +127,12 @@ namespace CompModeling
         }
 
         // Открытие окна добавления реакции
-        private void BtnAddReaction_Click(object sender, RoutedEventArgs e)
+        private void bt_Add_Reaction_Click(object sender, RoutedEventArgs e)
         {
-            var addReactionWindow = new AddReactionWindow();
-            addReactionWindow.ShowDialog();
-        }
-
-        private void BtnCreatePoints_Click(object sender, RoutedEventArgs e)
-        {
-
+            var АddReaction_Window = new AddReactionWindow();
+            АddReaction_Window.ShowDialog();
         }
     }
-
-    // Класс для отображения реакций с флажком
-    //public class ReactionWrapper
-    //{
-    //    public Reaction Reaction { get; }
-    //    public bool IsSelected { get; set; }
-    //    public string DisplayReaction =>
-    //        $"({Reaction.KInp1}{Reaction.Inp1}){Reaction.Ind1} + ({Reaction.KInp2}{Reaction.Inp2}){Reaction.Ind2} + ({Reaction.KInp3}{Reaction.Inp3}){Reaction.Ind3} → {Reaction.KProd}{Reaction.Prod}";
-
-    //    public ReactionWrapper(Reaction reaction)
-    //    {
-    //        Reaction = reaction;
-    //    }
-    //}
 
     public class ReactionWrapper : INotifyPropertyChanged
     {
