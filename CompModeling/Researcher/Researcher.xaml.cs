@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Navigation;
 using static CompModeling.ConnectToDB;
 
 namespace CompModeling
@@ -140,16 +141,371 @@ namespace CompModeling
             Add_Experimental_Points();
         }
 
-        private async void bt_Calculate_Click(object sender, RoutedEventArgs e)
+        private void bt_Calculate_Click(object sender, RoutedEventArgs e)
         {
-            var selectedMechanism = cb_Mechanisms_Points.SelectedItem as Mechanisms;
+            var selectedMechanism = cb_Mechanisms_Experiment.SelectedItem as Mechanisms;
             if (selectedMechanism == null)
             {
-                MessageBox.Show("Выберите механизм!");
+                MessageBox.Show("Выберите модель!");
                 return;
             }
+            Calculation(selectedMechanism);
+        }
+
+        private async void Create_Input_Constants_Grid()
+        {
+            try
+            {
+                using (var context = new ApplicationContext())
+                {
+                    if (cb_Mechanisms_Experiment.SelectedItem is Mechanisms selectedMechanism)
+                    {
+                        var reactions = await GetReactionsForMechanismAsync(context, selectedMechanism);
+
+                        reactionInputsPanel.Children.Clear();
+
+                        foreach (var reaction in reactions)
+                        {
+                            var grid = new Grid
+                            {
+                                Margin = new Thickness(0, 5, 0, 0),
+                                VerticalAlignment = VerticalAlignment.Top
+                            };
+
+                            // Настройка строк и колонок
+                            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                            // Элементы
+                            var lgKBlock = new TextBlock
+                            {
+                                Text = "K",
+                                FontSize = 16,
+                                VerticalAlignment = VerticalAlignment.Bottom,
+                                Margin = new Thickness(10, 0, 0, 0)
+                            };
+
+                            var prodBlock = new TextBlock
+                            {
+                                Text = reaction.Prod,
+                                FontStyle = FontStyles.Italic,
+                                Margin = new Thickness(30, 0, 0, 0),
+                                HorizontalAlignment = HorizontalAlignment.Left
+                            };
+
+                            var valueBox = new TextBox
+                            {
+                                Width = 80,
+                                Margin = new Thickness(30, 5, 10, 0),
+                                Tag = reaction.Prod
+                            };
+
+                            var unitBlock = new TextBlock
+                            {
+                                Text = "моль/л",
+                                VerticalAlignment = VerticalAlignment.Center
+                            };
+
+                            // Размещение элементов
+                            Grid.SetRow(lgKBlock, 0);
+                            Grid.SetColumn(lgKBlock, 0);
+
+                            Grid.SetRow(prodBlock, 1);
+                            Grid.SetColumn(prodBlock, 0);
+                            Grid.SetColumnSpan(prodBlock, 2);
+
+                            Grid.SetRow(valueBox, 0);
+                            Grid.SetColumn(valueBox, 1);
+
+                            Grid.SetRow(unitBlock, 0);
+                            Grid.SetColumn(unitBlock, 2);
+
+                            grid.Children.Add(lgKBlock);
+                            grid.Children.Add(prodBlock);
+                            grid.Children.Add(valueBox);
+                            grid.Children.Add(unitBlock);
+
+                            reactionInputsPanel.Children.Add(grid);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+        }
+
+        private async void Delete_Mechanism(object sender)
+        {
+            var button = (Button)sender;
+            var mechanismId = (int)button.Tag;
+
+            // Подтверждение удаления
+            var result = MessageBox.Show("Удалить этот механизм?", "Подтверждение",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                using (var context = new ApplicationContext())
+                {
+                    var mechanisms = await context.Mechanisms
+                        .Where(m => m.ID == mechanismId)
+                        .ToListAsync();
+                    context.Mechanisms.RemoveRange(mechanisms);
+
+                    await context.SaveChangesAsync();
+
+                    MessageBox.Show("Механизм успешно удален!");
+
+                    //LoadDataAsync();
+
+                    MechanismDeleted?.Invoke();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
+            }
+        }
+
+        private async void Create_Expermiental_Points_Grid()
+        {
             using (var context = new ApplicationContext())
             {
+                if (cb_Mechanisms_Points.SelectedItem is Mechanisms selectedMechanism)
+                {
+                    var mechanismId = selectedMechanism.ID; // Замените на нужный ID механизма
+
+                    var reactions = await GetReactionsForMechanismAsync(context, selectedMechanism);
+
+                    var baseFormNames = await GetBaseFormsFromReactionsAsync(context, reactions);
+
+                    pointInputsPanel.Children.Clear();
+
+                    foreach (var bFs in baseFormNames)
+                    {
+                        var grid = new Grid();
+                        for (int i = 0; i < 5; i++)
+                        {
+                            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                        }
+                        for (int i = 0; i < 2; i++)
+                        {
+                            grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                        }
+
+                        // Название базовой формы
+                        var bfName = new TextBlock
+                        {
+                            Text = bFs.Name,
+                            FontSize = 20,
+                            FontStyle = FontStyles.Italic,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Margin = new Thickness(0, 0, 15, 0),
+                            Width = 40
+                        };
+                        Grid.SetColumn(bfName, 0);
+                        Grid.SetRowSpan(bfName, 2);
+
+                        // Подписи фаз
+                        var labelAq = new TextBlock { Text = "Водная фаза" };
+                        var labelOrg = new TextBlock { Text = "Органическая фаза", Margin = new Thickness(10, 0, 0, 0) };
+
+                        // Поля ввода
+                        var valueAquBox = new TextBox { Width = 110, Margin = new Thickness(0, 5, 0, 10) };
+                        var valueOrgBox = new TextBox { Width = 110, Margin = new Thickness(10, 5, 0, 10) };
+
+                        // Новая единица измерения между полями
+                        var middleUnit = new TextBlock
+                        {
+                            Text = "моль/л",
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Margin = new Thickness(5, 0, 0, 0)
+                        };
+
+                        // Общая единица измерения
+                        var rightUnit = new TextBlock
+                        {
+                            Text = "моль/л",
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Margin = new Thickness(5, 0, 0, 0)
+                        };
+
+                        // Размещение элементов
+                        grid.Children.Add(bfName);
+
+                        // Водная фаза
+                        Grid.SetColumn(labelAq, 1);
+                        Grid.SetRow(labelAq, 0);
+                        grid.Children.Add(labelAq);
+
+                        Grid.SetColumn(valueAquBox, 1);
+                        Grid.SetRow(valueAquBox, 1);
+                        grid.Children.Add(valueAquBox);
+
+                        // Средняя единица измерения
+                        Grid.SetColumn(middleUnit, 2);
+                        Grid.SetRow(middleUnit, 1);
+                        grid.Children.Add(middleUnit);
+
+                        // Органическая фаза
+                        Grid.SetColumn(labelOrg, 3);
+                        Grid.SetRow(labelOrg, 0);
+                        grid.Children.Add(labelOrg);
+
+                        Grid.SetColumn(valueOrgBox, 3);
+                        Grid.SetRow(valueOrgBox, 1);
+                        grid.Children.Add(valueOrgBox);
+
+                        // Правая единица измерения
+                        Grid.SetColumn(rightUnit, 4);
+                        Grid.SetRow(rightUnit, 1);
+                        grid.Children.Add(rightUnit);
+
+                        inputBoxes[bFs.Name!] = (valueAquBox, valueOrgBox);
+                        pointInputsPanel.Children.Add(grid);
+                    }
+                }
+            }
+        }
+
+        private void Clear_Expiremntal_Points_Grid()
+        {
+            pointInputsPanel.Children.Clear();
+        }
+
+        private async void Add_Experimental_Points()
+        {
+            using (var context = new ApplicationContext())
+            {
+                using (var transaction = await context.Database.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        var selectedMechanism = cb_Mechanisms_Points.SelectedItem as Mechanisms;
+                        if (selectedMechanism == null)
+                        {
+                            MessageBox.Show("Выберите модель!");
+                            return;
+                        }
+
+                        // Создаем новую точку
+                        var point = new Points();
+                        context.Points.Add(point);
+                        await context.SaveChangesAsync(); // Получаем ID точки
+
+                        foreach (var entry in inputBoxes)
+                        {
+                            var baseForm = await context.BaseForms.FirstOrDefaultAsync(bf => bf.Name == entry.Key);
+                            if (baseForm == null) continue;
+
+                            // Сохраняем концентрацию для воды (фаза 1)
+                            if (double.TryParse(entry.Value.AquaBox.Text, out double aquaValue))
+                            {
+                                var inputAqua = new InputConcentration
+                                {
+                                    BaseForm = entry.Key,
+                                    Value = aquaValue,
+                                    Phase = 1
+                                };
+                                context.InputConcentrations.Add(inputAqua);
+                                await context.SaveChangesAsync();
+
+                                var expPointAqua = new ExperimentalPoints
+                                {
+                                    ID_Point = point.ID,
+                                    ID_InputConcentration = inputAqua.ID,
+                                    ID_BaseForm = baseForm.ID,
+                                    Phase = 1,
+                                    ID_Mechanism = selectedMechanism.ID
+                                };
+                                context.ExperimentalPoints.Add(expPointAqua);
+                            }
+
+                            // Сохраняем концентрацию для органики (фаза 2)
+                            if (double.TryParse(entry.Value.OrgBox.Text, out double orgValue))
+                            {
+                                var inputOrg = new InputConcentration
+                                {
+                                    BaseForm = entry.Key,
+                                    Value = orgValue,
+                                    Phase = 0,
+                                };
+                                context.InputConcentrations.Add(inputOrg);
+                                await context.SaveChangesAsync();
+
+                                var expPointOrg = new ExperimentalPoints
+                                {
+                                    ID_Point = point.ID,
+                                    ID_InputConcentration = inputOrg.ID,
+                                    ID_BaseForm = baseForm.ID,
+                                    Phase = 0,
+                                    ID_Mechanism = selectedMechanism.ID
+                                };
+                                context.ExperimentalPoints.Add(expPointOrg);
+                            }
+                        }
+
+                        await context.SaveChangesAsync();
+                        transaction.Commit();
+                        MessageBox.Show($"Точка №{currentPointId} успешно сохранена!");
+                        currentPointId++;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show($"Ошибка: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+        private async Task<List<Reaction>> GetReactionsForMechanismAsync(ApplicationContext context, Mechanisms selectedMechanism)
+        {
+            var reactions = context.ReactionMechanism
+                .Where(rm => rm.Mechanism_ID == selectedMechanism.ID)
+                .Join(context.Reactions,
+                    rm => rm.Reaction_ID,
+                    r => r.ID,
+                    (rm, r) => r)
+                .ToListAsync();
+            return await reactions;
+        }
+
+        private async Task<List<BaseForm>> GetBaseFormsFromReactionsAsync(ApplicationContext context, List<Reaction> reactions)
+        {
+            var formNames = reactions
+                .SelectMany(r => new[] { r.Inp1, r.Inp2, r.Inp3 })
+                .Where(name => name != null)
+                .Distinct()
+                .ToList();
+
+            var baseFormNames = context.BaseForms
+                .Where(bf => formNames.Contains(bf.Name))
+                .ToListAsync();
+            return await baseFormNames;
+        }
+
+        private async void Calculation(Mechanisms selectedMechanism)
+        {
+            using (var context = new ApplicationContext())
+            {
+                //Получить реакции для механизма
+                var reactions = await GetReactionsForMechanismAsync(context, selectedMechanism);
+                var baseForms = await GetBaseFormsFromReactionsAsync(context, reactions);
+
+                List<List<int>> ComponentMatrix = new List<List<int>>();
+
+
+
                 using (var transaction = await context.Database.BeginTransactionAsync())
                 {
                     List<double> inputConstants = new List<double> { 1, 1, 1, 1, 1 };
@@ -293,342 +649,6 @@ namespace CompModeling
 
                 }
 
-            }
-
-
-        }
-
-        private async void Create_Input_Constants_Grid()
-        {
-            try
-            {
-                using (var context = new ApplicationContext())
-                {
-                    if (cb_Mechanisms_Experiment.SelectedItem is Mechanisms selectedMechanism)
-                    {
-                        var reactions = await context.ReactionMechanism
-                            .Where(rm => rm.Mechanism_ID == selectedMechanism.ID)
-                            .Join(context.Reactions,
-                                rm => rm.Reaction_ID,
-                                r => r.ID,
-                                (rm, r) => new { r.Prod })
-                            .ToListAsync();
-
-                        reactionInputsPanel.Children.Clear();
-
-                        foreach (var reaction in reactions)
-                        {
-                            var grid = new Grid
-                            {
-                                Margin = new Thickness(0, 5, 0, 0),
-                                VerticalAlignment = VerticalAlignment.Top
-                            };
-
-                            // Настройка строк и колонок
-                            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-                            // Элементы
-                            var lgKBlock = new TextBlock
-                            {
-                                Text = "K",
-                                FontSize = 16,
-                                VerticalAlignment = VerticalAlignment.Bottom,
-                                Margin = new Thickness(10, 0, 0, 0)
-                            };
-
-                            var prodBlock = new TextBlock
-                            {
-                                Text = reaction.Prod,
-                                FontStyle = FontStyles.Italic,
-                                Margin = new Thickness(30, 0, 0, 0),
-                                HorizontalAlignment = HorizontalAlignment.Left
-                            };
-
-                            var valueBox = new TextBox
-                            {
-                                Width = 80,
-                                Margin = new Thickness(30, 5, 10, 0),
-                                Tag = reaction.Prod
-                            };
-
-                            var unitBlock = new TextBlock
-                            {
-                                Text = "моль/л",
-                                VerticalAlignment = VerticalAlignment.Center
-                            };
-
-                            // Размещение элементов
-                            Grid.SetRow(lgKBlock, 0);
-                            Grid.SetColumn(lgKBlock, 0);
-
-                            Grid.SetRow(prodBlock, 1);
-                            Grid.SetColumn(prodBlock, 0);
-                            Grid.SetColumnSpan(prodBlock, 2);
-
-                            Grid.SetRow(valueBox, 0);
-                            Grid.SetColumn(valueBox, 1);
-
-                            Grid.SetRow(unitBlock, 0);
-                            Grid.SetColumn(unitBlock, 2);
-
-                            grid.Children.Add(lgKBlock);
-                            grid.Children.Add(prodBlock);
-                            grid.Children.Add(valueBox);
-                            grid.Children.Add(unitBlock);
-
-                            reactionInputsPanel.Children.Add(grid);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-        }
-
-        private async void Delete_Mechanism(object sender)
-        {
-            var button = (Button)sender;
-            var mechanismId = (int)button.Tag;
-
-            // Подтверждение удаления
-            var result = MessageBox.Show("Удалить этот механизм?", "Подтверждение",
-                                        MessageBoxButton.YesNo,
-                                        MessageBoxImage.Warning);
-
-            if (result != MessageBoxResult.Yes) return;
-
-            try
-            {
-                using (var context = new ApplicationContext())
-                {
-                    var mechanisms = await context.Mechanisms
-                        .Where(m => m.ID == mechanismId)
-                        .ToListAsync();
-                    context.Mechanisms.RemoveRange(mechanisms);
-
-                    await context.SaveChangesAsync();
-
-                    MessageBox.Show("Механизм успешно удален!");
-
-                    //LoadDataAsync();
-
-                    MechanismDeleted?.Invoke();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка удаления: {ex.Message}");
-            }
-        }
-
-        private async void Create_Expermiental_Points_Grid()
-        {
-            using (var context = new ApplicationContext())
-            {
-                if (cb_Mechanisms_Points.SelectedItem is Mechanisms selectedMechanism)
-                {
-                    var mechanismId = selectedMechanism.ID; // Замените на нужный ID механизма
-
-                    var reactions = await context.ReactionMechanism
-                        .Where(rm => rm.Mechanism_ID == selectedMechanism.ID)
-                        .Join(context.Reactions,
-                            rm => rm.Reaction_ID,
-                            r => r.ID,
-                            (rm, r) => r) // Просто возвращаем объект Reaction
-                        .Distinct() // Опционально, если возможны дубликаты
-                        .ToListAsync();
-
-                    var baseFormNames = reactions
-                        .SelectMany(r => new[] { r.Inp1, r.Inp2, r.Inp3 })
-                        .Where(input => input != null)
-                        .Distinct()
-                        .ToList();
-
-                    pointInputsPanel.Children.Clear();
-
-                    foreach (var bFs in baseFormNames)
-                    {
-                        var grid = new Grid();
-                        // Изменено количество колонок и их размеры
-                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // Название формы
-                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // Водная фаза
-                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // Единица измерения
-                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // Органическая фаза
-                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // Единица измерения
-
-                        grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                        grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-
-                        // Название базовой формы
-                        var bfName = new TextBlock
-                        {
-                            Text = bFs,
-                            FontSize = 20,
-                            FontStyle = FontStyles.Italic,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            Margin = new Thickness(0, 0, 15, 0),
-                            Width = 40
-                        };
-                        Grid.SetColumn(bfName, 0);
-                        Grid.SetRowSpan(bfName, 2);
-
-                        // Подписи фаз
-                        var labelAq = new TextBlock { Text = "Водная фаза" };
-                        var labelOrg = new TextBlock { Text = "Органическая фаза", Margin = new Thickness(10, 0, 0, 0) };
-
-                        // Поля ввода
-                        var valueAquBox = new TextBox { Width = 110, Margin = new Thickness(0, 5, 0, 10) };
-                        var valueOrgBox = new TextBox { Width = 110, Margin = new Thickness(10, 5, 0, 10) };
-
-                        // Новая единица измерения между полями
-                        var middleUnit = new TextBlock
-                        {
-                            Text = "моль/л",
-                            VerticalAlignment = VerticalAlignment.Center,
-                            Margin = new Thickness(5, 0, 0, 0)
-                        };
-
-                        // Общая единица измерения
-                        var rightUnit = new TextBlock
-                        {
-                            Text = "моль/л",
-                            VerticalAlignment = VerticalAlignment.Center,
-                            Margin = new Thickness(5, 0, 0, 0)
-                        };
-
-                        // Размещение элементов
-                        grid.Children.Add(bfName);
-
-                        // Водная фаза
-                        Grid.SetColumn(labelAq, 1);
-                        Grid.SetRow(labelAq, 0);
-                        grid.Children.Add(labelAq);
-
-                        Grid.SetColumn(valueAquBox, 1);
-                        Grid.SetRow(valueAquBox, 1);
-                        grid.Children.Add(valueAquBox);
-
-                        // Средняя единица измерения
-                        Grid.SetColumn(middleUnit, 2);
-                        Grid.SetRow(middleUnit, 1);
-                        grid.Children.Add(middleUnit);
-
-                        // Органическая фаза
-                        Grid.SetColumn(labelOrg, 3);
-                        Grid.SetRow(labelOrg, 0);
-                        grid.Children.Add(labelOrg);
-
-                        Grid.SetColumn(valueOrgBox, 3);
-                        Grid.SetRow(valueOrgBox, 1);
-                        grid.Children.Add(valueOrgBox);
-
-                        // Правая единица измерения
-                        Grid.SetColumn(rightUnit, 4);
-                        Grid.SetRow(rightUnit, 1);
-                        grid.Children.Add(rightUnit);
-
-                        inputBoxes[bFs!] = (valueAquBox, valueOrgBox);
-                        pointInputsPanel.Children.Add(grid);
-                    }
-                }
-            }
-        }
-
-        private void Clear_Expiremntal_Points_Grid()
-        {
-            pointInputsPanel.Children.Clear();
-        }
-
-        private async void Add_Experimental_Points()
-        {
-            using (var context = new ApplicationContext())
-            {
-                using (var transaction = await context.Database.BeginTransactionAsync())
-                {
-                    try
-                    {
-                        var selectedMechanism = cb_Mechanisms_Points.SelectedItem as Mechanisms;
-                        if (selectedMechanism == null)
-                        {
-                            MessageBox.Show("Выберите механизм!");
-                            return;
-                        }
-
-                        // Создаем новую точку
-                        var point = new Points();
-                        context.Points.Add(point);
-                        await context.SaveChangesAsync(); // Получаем ID точки
-
-                        foreach (var entry in inputBoxes)
-                        {
-                            var baseForm = await context.BaseForms.FirstOrDefaultAsync(bf => bf.Name == entry.Key);
-                            if (baseForm == null) continue;
-
-                            // Сохраняем концентрацию для воды (фаза 1)
-                            if (double.TryParse(entry.Value.AquaBox.Text, out double aquaValue))
-                            {
-                                var inputAqua = new InputConcentration
-                                {
-                                    BaseForm = entry.Key,
-                                    Value = aquaValue,
-                                    Phase = 1
-                                };
-                                context.InputConcentrations.Add(inputAqua);
-                                await context.SaveChangesAsync();
-
-                                var expPointAqua = new ExperimentalPoints
-                                {
-                                    ID_Point = point.ID,
-                                    ID_InputConcentration = inputAqua.ID,
-                                    ID_BaseForm = baseForm.ID,
-                                    Phase = 1,
-                                    ID_Mechanism = selectedMechanism.ID
-                                };
-                                context.ExperimentalPoints.Add(expPointAqua);
-                            }
-
-                            // Сохраняем концентрацию для органики (фаза 2)
-                            if (double.TryParse(entry.Value.OrgBox.Text, out double orgValue))
-                            {
-                                var inputOrg = new InputConcentration
-                                {
-                                    BaseForm = entry.Key,
-                                    Value = orgValue,
-                                    Phase = 0,
-                                };
-                                context.InputConcentrations.Add(inputOrg);
-                                await context.SaveChangesAsync();
-
-                                var expPointOrg = new ExperimentalPoints
-                                {
-                                    ID_Point = point.ID,
-                                    ID_InputConcentration = inputOrg.ID,
-                                    ID_BaseForm = baseForm.ID,
-                                    Phase = 0,
-                                    ID_Mechanism = selectedMechanism.ID
-                                };
-                                context.ExperimentalPoints.Add(expPointOrg);
-                            }
-                        }
-
-                        await context.SaveChangesAsync();
-                        transaction.Commit();
-                        MessageBox.Show($"Точка №{currentPointId} успешно сохранена!");
-                        currentPointId++;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        MessageBox.Show($"Ошибка: {ex.Message}");
-                    }
-                }
             }
         }
 
