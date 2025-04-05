@@ -55,6 +55,7 @@ namespace CompModeling
         {
             InitializeComponent();
             LoadDataAsync();
+            AddReactionWindow.ReactionAdded += LoadDataAsync;
         }
 
         private async void LoadDataAsync()
@@ -65,7 +66,7 @@ namespace CompModeling
                 _reactions = new ObservableCollection<ReactionWrapper>(
                     reactions.Select(r => new ReactionWrapper(r)));
 
-                dgReactions.ItemsSource = _reactions;
+                dg_Reactions.ItemsSource = _reactions;
             }
         }
 
@@ -77,7 +78,7 @@ namespace CompModeling
                 .Select(r => r.Reaction)
                 .ToList();
 
-            if (string.IsNullOrWhiteSpace(txtMechanismName.Text) || selectedReactions.Count == 0)
+            if (string.IsNullOrWhiteSpace(tb_Mechanism_Name.Text) || selectedReactions.Count == 0)
             {
                 MessageBox.Show("Заполните название и выберите реакции!");
                 return;
@@ -93,7 +94,7 @@ namespace CompModeling
                     // Создаем новый механизм
                     var mechanism = new Mechanisms
                     {
-                        Info = txtMechanismName.Text.Trim()
+                        Info = tb_Mechanism_Name.Text.Trim()
                     };
 
                     context.Mechanisms.Add(mechanism);
@@ -113,7 +114,7 @@ namespace CompModeling
 
 
                     // Обновляем UI
-                    txtMechanismName.Clear();
+                    tb_Mechanism_Name.Clear();
                     MessageBox.Show("Механизм успешно создан!");
                     this.DialogResult = true;
                     

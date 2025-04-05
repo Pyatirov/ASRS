@@ -24,9 +24,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Описание модели:" VerticalAlignment="Center" Margin="10,10,0,5"/>
-        <TextBox x:Name="txtMechanismName" Margin="10,5,10,5" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="tb_Mechanism_Name" Margin="10,5,10,5" Grid.Row="1" Grid.ColumnSpan="2"/>
         <TextBlock Text="Выберите реакции:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,5,0,0" Height="16" Width="106"/>
-        <DataGrid x:Name="dgReactions" AutoGenerateColumns="False" 
+        <DataGrid x:Name="dg_Reactions" AutoGenerateColumns="False" 
           SelectionMode="Single" CanUserAddRows="False" 
           Grid.Row="3" Margin="10,10,10,0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
@@ -44,8 +44,7 @@
                                 </StackPanel>
 
                                 <!-- Разделитель 1 -->
-                                <TextBlock Text=" + " 
-                                  Visibility="{Binding ShowPlus1, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <TextBlock Text=" + " Visibility="{Binding ShowPlus1, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                                 <!-- Реагент 2 -->
                                 <StackPanel Orientation="Horizontal" 
@@ -56,8 +55,7 @@
                                 </StackPanel>
 
                                 <!-- Разделитель 2 -->
-                                <TextBlock Text=" + " 
-                                  Visibility="{Binding ShowPlus2, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <TextBlock Text=" + " Visibility="{Binding ShowPlus2, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                                 <!-- Реагент 3 -->
                                 <StackPanel Orientation="Horizontal" 
