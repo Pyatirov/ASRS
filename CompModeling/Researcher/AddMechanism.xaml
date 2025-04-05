@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompModeling"
         mc:Ignorable="d"
-        Title="Настройка механизма" Height="450" Width="800" ResizeMode="NoResize">
+        Title="Настройка механизма" Height="450" Width="800" ResizeMode="NoResize" Closed="AddMechanism_Closed">
     <Window.Resources>
         <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
         <local:OneToVisibilityConverter x:Key="OneToVisibilityConverter"/>

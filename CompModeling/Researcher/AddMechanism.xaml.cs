@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
@@ -73,8 +74,21 @@ namespace CompModeling
         }
 
         // Создание нового механизма
-        private async void bt_Create_Mechanism_Click(object sender, RoutedEventArgs e)
+        private void bt_Create_Mechanism_Click(object sender, RoutedEventArgs e)
         {
+            CreateMechanismDataBaseAsync();
+        }
+
+        // Открытие окна добавления реакции
+        private void bt_Add_Reaction_Click(object sender, RoutedEventArgs e)
+        {
+            var АddReaction_Window = new AddReactionWindow();
+            АddReaction_Window.ShowDialog();
+        }
+
+        private async void CreateMechanismDataBaseAsync()
+        {
+
             var selectedReactions = _reactions!
                 .Where(r => r.IsSelected)
                 .Select(r => r.Reaction)
@@ -117,7 +131,7 @@ namespace CompModeling
 
                     // Обновляем UI
                     tb_Mechanism_Name.Clear();
-                    MessageBox.Show("Механизм успешно создан!");
+                    MessageBox.Show("Модель успешно создана!");
 
                     MechanismAdded?.Invoke();
                 }
@@ -126,13 +140,12 @@ namespace CompModeling
             {
                 MessageBox.Show($"Ошибка: {ex.Message}\n{ex.InnerException?.Message}");
             }
+
         }
 
-        // Открытие окна добавления реакции
-        private void bt_Add_Reaction_Click(object sender, RoutedEventArgs e)
+        private void AddMechanism_Closed(object sender, EventArgs e)
         {
-            var АddReaction_Window = new AddReactionWindow();
-            АddReaction_Window.ShowDialog();
+            AddReactionWindow.ReactionAdded -= LoadDataAsync;
         }
     }
 
