@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompModeling"
         mc:Ignorable="d"
-        Title="Исследователь" Height="700" Width="700" ResizeMode="NoResize">
+        Title="Исследователь" Height="700" Width="700" ResizeMode="NoResize" Closed="Reseacher_Closed">
         <Window.Resources>
             <local:RowToVisibilityConverter x:Key="RowToVisibilityConverter"/>
         </Window.Resources>
