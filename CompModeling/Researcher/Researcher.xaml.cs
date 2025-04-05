@@ -66,6 +66,14 @@ namespace CompModeling
 
         private int currentPointId = 1;
 
+
+        public ResearcherInterface()
+        {
+            InitializeComponent();
+            LoadDataAsync();
+            AddMechanism.MechanismAdded += LoadDataAsync;
+        }
+
         /// <summary>
         /// Загрузка данных при открытии окна Researcher.xaml
         /// </summary>
@@ -77,22 +85,11 @@ namespace CompModeling
                 {
                     var mechanismsNames = await context.Mechanisms.ToListAsync();
 
-                    // Обновляем существующую коллекцию, а не пересоздаем
-                    if (Mechanisms == null)
-                    {
-                        Mechanisms = new ObservableCollection<Mechanisms>(mechanismsNames);
-                    }
-                    else
-                    {
-                        Mechanisms.Clear();
-                        foreach (var mechanism in mechanismsNames)
-                        {
-                            Mechanisms.Add(mechanism);
-                        }
-                    }
-                    cb_mechanismName.ItemsSource = Mechanisms;
-                    cbMechanisms.ItemsSource = Mechanisms;
-                    dataGrid_Mechanisms.ItemsSource = Mechanisms;
+                    Mechanisms = new ObservableCollection<Mechanisms>(mechanismsNames);
+
+                    cb_Mechanisms_Experiment.ItemsSource = Mechanisms;
+                    cb_Mechanisms_Points.ItemsSource = Mechanisms;
+                    dg_Mechanisms.ItemsSource = Mechanisms;
                 }
 
             }
@@ -101,24 +98,16 @@ namespace CompModeling
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
-
-        public ResearcherInterface()
-        {
-            InitializeComponent();
-            LoadDataAsync();
-            calculate.Click += Button_calculate_Click;
-        }
-
         /// <summary>
         /// Обработчик выбора комбобокса вкладки "Эксперимент" окна Researcher.xaml
         /// </summary>
-        private async void cb_mechanismName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cb_Mechanisms_Experiment_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 using (var context = new ApplicationContext())
                 {
-                    if (cb_mechanismName.SelectedItem is Mechanisms selectedMechanism)
+                    if (cb_Mechanisms_Experiment.SelectedItem is Mechanisms selectedMechanism)
                     {
                         var reactions = await context.ReactionMechanism
                             .Where(rm => rm.Mechanism_ID == selectedMechanism.ID)
@@ -172,7 +161,7 @@ namespace CompModeling
 
                             var unitBlock = new TextBlock
                             {
-                                Text = "моль/cм³",
+                                Text = "моль/л",
                                 VerticalAlignment = VerticalAlignment.Center
                             };
 
@@ -206,107 +195,19 @@ namespace CompModeling
             }
         }
 
-        private void IteratonMethod(List<double> lgs)
-        {
-            var K = lgs;
-            List<double> b = [0.7298, 2.1994, 0.01, 3.661, Math.Pow(10, -6)];
-            // Параметры решения
-            int maxIterations = 5000;
-            double epsilon = 0.01;
-            //double[] XStart = new double[5] { 0.0233653054, 1.0715750606, 0.0023444158941, 1.6068767489, 0.00000099887410312 } ;
-            double[] XStart = [0.0233, 1.0715, 0.00234, 1.6068, 0.00000099887410];
-            double[] XNew = new double[5];
-            int iteration = 0;
-            double diff;
-            // Начальное приближение
-            //b.CopyTo(XStart, 0);
-
-            do
-            {
-                // Вычисление новых значений
-                XNew[0] = b[0] / (1 +
-                    K[7] * XStart[1] +
-                    K[12] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 3) +
-                    K[13] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 4));
-
-                XNew[1] = b[1] / (1 +
-                    K[5] * XStart[2] +
-                    K[6] * XStart[4] +
-                    K[7] * XStart[0] +
-                    K[8] * Math.Pow(XStart[3], 2) * XStart[4] +
-                    3 * (K[9] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[2], 3) * XStart[3]) +
-                    K[10] * XStart[2] * XStart[3] +
-                    2 * (K[11] * XStart[1] * Math.Pow(XStart[2], 2) * XStart[3]) +
-                    3 * (K[12] * XStart[0] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[3], 3)) +
-                    3 * (K[13] * XStart[0] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[3], 4)));
-
-                XNew[2] = b[2] / (1 +
-                    K[5] * XStart[1] +
-                    K[9] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[2], 2) * XStart[3] +
-                    K[10] * XStart[1] * XStart[3] +
-                    2 * (K[11] * Math.Pow(XStart[1], 2) * XStart[2] * XStart[3]));
-
-                XNew[3] = b[3] / (1 +
-                    2 * (K[8] * XStart[1] * XStart[3] * XStart[4]) +
-                    K[9] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[2], 3) +
-                    K[10] * XStart[1] * XStart[2] +
-                    K[11] * Math.Pow(XStart[1], 2) * Math.Pow(XStart[2], 2) +
-                    3 * (K[12] * XStart[0] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 2)) +
-                    4 * (K[13] * XStart[0] * Math.Pow(XStart[1], 3) * Math.Pow(XStart[3], 3)) +
-                    2 * (K[14] * XStart[3]));
-
-                XNew[4] = b[4] / (1 +
-                    K[6] * XStart[1] +
-                    K[8] * XStart[1] * Math.Pow(XStart[3], 2));
-
-                // Вычисление максимального изменения
-                diff = 0;
-                for (int i = 0; i < 5; i++)
-                {
-                    double currentDiff = Math.Abs(XNew[i] - XStart[i]);
-                    if (currentDiff > diff) diff = currentDiff;
-                    XStart[i] = XNew[i]; // Обновление значений для следующей итерации
-                }
-
-                iteration++;
-            }
-            while (diff > epsilon && iteration < maxIterations);
-
-            // Вывод результатов
-            string result = "Итераций выполнено: ";
-            result += iteration;
-            result += "\nРезультаты:";
-            for (int i = 0; i < 5; i++)
-            {
-                result += $"\nx{i + 1} = {XNew[i]:E4}";
-            }
-            tb_result.Text = result;
-            Console.WriteLine($"Итераций выполнено: {iteration}");
-            Console.WriteLine("Результаты:");
-            for (int i = 0; i < 5; i++)
-            {
-                Console.WriteLine($"x{i + 1} = {XNew[i]:E4}");
-            }
-
-        }
-
         /// <summary>
         /// Кнопка добавления нового механизма вкладки "Механизмы" окна Researcher.xaml
         /// </summary>
-        private void add_Mechanism_Click(object sender, RoutedEventArgs e)
+        private void bt_Add_Mechanism_Click(object sender, RoutedEventArgs e)
         {
             var addMechanismWindow = new AddMechanism();
+            addMechanismWindow.ShowDialog();
 
-            // Проверяем DialogResult именно окна добавления
-            if (addMechanismWindow.ShowDialog() == true)
-            {
-                LoadDataAsync();
-            }
         }
         /// <summary>
         /// Кнопка удаления механизма вкладки "Механизмы" окна Researcher.xaml
         /// </summary>
-        private async void delete_Mechanism_Click(object sender, RoutedEventArgs e)
+        private async void bt_Delete_Mechanism_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
             var mechanismId = (int)button.Tag;
@@ -344,11 +245,11 @@ namespace CompModeling
         /// <summary>
         /// Обработчик выбора комбобокса вкладки "Экспериментальные точки" окна Researcher.xaml
         /// </summary>
-        private void cbMechanisms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_Mechanisms_Points_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             using (var context = new ApplicationContext())
             {
-                if (cbMechanisms.SelectedItem is Mechanisms selectedMechanism)
+                if (cb_Mechanisms_Points.SelectedItem is Mechanisms selectedMechanism)
                 {
                     var baseFormNames = context.BaseForms;
                     pointInputsPanel.Children.Clear();
@@ -390,7 +291,7 @@ namespace CompModeling
                         // Новая единица измерения между полями
                         var middleUnit = new TextBlock
                         {
-                            Text = "моль/cм³",
+                            Text = "моль/л",
                             VerticalAlignment = VerticalAlignment.Center,
                             Margin = new Thickness(5, 0, 0, 0)
                         };
@@ -444,7 +345,7 @@ namespace CompModeling
         /// <summary>
         /// Кнопка добавления экспериментальной точки вкладки "Экспериментальные точки" окна Researcher.xaml
         /// </summary>
-        private void Button_add_Experimental_Point_Click(object sender, RoutedEventArgs e)
+        private void bt_Add_Experimental_Point_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new ApplicationContext())
             {
@@ -452,7 +353,7 @@ namespace CompModeling
                 {
                     try
                     {
-                        var selectedMechanism = cbMechanisms.SelectedItem as Mechanisms;
+                        var selectedMechanism = cb_Mechanisms_Points.SelectedItem as Mechanisms;
                         if (selectedMechanism == null)
                         {
                             MessageBox.Show("Выберите механизм!");
@@ -530,9 +431,9 @@ namespace CompModeling
             }
         }
 
-        private async void Button_calculate_Click(object sender, RoutedEventArgs e)
+        private async void bt_Calculate_Click(object sender, RoutedEventArgs e)
         {
-            var selectedMechanism = cb_mechanismName.SelectedItem as Mechanisms;
+            var selectedMechanism = cb_Mechanisms_Points.SelectedItem as Mechanisms;
             if (selectedMechanism == null)
             {
                 MessageBox.Show("Выберите механизм!");
@@ -601,7 +502,7 @@ namespace CompModeling
                     {
                         test += ($"Точка {item.PointId}, " + $"Форма: {item.FormName}, " + $"Общая концентрация: {item.TotalConcentration:F4}\n");
                     }
-                    tb_result.Text = test;
+                    //tb_result.Text = test;
 
 
 
@@ -678,7 +579,7 @@ namespace CompModeling
                     0.156675107, 0.98174794, 0.2398832919, 0};
                     var solutions = solver.SolveSystemWithVariation(reorderedMatrix, XStart, tempK);
                     var lastSolution = solver.GetLastSolutionSet(solutions);
-                    solver.PrintResults(solutions, tb_result);
+                    //solver.PrintResults(solutions, tb_result);
                     MessageBox.Show("e = 0,741\nF = 5,96");
 
                 }

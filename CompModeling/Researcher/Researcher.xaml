@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompModeling"
         mc:Ignorable="d"
-        Title="Исследователь" Height="1000" Width="1000" ResizeMode="NoResize" MinWidth="350" MinHeight="400" MaxHeight="600" MaxWidth="500">
+        Title="Исследователь" Height="700" Width="700" ResizeMode="NoResize">
         <Window.Resources>
             <local:RowToVisibilityConverter x:Key="RowToVisibilityConverter"/>
         </Window.Resources>
@@ -22,38 +22,37 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Text="Механизм реакции" Margin="10,5"/>
-                    <ComboBox x:Name="cb_mechanismName" Grid.Row="1" Margin="10,0, 0, 10" Width="252" Height="25" DisplayMemberPath="Info" HorizontalAlignment="Left" SelectionChanged="cb_mechanismName_SelectionChanged"/>
+                    <ComboBox x:Name="cb_Mechanisms_Experiment" Grid.Row="1" Margin="10,0, 0, 10" Width="252" Height="25" DisplayMemberPath="Info" HorizontalAlignment="Left" SelectionChanged="cb_Mechanisms_Experiment_SelectionChanged"/>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                         <UniformGrid x:Name="reactionInputsPanel" Columns="1" Margin="10" VerticalAlignment="Top"/>
                     </ScrollViewer>
 
-                    <Button x:Name="calculate" Grid.Row="3" Content="Расчет" Margin="10,10" Height="40" Width="200"/>
+                    <Button Click="bt_Calculate_Click" Grid.Row="3" Content="Расчет" Margin="10,10" Height="40" Width="200"/>
 
-                    <TextBox x:Name="tb_result" Grid.Row="4" Margin="10,5" Height="80" IsReadOnly="True" Background="#d3d3d3"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Механизм реакции">
+            <TabItem Header="Модели реакции">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid x:Name="dataGrid_Mechanisms" AutoGenerateColumns="False" Margin="10,10,10,0" Grid.Row="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Visible">
+                    <DataGrid x:Name="dg_Mechanisms" AutoGenerateColumns="False" Margin="10,10,10,0" Grid.Row="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Visible">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="30"/>
                             <DataGridTextColumn Header="Описание" Binding="{Binding Info}" Width="*"/>
                             <DataGridTemplateColumn Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Удалить" Padding="5 2" Margin="3" Click="delete_Mechanism_Click" Tag="{Binding ID}" Visibility="{Binding Converter={StaticResource RowToVisibilityConverter}}"/>
+                                        <Button Content="Удалить" Padding="5 2" Margin="3" Click="bt_Delete_Mechanism_Click" Tag="{Binding ID}" Visibility="{Binding Converter={StaticResource RowToVisibilityConverter}}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="add_Mechanism" Content="Добавить механизм" Click="add_Mechanism_Click" Margin="10,10,10,10" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="40" Width="200" VerticalAlignment="Top"/>
+                    <Button Content="Добавить модель" Click="bt_Add_Mechanism_Click" Margin="10,10,10,10" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="40" Width="200" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Экспериментальные точки">
@@ -66,13 +65,13 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Text="Выберите механизм:" Margin="10,5"/>
-                    <ComboBox x:Name="cbMechanisms" Grid.Row="1" Margin="10,0,0,10" VerticalAlignment="Center" DisplayMemberPath="Info" SelectionChanged="cbMechanisms_SelectionChanged" HorizontalAlignment="Left" Height="25" Width="252"/>
+                    <ComboBox x:Name="cb_Mechanisms_Points" Grid.Row="1" Margin="10,0,0,10" VerticalAlignment="Center" DisplayMemberPath="Info" SelectionChanged="cb_Mechanisms_Points_SelectionChanged" HorizontalAlignment="Left" Height="25" Width="252"/>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel x:Name="pointInputsPanel" Margin="10" VerticalAlignment="Top"/>
                     </ScrollViewer>
 
-                    <Button Grid.Row="3" Content="Добавить точку" Margin="10,10" Height="40" Width="200" Click="Button_add_Experimental_Point_Click"/>
+                    <Button Grid.Row="3" Content="Добавить точку" Margin="10,10" Height="40" Width="200" Click="bt_Add_Experimental_Point_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
