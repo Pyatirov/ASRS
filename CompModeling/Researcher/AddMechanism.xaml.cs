@@ -50,6 +50,8 @@ namespace CompModeling
     {
         private ObservableCollection<ReactionWrapper>? _reactions;
 
+        public static event Action? MechanismAdded;
+
 
         public AddMechanism()
         {
@@ -116,14 +118,13 @@ namespace CompModeling
                     // Обновляем UI
                     tb_Mechanism_Name.Clear();
                     MessageBox.Show("Механизм успешно создан!");
-                    this.DialogResult = true;
-                    
+
+                    MechanismAdded?.Invoke();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка: {ex.Message}\n{ex.InnerException?.Message}");
-                this.DialogResult= false;
             }
         }
 
