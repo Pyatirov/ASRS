@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -52,7 +51,7 @@ namespace CompModeling
             {
                 Header = "Образующиеся формы",
                 Binding = new Binding("FormingFormName"),
-                Width = new DataGridLength(1, DataGridLengthUnitType.Star)
+                Width = new DataGridLength(2, DataGridLengthUnitType.Star)
             });
 
             // Колонки для базовых форм
@@ -79,7 +78,7 @@ namespace CompModeling
 
                 for (int j = 0; j < _baseForms.Count; j++)
                 {
-                    rowData.Coefficients[_baseForms[j].Name] = _componentMatrix[i][j];
+                    rowData.Coefficients[_baseForms[j].Name!] = _componentMatrix[i][j];
                 }
 
                 Rows.Add(rowData);

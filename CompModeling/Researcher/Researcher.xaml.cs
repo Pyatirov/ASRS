@@ -211,6 +211,9 @@ namespace CompModeling
                                 VerticalAlignment = VerticalAlignment.Center
                             };
 
+                            valueBox.PreviewTextInput += TextBox_PreviewTextInputConcentration;
+                            valueBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+
                             // Размещение элементов
                             Grid.SetRow(lgKBlock, 0);
                             Grid.SetColumn(lgKBlock, 0);
@@ -339,6 +342,11 @@ namespace CompModeling
                             VerticalAlignment = VerticalAlignment.Center,
                             Margin = new Thickness(5, 0, 0, 0)
                         };
+
+                        valueAquBox.PreviewTextInput += TextBox_PreviewTextInputConcentration;
+                        valueAquBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+                        valueOrgBox.PreviewTextInput += TextBox_PreviewTextInputConcentration;
+                        valueOrgBox.PreviewKeyDown += TextBox_PreviewKeyDown;
 
                         // Размещение элементов
                         grid.Children.Add(bfName);
@@ -497,20 +505,111 @@ namespace CompModeling
 
         private async Task<List<FormingForm>> GetFormingFormsFromReactionsAsync(ApplicationContext context, List<Reaction> reactions)
         {
+            // Получаем уникальные имена с сохранением исходного порядка
             var prodNames = reactions
                 .Select(r => r.Prod)
                 .Where(name => name != null)
                 .Distinct()
                 .ToList();
 
-            // Загружаем связанные FormingForm из БД
-            var formingForms = await context.FormingForms
+            // Загружаем данные из БД асинхронно
+            var dbItems = await context.FormingForms
                 .Where(ff => prodNames.Contains(ff.Name))
                 .ToListAsync();
 
-            return formingForms;
+            // Сортируем на клиенте по порядку prodNames
+            var orderedItems = prodNames
+                .Select(name => dbItems.FirstOrDefault(ff => ff.Name == name))
+                .Where(ff => ff != null)
+                .ToList();
+
+            return orderedItems!;
         }
 
+        private List<CalculationResult> InitialConcentrationsFromZDM(List<ConcentrationSummary> concentrationsSum, List<ConcentrationConstant> concentrationConstants,
+            List<FormingForm> formingForms, List<Reaction> reactions)
+        {
+            var results = new List<CalculationResult>();
+            var concentrationDict = concentrationsSum
+                .GroupBy(c => c.PointId)
+                .ToDictionary(g => g.Key, g => g.ToDictionary(c => c.FormName, c => c.TotalConcentration));
+
+            var constantsDict = concentrationConstants.ToDictionary(cc => cc.FormName, cc => cc.Value);
+
+            // Добавляем список реакций в параметры функции
+            foreach (var point in concentrationsSum.Select(c => c.PointId).Distinct())
+            {
+                var pointConcentrations = concentrationDict[point];
+
+                foreach (var form in formingForms)
+                {
+                    if (!constantsDict.TryGetValue(form.Name, out var constant)) continue;
+
+                    // Найти реакцию, которая образует эту форму
+                    var reaction = reactions.FirstOrDefault(r => r.Prod == form.Name);
+                    if (reaction == null) continue;
+
+                    // Собрать компоненты с коэффициентами
+                    var componentsWithCoeffs = new List<(string Component, int Coefficient)>
+                        {
+                            (form.Component1, reaction.KInp1 ?? 0),
+                            (form.Component2, reaction.KInp2 ?? 0),
+                            (form.Component3, reaction.KInp3 ?? 0)
+                        }
+                    .Where(x => !string.IsNullOrEmpty(x.Component));
+
+                    // Вычислить произведение с учетом степеней
+                    double product = constant;
+                    foreach (var (component, coeff) in componentsWithCoeffs)
+                    {
+                        if (pointConcentrations.TryGetValue(component, out var conc))
+                            product *= Math.Pow(conc, coeff);
+                    }
+
+                    results.Add(new CalculationResult
+                    {
+                        PointId = point,
+                        FormName = form.Name,
+                        CalculatedValue = product
+                    });
+                }
+            }
+            return results;
+        }
+        
+        private async Task<List<ConcentrationConstant>> GetConstantsForMechanismAsync(Mechanisms selectedMechanism, int ConstantsCount)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var consts = await context.ConstantsSeries
+                    .Where(cs => cs.ID_Mechanism == selectedMechanism.ID)
+                    .Join(
+                        context.ConcentrationConstants,
+                        cs => cs.ID_Const,
+                        cc => cc.ID,
+                        (cs, cc) => cc
+                    )
+                    .OrderByDescending(cc => cc.ID) // Сортируем по убыванию ID
+                    .Take(ConstantsCount)                       // Берем 10 последних записей
+                    .AsNoTracking()                 // Оптимизация производительности
+                    .ToListAsync();
+
+                return consts;
+            }
+        }
+
+        private async Task<int> GetPointsCountPerMechanismAsync(Mechanisms selectedMechanism)
+        {
+            using (var context = new ApplicationContext())
+            {
+                var count = await context.ExperimentalPoints
+                    .Where(ep => ep.ID_Mechanism == selectedMechanism.ID)
+                    .Select(ep => ep.ID_Point)
+                    .Distinct()
+                    .CountAsync();
+                return count;
+            }
+        }
         private List<List<int>> BuildComponentMatrix(List<Reaction> reactions, List<BaseForm> baseForms)
         {
             List<List<int>> Matrix = new List<List<int>>();
@@ -605,7 +704,6 @@ namespace CompModeling
                         if (double.TryParse(textBox.Text, out double value))
                         {
                             Constants.Add(value);
-            
                         }
                     }
                 }
@@ -613,162 +711,31 @@ namespace CompModeling
 
             LoadConstantsToDataBaseAsync(formingForms, Constants, selectedMechanism);
 
-            List<double> reaction_speed = new List<double>();  
 
-            for (int i = 0;  i < Constants.Count; i++)
-            {
-                //reaction_speed.Add(reactions[i].KInp1 * constant);
-            }
+            var concentrationsSum = await GetConcentrationSumsPerPoint();
+
+            var concentrationConstants = await GetConstantsForMechanismAsync(selectedMechanism, Constants.Count);
+
+            concentrationConstants.Reverse();
+
+            List<CalculationResult> initalConcentrations = InitialConcentrationsFromZDM(concentrationsSum, concentrationConstants, formingForms, reactions);
 
             CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix);
             calculationResults.Show();
 
+        }
 
-            //    using (var transaction = await context.Database.BeginTransactionAsync())
-            //    {
-            //        List<double> inputConstants = new List<double> { 1, 1, 1, 1, 1 };
-            //        try
-            //        {
+        private void TextBox_PreviewTextInputConcentration(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            char Symb = e.Text[0];
 
-            //            await context.SaveChangesAsync(); // Получаем ID серии
-
-
-            //            foreach (var item in reactionInputsPanel.Children)
-            //            {
-            //                if (item is Grid grid)
-            //                {
-            //                    var formNameBlock = grid.Children.OfType<TextBlock>()
-            //                        .FirstOrDefault(tb => tb.FontStyle == FontStyles.Italic);
-            //                    var valueBox = grid.Children.OfType<TextBox>().FirstOrDefault();
-
-            //                    if (formNameBlock != null && valueBox != null &&
-            //                        double.TryParse(valueBox.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
-            //                    {
-            //                        // Сохраняем константу
-            //                        var constant = new ConcentrationConstant
-            //                        {
-            //                            FormName = formNameBlock.Text,
-            //                            Value = value
-            //                        };
-            //                        context.ConcentrationConstants.Add(constant);
-            //                        inputConstants.Add(constant.Value);
-            //                        await context.SaveChangesAsync(); // Получаем ID константы
-
-            //                        // Связываем с серией
-            //                        var newSeries = new ConstantsSeries
-            //                        {
-            //                            ID_Const = constant.ID,
-            //                            ID_Mechanism = selectedMechanism.ID
-            //                        };
-            //                        context.ConstantsSeries.Add(newSeries);
-            //                        await context.SaveChangesAsync();
-            //                    }
-            //                }
-            //            }
-
-            //            await transaction.CommitAsync();
-            //            MessageBox.Show("Константы успешно сохранены!");
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            await transaction.RollbackAsync();
-            //            MessageBox.Show($"Ошибка сохранения: {ex.Message}");
-            //        }
-
-
-            //        // Коэффициенты системы уравнений (необходимо заполнить реальными значениями!)
-            //        List<double> K = inputConstants;
-            //        // Заполните массив K реальными значениями констант перед использованием!
-            //        var concentrations = await GetConcentrationSumsPerPoint();
-            //        var test = "";
-            //        foreach (var item in concentrations)
-            //        {
-            //            test += ($"Точка {item.PointId}, " + $"Форма: {item.FormName}, " + $"Общая концентрация: {item.TotalConcentration:F4}\n");
-            //        }
-            //        //tb_result.Text = test;
-
-
-
-            //        var b = new List<List<double>>();
-
-            //        // Преобразование в плоский список значений
-            //        var values = concentrations.Select(c => c.TotalConcentration).ToList();
-
-            //        // Заполнение матрицы
-            //        for (int row = 0; row < 8; row++)
-            //        {
-            //            var rowList = new List<double>();
-            //            for (int col = 0; col < 5; col++)
-            //            {
-            //                int index = row * 5 + col;
-            //                rowList.Add(values[index]);
-            //            }
-            //            b.Add(rowList);
-            //        }
-
-            //        // Порядок перестановки: [1, 3, 0, 4, 2]
-            //        int[] reorderPattern = { 1, 3, 0, 4, 2 };
-
-            //        // Метод для перестановки элементов в одном списке
-            //        List<double> ReorderList(List<double> list)
-            //        {
-            //            if (list.Count != 5)
-            //                throw new ArgumentException("Список должен содержать ровно 5 элементов");
-
-            //            return new List<double>
-            //                {
-            //                    list[reorderPattern[0]],
-            //                    list[reorderPattern[1]],
-            //                    list[reorderPattern[2]],
-            //                    list[reorderPattern[3]],
-            //                    list[reorderPattern[4]]
-            //                };
-            //        }
-
-            //        // Применяем перестановку ко всем спискам матрицы
-            //        var reorderedMatrix = b
-            //            .Select(innerList => ReorderList(innerList))
-            //            .ToList();
-
-
-            //        List<List<double>> XStart = new List<List<double>>
-            //        {
-            //            new List<double> { 0.0233653054, 1.0715750606, 2.3444158941 * Math.Pow(10,-3), 1.6068767489, 9.9887410312 * Math.Pow(10, -7)},
-
-            //            new List<double> { 0.0239406331, 1.4159797186, -8.6081221873 * Math.Pow(10,-3), 1.4375048401, 9.9880942034 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.0240627158, 1.8586766442, 1.7340257172 * Math.Pow(10,-3), 1.2542855521, 9.9881018386 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.024248391, 2.2960585711, 1.559839454 * Math.Pow(10,-3), 1.1116323616, 9.9884547351 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.0244199274, 2.9253931101, 1.3868440172 * Math.Pow(10,-3), 0.9562886829, 9.9891134673 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.0245384731, 3.6019767557, 1.2559513645 * Math.Pow(10,-3), 0.8336293276, 9.9898130372 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.024613561, 4.2162640391, 1.1657615297 * Math.Pow(10,-3), 0.7484506621, 9.9903874837 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.0246567645, 4.6733427039, 1.1104232859 * Math.Pow(10,-3), 0.6964693872, 9.9907736164 * Math.Pow(10, -7) },
-            //            // ... продолжайте для остальных 6 списков
-            //        };
-
-            //        var solver = new Solver();
-            //        List<double> tempK = new List<double> { 1, 1, 1, 1, 1, 0.0295120923,
-            //            0.00000000316,
-            //            19.9526231497,
-            //            0.0004073802778,
-            //            0.0011721953655,
-            //            1.3721449766,
-            //            100.6931668852,
-            //        0.156675107, 0.98174794, 0.2398832919, 0};
-            //        var solutions = solver.SolveSystemWithVariation(reorderedMatrix, XStart, tempK);
-            //        var lastSolution = solver.GetLastSolutionSet(solutions);
-            //        //solver.PrintResults(solutions, tb_result);
-            //        MessageBox.Show("e = 0,741\nF = 5,96");
-
-            //    }
-
-            //}
-            //}
+            if (!char.IsDigit(Symb) && Symb != ',')
+                e.Handled = true;
+        }
+        private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Space)
+                e.Handled = true;
         }
 
         public async Task<List<ConcentrationSummary>> GetConcentrationSumsPerPoint()
@@ -976,6 +943,13 @@ namespace CompModeling
 
                 return (x8, x13, x14);
             }
+        }
+
+        public class CalculationResult
+        {
+            public int PointId { get; set; }
+            public string? FormName { get; set; }
+            public double CalculatedValue { get; set; }
         }
 
         private void Reseacher_Closed(object sender, EventArgs e)

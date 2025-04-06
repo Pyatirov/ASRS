@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompModeling"
         mc:Ignorable="d"
-        Title="CalculationResults" Height="450" Width="800">
+        Title="Результаты вычисления" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="dg_Component_Matrix"
-                  AutoGenerateColumns="False"
-                  ItemsSource="{Binding Rows}"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  IsReadOnly="True"
-                  Margin="10"
-                  HorizontalScrollBarVisibility="Auto"
-                  VerticalScrollBarVisibility="Auto"/>
+        <StackPanel>
+            <TextBlock Text="Компонентная матрица:" Margin="10,10,0,0"/>
+            <DataGrid x:Name="dg_Component_Matrix"
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding Rows}"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      IsReadOnly="True"
+                      Margin="10"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"/>
+        </StackPanel>
     </Grid>
 </Window>
