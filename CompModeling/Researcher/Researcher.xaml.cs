@@ -720,6 +720,21 @@ namespace CompModeling
 
             List<CalculationResult> initalConcentrations = InitialConcentrationsFromZDM(concentrationsSum, concentrationConstants, formingForms, reactions);
 
+            var builder = new SystemBuilder(
+                                concentrationsSum,
+                                concentrationConstants,
+                                reactions,
+                                baseForms,
+                                formingForms
+);
+            var system = builder.BuildEquations();
+
+            // Вывод для точки 1
+            foreach (var eq in system[1])
+            {
+                MessageBox.Show(($"{eq.Key}: {eq.Value}"));
+            }
+
             CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix);
             calculationResults.Show();
 
@@ -764,7 +779,102 @@ namespace CompModeling
             }
         }
         // Вспомогательный класс для результатов
-        public class ConcentrationSummary
+        
+
+        public class SystemBuilder
+    {
+        private List<ConcentrationSummary> concentrationsSum;
+        private List<ConcentrationConstant> concentrationConstants;
+        private List<Reaction> reactions;
+        private List<BaseForm> baseForms;
+        private List<FormingForm> formingForms;
+
+        public SystemBuilder(
+            List<ConcentrationSummary> concentrationsSum,
+            List<ConcentrationConstant> concentrationConstants,
+            List<Reaction> reactions,
+            List<BaseForm> baseForms,
+            List<FormingForm> formingForms
+        )
+        {
+            this.concentrationsSum = concentrationsSum;
+            this.concentrationConstants = concentrationConstants;
+            this.reactions = reactions;
+            this.baseForms = baseForms;
+            this.formingForms = formingForms;
+        }
+
+        public Dictionary<int, Dictionary<string, string>> BuildEquations()
+        {
+            var equationSystem = new Dictionary<int, Dictionary<string, string>>();
+
+            // Словарь: FormName → Константа K
+            var constantsDict = concentrationConstants
+                .ToDictionary(cc => cc.FormName, cc => cc.Value);
+
+            // Словарь: FormName → Реакция
+            var reactionForForm = formingForms
+                .ToDictionary(
+                    ff => ff.Name,
+                    ff => reactions.FirstOrDefault(r => r.Prod == ff.Name)
+                );
+
+            // Для каждой точки
+            foreach (var point in concentrationsSum
+                .Select(c => c.PointId)
+                .Distinct())
+            {
+                var pointConcentrations = concentrationsSum
+                    .Where(c => c.PointId == point)
+                    .ToDictionary(c => c.FormName, c => c.TotalConcentration);
+
+                var equationsForPoint = new Dictionary<string, string>();
+
+                // Для каждой базовой формы
+                foreach (var baseForm in baseForms)
+                {
+                    var formName = baseForm.Name;
+                    var equation = $"[{formName}] = ";
+
+                    // Суммируем вклады всех реакций, где форма участвует
+                    var terms = new List<string>();
+                    foreach (var reaction in reactions)
+                    {
+                        // Проверяем, участвует ли форма как входной компонент
+                        if (reaction.Inp1 == formName || reaction.Inp2 == formName || reaction.Inp3 == formName)
+                        {
+                            // Получаем коэффициенты компонентов
+                            var components = new[]
+                            {
+                            (reaction.Inp1, reaction.KInp1),
+                            (reaction.Inp2, reaction.KInp2),
+                            (reaction.Inp3, reaction.KInp3)
+                        };
+
+                            // Формируем член уравнения
+                            var term = $"{constantsDict[reaction.Prod]}";
+                            foreach (var (component, coeff) in components)
+                            {
+                                if (string.IsNullOrEmpty(component) || coeff == null || coeff == 0)
+                                    continue;
+                                term += $" * [{component}]^{coeff.Value}";
+                            }
+                            terms.Add($"({term})");
+                        }
+                    }
+
+                    equation += string.Join(" + ", terms);
+                    equationsForPoint[formName] = equation;
+                }
+
+                equationSystem[point] = equationsForPoint;
+            }
+
+            return equationSystem;
+        }
+    }
+
+    public class ConcentrationSummary
         {
             public int PointId { get; set; }
             public string? FormName { get; set; }
