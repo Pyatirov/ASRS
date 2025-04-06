@@ -76,6 +76,7 @@ namespace CompModeling
         public int? KInp3 { get; set; }
         public int? KProd { get; set; }
     }
+
     public class ReactionMechanism
     {
         [Key]
