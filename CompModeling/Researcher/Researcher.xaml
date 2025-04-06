@@ -25,7 +25,7 @@
                     <ComboBox x:Name="cb_Mechanisms_Experiment" Grid.Row="1" Margin="10,0, 0, 10" Width="252" Height="25" DisplayMemberPath="Info" HorizontalAlignment="Left" SelectionChanged="cb_Mechanisms_Experiment_SelectionChanged"/>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                        <UniformGrid x:Name="reactionInputsPanel" Columns="1" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        <UniformGrid x:Name="ug_Constants_Inputs_Panel" Columns="1" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     </ScrollViewer>
 
                     <Button Click="bt_Calculate_Click" Grid.Row="3" Content="Расчет" Margin="10,10" Height="40" Width="200"/>

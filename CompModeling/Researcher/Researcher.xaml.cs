@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Navigation;
 using static CompModeling.ConnectToDB;
 
@@ -105,7 +106,7 @@ namespace CompModeling
         /// </summary>
         private void cb_Mechanisms_Experiment_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Create_Input_Constants_Grid();
+            Create_Input_Constants_Grid_Async();
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace CompModeling
         /// </summary>
         private void bt_Delete_Mechanism_Click(object sender, RoutedEventArgs e)
         {
-            Delete_Mechanism(sender);
+            Delete_Mechanism_Async(sender);
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace CompModeling
         /// </summary>
         private void cb_Mechanisms_Points_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Create_Expermiental_Points_Grid();
+            Create_Expermiental_Points_Grid_Async();
         }
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace CompModeling
         /// </summary>
         private void bt_Add_Experimental_Point_Click(object sender, RoutedEventArgs e)
         {
-            Add_Experimental_Points();
+            Add_Experimental_Points_Async();
         }
 
         private void bt_Calculate_Click(object sender, RoutedEventArgs e)
@@ -152,7 +153,7 @@ namespace CompModeling
             Calculation(selectedMechanism);
         }
 
-        private async void Create_Input_Constants_Grid()
+        private async void Create_Input_Constants_Grid_Async()
         {
             try
             {
@@ -162,7 +163,7 @@ namespace CompModeling
                     {
                         var reactions = await GetReactionsForMechanismAsync(context, selectedMechanism);
 
-                        reactionInputsPanel.Children.Clear();
+                        ug_Constants_Inputs_Panel.Children.Clear();
 
                         foreach (var reaction in reactions)
                         {
@@ -229,7 +230,7 @@ namespace CompModeling
                             grid.Children.Add(valueBox);
                             grid.Children.Add(unitBlock);
 
-                            reactionInputsPanel.Children.Add(grid);
+                            ug_Constants_Inputs_Panel.Children.Add(grid);
                         }
                     }
                 }
@@ -240,7 +241,7 @@ namespace CompModeling
             }
         }
 
-        private async void Delete_Mechanism(object sender)
+        private async void Delete_Mechanism_Async(object sender)
         {
             var button = (Button)sender;
             var mechanismId = (int)button.Tag;
@@ -276,7 +277,7 @@ namespace CompModeling
             }
         }
 
-        private async void Create_Expermiental_Points_Grid()
+        private async void Create_Expermiental_Points_Grid_Async()
         {
             using (var context = new ApplicationContext())
             {
@@ -382,7 +383,7 @@ namespace CompModeling
             pointInputsPanel.Children.Clear();
         }
 
-        private async void Add_Experimental_Points()
+        private async void Add_Experimental_Points_Async()
         {
             using (var context = new ApplicationContext())
             {
@@ -470,14 +471,14 @@ namespace CompModeling
 
         private async Task<List<Reaction>> GetReactionsForMechanismAsync(ApplicationContext context, Mechanisms selectedMechanism)
         {
-            var reactions = context.ReactionMechanism
+            var reactions = await context.ReactionMechanism
                 .Where(rm => rm.Mechanism_ID == selectedMechanism.ID)
                 .Join(context.Reactions,
                     rm => rm.Reaction_ID,
                     r => r.ID,
                     (rm, r) => r)
                 .ToListAsync();
-            return await reactions;
+            return reactions;
         }
 
         private async Task<List<BaseForm>> GetBaseFormsFromReactionsAsync(ApplicationContext context, List<Reaction> reactions)
@@ -488,49 +489,135 @@ namespace CompModeling
                 .Distinct()
                 .ToList();
 
-            var baseFormNames = context.BaseForms
+            var baseFormNames = await context.BaseForms
                 .Where(bf => formNames.Contains(bf.Name))
                 .ToListAsync();
-            return await baseFormNames;
+            return baseFormNames;
+        }
+
+        private async Task<List<FormingForm>> GetFormingFormsFromReactionsAsync(ApplicationContext context, List<Reaction> reactions)
+        {
+            var prodNames = reactions
+                .Select(r => r.Prod)
+                .Where(name => name != null)
+                .Distinct()
+                .ToList();
+
+            // Загружаем связанные FormingForm из БД
+            var formingForms = await context.FormingForms
+                .Where(ff => prodNames.Contains(ff.Name))
+                .ToListAsync();
+
+            return formingForms;
+        }
+
+        private List<List<int>> BuildComponentMatrix(List<Reaction> reactions, List<BaseForm> baseForms)
+        {
+            List<List<int>> Matrix = new List<List<int>>();
+
+            for (int i = 0; i < reactions.Count; i++)
+            {
+                Matrix.Add(new List<int>());
+                for (int j = 0; j < baseForms.Count; j++)
+                {
+                    if (reactions[i].Inp1 == baseForms[j].Name)
+                    {
+                        Matrix[i].Add(reactions[i].KInp1!.Value);
+                        continue;
+                    }
+                    else if (reactions[i].Inp2 == baseForms[j].Name)
+                    {
+                        Matrix[i].Add(reactions[i].KInp2!.Value);
+                        continue;
+                    }
+                    else if (reactions[i].Inp3 == baseForms[j].Name)
+                    {
+                        Matrix[i].Add(reactions[i].KInp3!.Value);
+                        continue;
+                    }
+                    else
+                    {
+                        Matrix[i].Add(0);
+                    }
+                }
+            }
+            return Matrix;
+        }
+        
+        private async void LoadConstantsToDataBaseAsync(List<FormingForm> formingForms,
+            List<double> Constants, Mechanisms selectedMechanism)
+        {
+            for (int i = 0; i < formingForms.Count; i++)
+            {
+                using (var context = new ApplicationContext())
+                {
+                    var constant = new ConcentrationConstant
+                    {
+                        FormName = formingForms[i].Name,
+                        Value = Constants[i]
+                    };
+                    context.ConcentrationConstants.Add(constant);
+                    await context.SaveChangesAsync(); // Получаем ID константы
+
+                    // Связываем с серией
+                    var newSeries = new ConstantsSeries
+                    {
+                        ID_Const = constant.ID,
+                        ID_Mechanism = selectedMechanism.ID
+                    };
+                    context.ConstantsSeries.Add(newSeries);
+                    await context.SaveChangesAsync();
+                }
+
+            }
+            
         }
 
         private async void Calculation(Mechanisms selectedMechanism)
         {
             List<List<int>> ComponentMatrix = new List<List<int>>();
+            List<Reaction> reactions = new List<Reaction>();
+            List<BaseForm> baseForms = new List<BaseForm>();
+            List<FormingForm> formingForms = new List<FormingForm>();
 
             using (var context = new ApplicationContext())
             {
-                //Получить реакции для механизма
-                var reactions = await GetReactionsForMechanismAsync(context, selectedMechanism);
-                var baseForms = await GetBaseFormsFromReactionsAsync(context, reactions);
+                reactions = await GetReactionsForMechanismAsync(context, selectedMechanism);
+                baseForms = await GetBaseFormsFromReactionsAsync(context, reactions);
+                formingForms = await GetFormingFormsFromReactionsAsync(context, reactions);
+            }
 
+            ComponentMatrix = BuildComponentMatrix(reactions, baseForms);
 
-                for (int i = 0; i < reactions.Count; i++)
+            List<double> Constants = new List<double>();
+
+            Constants.Clear();
+
+            foreach (var child in ug_Constants_Inputs_Panel.Children)
+            {
+                if (child is Grid grid)
                 {
-                    ComponentMatrix.Add(new List<int>());
-                    for (int j = 0; j < baseForms.Count; j++)
+                    // Ищем все TextBox'ы внутри Grid, включая вложенные контейнеры
+                    var textBoxes = grid.Children.OfType<TextBox>();
+
+                    foreach (var textBox in textBoxes)
                     {
-                        if (reactions[i].Inp1 == baseForms[j].Name)
+                        if (double.TryParse(textBox.Text, out double value))
                         {
-                            ComponentMatrix[i].Add(reactions[i].KInp1!.Value);
-                            continue;
-                        }
-                        else if (reactions[i].Inp2 == baseForms[j].Name)
-                        {
-                            ComponentMatrix[i].Add(reactions[i].KInp2!.Value);
-                            continue;
-                        }
-                        else if (reactions[i].Inp3 == baseForms[j].Name)
-                        {
-                            ComponentMatrix[i].Add(reactions[i].KInp3!.Value);
-                            continue;
-                        }
-                        else
-                        {
-                            ComponentMatrix[i].Add(0);
+                            Constants.Add(value);
+            
                         }
                     }
                 }
+            }
+
+            LoadConstantsToDataBaseAsync(formingForms, Constants, selectedMechanism);
+
+            List<double> reaction_speed = new List<double>();  
+
+            for (int i = 0;  i < Constants.Count; i++)
+            {
+                //reaction_speed.Add(reactions[i].KInp1 * constant);
             }
 
             CalculationResults calculationResults = new CalculationResults(ComponentMatrix);
