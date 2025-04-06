@@ -543,7 +543,7 @@ namespace CompModeling
             }
             return Matrix;
         }
-        
+
         private async void LoadConstantsToDataBaseAsync(List<FormingForm> formingForms,
             List<double> Constants, Mechanisms selectedMechanism)
         {
@@ -620,7 +620,7 @@ namespace CompModeling
                 //reaction_speed.Add(reactions[i].KInp1 * constant);
             }
 
-            CalculationResults calculationResults = new CalculationResults(ComponentMatrix);
+            CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix);
             calculationResults.Show();
 
 

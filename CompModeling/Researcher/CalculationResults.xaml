@@ -7,8 +7,14 @@
         mc:Ignorable="d"
         Title="CalculationResults" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="dg_Component_Matrix">
-
-        </DataGrid>
+        <DataGrid x:Name="dg_Component_Matrix"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Rows}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True"
+                  Margin="10"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"/>
     </Grid>
 </Window>
