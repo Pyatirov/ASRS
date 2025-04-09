@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MathNet.Numerics.LinearAlgebra;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text;
@@ -598,7 +599,7 @@ namespace CompModeling
             }
         }
 
-        private async Task<int> GetPointsCountPerMechanismAsync(Mechanisms selectedMechanism)
+        public static async Task<int> GetPointsCountPerMechanismAsync(Mechanisms selectedMechanism)
         {
             using (var context = new ApplicationContext())
             {
@@ -709,7 +710,7 @@ namespace CompModeling
                 }
             }
 
-            LoadConstantsToDataBaseAsync(formingForms, Constants, selectedMechanism);
+            //LoadConstantsToDataBaseAsync(formingForms, Constants, selectedMechanism);
 
 
             var concentrationsSum = await GetConcentrationSumsPerPoint();
@@ -720,22 +721,88 @@ namespace CompModeling
 
             List<CalculationResult> initalConcentrations = InitialConcentrationsFromZDM(concentrationsSum, concentrationConstants, formingForms, reactions);
 
-            var builder = new SystemBuilder(
-                                concentrationsSum,
-                                concentrationConstants,
-                                reactions,
-                                baseForms,
-                                formingForms
-);
-            var system = builder.BuildEquations();
+//            var builder = new SystemBuilder(
+//                                concentrationsSum,
+//                                concentrationConstants,
+//                                reactions,
+//                                baseForms,
+//                                formingForms
+//                                  );
+//            var system = builder.BuildEquations();
 
-            // Вывод для точки 1
-            foreach (var eq in system[1])
+            List<List<double>> b = new List<List<double>>();
+            //List<List<double>> XStart = new List<List<double>>
+            //        {
+            //            new List<double> { 0.019, 1.07, 2.34 * Math.Pow(10,-3), 1.60, 9.98 * Math.Pow(10, -7)},
+
+            //            new List<double> { 0.019, 1.41, -8.60 * Math.Pow(10,-3), 1.43, 9.98 * Math.Pow(10, -7) },
+
+            //            new List<double> { 0.02, 1.85, 1.73 * Math.Pow(10,-3), 1.25, 9.98 * Math.Pow(10, -7) },
+
+            //            new List<double> { 0.02, 2.29, 1.55 * Math.Pow(10,-3), 1.11, 9.98 * Math.Pow(10, -7) },
+
+            //            new List<double> { 0.02, 2.92, 1.38 * Math.Pow(10,-3), 0.95, 9.98 * Math.Pow(10, -7) },
+
+            //            new List<double> { 0.02, 3.60, 1.25 * Math.Pow(10,-3), 0.83, 9.98 * Math.Pow(10, -7) },
+
+            //            new List<double> { 0.02, 4.211, 1.167 * Math.Pow(10,-3), 0.74, 9.997 * Math.Pow(10, -7) },
+
+            //            new List<double> { 0.02, 4.67, 1.11 * Math.Pow(10,-3), 0.69, 9.99 * Math.Pow(10, -7) },
+            //            // ... продолжайте для остальных 6 списков
+            //        };
+
+            List<List<double>> XStart = new List<List<double>>
+                    {
+                        new List<double> { 0.7298, 2.1994, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                        new List<double> { 1.01689, 3.06067, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                        new List<double> { 1.33965, 4.02895, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                        new List<double> { 1.63832, 4.92496, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                        new List<double> { 2.0355, 6.1165, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                        new List<double> { 2.43588, 7.31764, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                        new List<double> { 2.78477, 8.36431, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                        new List<double> { 3.03833, 9.12499, 0.01, 3.661, 1 * Math.Pow(10, -6)},
+                    };
+
+            List<double> concentrat = new List<double>();
+            foreach (var conc in concentrationsSum)
             {
-                MessageBox.Show(($"{eq.Key}: {eq.Value}"));
+                concentrat.Add(conc.TotalConcentration);
             }
 
-            CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix);
+            for (int i = 0; i < concentrat.Count; i += 5)
+            {
+                var original = concentrat.GetRange(i, 5);
+                var reordered = new List<double>
+                {
+                    original[1],  // Первый элемент нового списка
+                    original[3],  // Второй элемент
+                    original[0],  // Третий элемент
+                    original[4],  // Четвертый элемент
+                    original[2]   // Пятый элемент
+                };
+                b.Add(reordered);
+            }
+
+            //foreach (var innerList in b)
+            //{
+            //    XStart.Add(new List<double>(innerList)); // Создаём новый список с элементами из innerList
+            //}
+
+            List<double> inputK = new List<double> { 1, 1, 1, 1, 1, 0.03, 0, 19.95,
+            0.0004, 0.001, 1.372, 100.69, 0.1566, 0.981, 0.239};
+            //foreach(var value in concentrationConstants)
+            //{
+            //    inputK.Add(value.Value);
+            //}
+            // Вывод для точки 1
+            //foreach (var eq in system[1])
+            //{
+            //    MessageBox.Show(($"{eq.Key}: {eq.Value}"));
+            //}
+
+            var pointsCount = await GetPointsCountPerMechanismAsync(selectedMechanism);
+
+            CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix, b, XStart, inputK, pointsCount);
             calculationResults.Show();
 
         }
@@ -874,187 +941,104 @@ namespace CompModeling
         }
     }
 
-    public class ConcentrationSummary
+        public class ConcentrationSummary
         {
             public int PointId { get; set; }
             public string? FormName { get; set; }
             public double TotalConcentration { get; set; }
         }
 
-        public class Solver
+        
+
+        public class NonlinearSolver
         {
-
-            public Dictionary<double, List<List<double>>> SolveSystemWithVariation(
-                List<List<double>> b,
-                List<List<double>> XStart,
-                List<double> initialK,
-                double initialLgK13 = -0.5,
-                double finalLgK13 = -0.805,
-                double stepLgK13 = 0.005) // Уменьшаем шаг до 0.005
+            public Vector<double> SolveSystem(Vector<double> initialGuess, Vector<double> K, Vector<double> b, double tolerance = 1e-6, int maxIterations = 100)
             {
-                var results = new Dictionary<double, List<List<double>>>();
+                Vector<double> x = initialGuess.Clone();
+                int iteration = 0;
+                double residualNorm;
 
-                // Используем цикл while для точного контроля границ
-                double currentLgK13 = initialLgK13;
-                while (currentLgK13 >= finalLgK13 - 1e-6) // Учет погрешности double
+                do
                 {
-                    double K13 = Math.Pow(10, currentLgK13);
-                    var modifiedK = new List<double>(initialK);
-                    if (modifiedK.Count > 13) modifiedK[12] = K13;
-                    else modifiedK.Add(K13);
+                    // Вычисление вектора невязок
+                    Vector<double> F = ComputeResiduals(x, K, b);
 
-                    results.Add(K13, SolveSystem(b, XStart, modifiedK));
+                    // Вычисление матрицы Якоби
+                    Matrix<double> J = ComputeJacobian(x, K, b);
 
-                    currentLgK13 -= stepLgK13;
-                    currentLgK13 = Math.Round(currentLgK13, 3); // Округление для избежания ошибок
+                    // Решение линейной системы J * Δx = -F
+                    Vector<double> deltaX = J.Solve(-F);
+
+                    // Обновление решения
+                    x += deltaX;
+
+                    residualNorm = F.L2Norm();
+                    iteration++;
                 }
+                while (residualNorm > tolerance && iteration < maxIterations);
 
-                return results;
+                return x;
             }
 
-            public List<List<double>> GetLastSolutionSet(Dictionary<double, List<List<double>>> results)
+            private Vector<double> ComputeResiduals(Vector<double> x, Vector<double> K, Vector<double> b)
             {
-                if (results == null || results.Count == 0)
-                    throw new ArgumentException("Результаты не содержат данных");
+                Vector<double> residuals = Vector<double>.Build.Dense(5);
 
-                // Получаем последнее значение K13 (минимальное значение в логарифмической шкале)
-                var lastK13 = results.Keys.OrderBy(k => k).First();
+                // Уравнение 1
+                residuals[0] =  b[0]/ (1 + K[7] * x[1] + 
+                                           K[12] * Math.Pow(x[1], 3) * Math.Pow(x[3], 3) +
+                                           K[13] * Math.Pow(x[1], 3) * Math.Pow(x[3], 4));
 
-                // Для версии C# 7.0+ можно использовать:
-                // var lastK13 = results.Keys.Max();
+                // Уравнение 2
+                residuals[1] = b[1] / (1 +
+                    K[5] * x[2] +
+                    K[6] * x[4] +
+                    K[7] * x[0] +
+                    K[8] * Math.Pow(x[3], 2) * x[4] +
+                    3 * K[9] * Math.Pow(x[1], 2) * Math.Pow(x[2], 3) * x[3] +
+                    K[10] * x[2] * x[3] +
+                    2 * K[11] * x[1] * Math.Pow(x[2], 2) * x[3] +
+                    3 * K[12] * x[0] * Math.Pow(x[1], 2) * Math.Pow(x[3], 3) +
+                    3 * K[13] * x[0] * Math.Pow(x[1], 2) * Math.Pow(x[3], 4));
 
-                return results[lastK13];
+                // Уравнение 3
+                residuals[2] = b[2] / (1 +
+                    K[5] * x[1] +
+                    K[9] * Math.Pow(x[1], 3) * Math.Pow(x[2], 2) * x[3] +
+                    K[10] * x[1] * x[3] +
+                    2 * K[11] * Math.Pow(x[1], 2) * x[2] * x[3]);
+
+                // Уравнение 4
+                residuals[3] = b[3] / (1 +
+                    2 * K[8] * x[1] * x[3] * x[4] +
+                    K[9] * Math.Pow(x[1], 3) * Math.Pow(x[2], 3) +
+                    K[10] * x[1] * x[2] +
+                    K[11] * Math.Pow(x[1], 2) * Math.Pow(x[2], 2) +
+                    3 * K[12] * x[0] * Math.Pow(x[1], 3) * Math.Pow(x[3], 2) +
+                    4 * K[13] * x[0] * Math.Pow(x[1], 3) * Math.Pow(x[3], 3) +
+                    2 * K[14] * x[3]);
+
+                // Уравнение 5
+                residuals[4] = b[4] / (1 +
+                    K[6] * x[1] +
+                    K[8] * x[1] * Math.Pow(x[3], 2));
+
+                return residuals;
             }
 
-            public List<List<double>> SolveSystem(List<List<double>> b, List<List<double>> XStart, List<double> inputK)
+            private Matrix<double> ComputeJacobian(Vector<double> x, Vector<double> K, Vector<double> b)
             {
-                List<double> K = inputK;
-                int maxIterations = 5000;
-                double epsilon = 0.01;
-                var solutions = new List<List<double>>();
+                Matrix<double> J = Matrix<double>.Build.Dense(5, 5);
+                // Реализация вычисления частных производных для каждого уравнения
+                // (требуется ручной расчет производных для каждой компоненты)
+                // Пример для первого уравнения:
+                J[0, 0] = 1 + K[7] * x[1] + K[12] * Math.Pow(x[1], 3);
+                J[0, 1] = K[7] * x[0] + 3 * K[12] * x[0] * Math.Pow(x[1], 2);
+                // ... и т.д. для всех элементов матрицы
 
-                // Проверка входных данных
-                if (b.Count != 8 || XStart.Count != 8 || b.Any(x => x.Count != 5) || XStart.Any(x => x.Count != 5))
-                    throw new ArgumentException("Неверный формат входных данных");
-
-                // Обработка каждой экспериментальной точки
-                for (int point = 0; point < 8; point++)
-                {
-                    var currentB = b[point];
-                    var currentX = XStart[point].ToList();
-                    var XNew = new List<double>(currentX);
-                    int iteration = 0;
-                    double diff;
-
-                    do
-                    {
-                        // Вычисление новых значений для текущей точки
-                        XNew[0] = currentB[0] / (1 +
-                            K[7] * currentX[1] +
-                            K[12] * Math.Pow(currentX[1], 3) * Math.Pow(currentX[3], 3) +
-                            K[13] * Math.Pow(currentX[1], 3) * Math.Pow(currentX[3], 4));
-
-                        XNew[1] = currentB[1] / (1 +
-                            K[5] * currentX[2] +
-                            K[6] * currentX[4] +
-                            K[7] * currentX[0] +
-                            K[8] * Math.Pow(currentX[3], 2) * currentX[4] +
-                            3 * K[9] * Math.Pow(currentX[1], 2) * Math.Pow(currentX[2], 3) * currentX[3] +
-                            K[10] * currentX[2] * currentX[3] +
-                            2 * K[11] * currentX[1] * Math.Pow(currentX[2], 2) * currentX[3] +
-                            3 * K[12] * currentX[0] * Math.Pow(currentX[1], 2) * Math.Pow(currentX[3], 3) +
-                            3 * K[13] * currentX[0] * Math.Pow(currentX[1], 2) * Math.Pow(currentX[3], 4));
-
-                        XNew[2] = currentB[2] / (1 +
-                            K[5] * currentX[1] +
-                            K[9] * Math.Pow(currentX[1], 3) * Math.Pow(currentX[2], 2) * currentX[3] +
-                            K[10] * currentX[1] * currentX[3] +
-                            2 * K[11] * Math.Pow(currentX[1], 2) * currentX[2] * currentX[3]);
-
-                        XNew[3] = currentB[3] / (1 +
-                            2 * K[8] * currentX[1] * currentX[3] * currentX[4] +
-                            K[9] * Math.Pow(currentX[1], 3) * Math.Pow(currentX[2], 3) +
-                            K[10] * currentX[1] * currentX[2] +
-                            K[11] * Math.Pow(currentX[1], 2) * Math.Pow(currentX[2], 2) +
-                            3 * K[12] * currentX[0] * Math.Pow(currentX[1], 3) * Math.Pow(currentX[3], 2) +
-                            4 * K[13] * currentX[0] * Math.Pow(currentX[1], 3) * Math.Pow(currentX[3], 3) +
-                            2 * K[14] * currentX[3]);
-
-                        XNew[4] = currentB[4] / (1 +
-                            K[6] * currentX[1] +
-                            K[8] * currentX[1] * Math.Pow(currentX[3], 2));
-
-                        // Вычисление максимальной разницы
-                        diff = currentX.Select((x, i) => Math.Abs(XNew[i] - x)).Max();
-
-                        // Обновление значений для следующей итерации
-                        currentX = XNew.ToList();
-                        iteration++;
-                    }
-                    while (diff > epsilon && iteration < maxIterations);
-
-                    solutions.Add(XNew);
-                }
-
-                return solutions;
-            }
-
-            public void PrintResults(Dictionary<double, List<List<double>>> results, TextBox textBox)
-            {
-                var sb = new StringBuilder();
-
-                foreach (var kvp in results.OrderBy(k => k.Key))
-                {
-                    sb.AppendLine($"K[13] = {kvp.Key:E4} (lgK = {Math.Log10(kvp.Key):F3})");
-
-                    for (int i = 0; i < kvp.Value.Count; i++)
-                    {
-                        sb.AppendLine($" Point {i + 1}:");
-                        foreach (var val in kvp.Value[i])
-                        {
-                            sb.AppendLine($"  {val:E4}");
-                        }
-                    }
-                    sb.AppendLine();
-                }
-
-                textBox.Text = sb.ToString();
+                return J;
             }
         }
-
-        public class ConcentrationCalculator
-        {
-            public (double x8, double x13, double x14) CalculateConcentrations(
-                List<double> K,
-                List<double> x)
-            {
-                // Проверка входных данных
-                if (K == null || K.Count < 14)
-                    throw new ArgumentException("Список K должен содержать минимум 14 элементов");
-
-                if (x == null || x.Count < 4)
-                    throw new ArgumentException("Список x должен содержать минимум 4 элемента");
-
-                // Извлекаем необходимые константы (K8, K13, K14)
-                double K8 = K[7];   // K[8] в вашей нумерации = индекс 7 в C#
-                double K13 = K[12]; // K[13] в вашей нумерации = индекс 12
-                double K14 = K[13]; // K[14] в вашей нумерации = индекс 13
-
-                // Извлекаем значения переменных (x1, x2, x3, x4)
-                double x1 = x[0]; // x[1] в вашей нумерации = индекс 0
-                double x2 = x[1]; // x[2] в вашей нумерации = индекс 1
-                double x3 = x[2]; // x[3] в вашей нумерации = индекс 2
-                double x4 = x[3]; // x[4] в вашей нумерации = индекс 3
-
-                // Вычисляем значения по формулам
-                double x8 = K8 * x1 * x2;
-                double x13 = K13 * x1 * Math.Pow(x2, 3) * Math.Pow(x3, 4);
-                double x14 = K14 * x1 * Math.Pow(x2, 3) * x4;
-
-                return (x8, x13, x14);
-            }
-        }
-
         public class CalculationResult
         {
             public int PointId { get; set; }

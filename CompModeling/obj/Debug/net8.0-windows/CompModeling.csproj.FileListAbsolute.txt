@@ -428,3 +428,4 @@ D:\Projects\ASRS\CompModeling\obj\Debug\net8.0-windows\refint\CompModeling.dll
 D:\Projects\ASRS\CompModeling\obj\Debug\net8.0-windows\CompModeling.pdb
 D:\Projects\ASRS\CompModeling\obj\Debug\net8.0-windows\CompModeling.genruntimeconfig.cache
 D:\Projects\ASRS\CompModeling\obj\Debug\net8.0-windows\ref\CompModeling.dll
+D:\Projects\ASRS\CompModeling\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
