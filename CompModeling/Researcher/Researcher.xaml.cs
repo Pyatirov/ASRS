@@ -756,9 +756,55 @@ namespace CompModeling
 
             List<List<double>> XStart = b;
 
+            var expPoints = await GetAllExperimentalPoints();
+
+            List<List<double>> expPointsValues = new List<List<double>>();
+
+            using (var context = new ApplicationContext())
+            {
+                // 1. Группируем экспериментальные точки по уникальному ID_Point
+                var groupedPoints = expPoints.GroupBy(p => p.ID_Point); // [[1]]
+
+                foreach (var group in groupedPoints)
+                {
+                    // 2. Для каждой группы (уникальный ID_Point) собираем все значения Value
+                    List<double> valuesForPoint = new List<double>();
+                    foreach (var point in group)
+                    {
+                        var inputConcentration = context.InputConcentrations
+                            .Find(point.ID_InputConcentration); // [[1]]
+
+                        if (inputConcentration != null)
+                        {
+                            valuesForPoint.Add(inputConcentration.Value); // [[1]]
+                        }
+                    }
+
+                    // 3. Добавляем список значений в общий результат
+                    expPointsValues.Add(valuesForPoint); // [[1]]
+                }
+            }
+
+            // Перестановка элементов в каждом вложенном списке
+            for (int i = 0; i < expPointsValues.Count; i++)
+            {
+                List<double> original = expPointsValues[i]; // [[2]]
+
+                expPointsValues[i] = new List<double>
+                {
+                    original[2], original[3], // Пара 2-3
+                    original[6], original[7], // Пара 6-7
+                    original[0], original[1], // Пара 0-1
+                    original[8], original[9], // Пара 8-9
+                    original[4], original[5]  // Пара 4-5
+                };
+            }
+
+
+
             var pointsCount = await GetPointsCountPerMechanismAsync(selectedMechanism);
 
-            CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix, b, XStart, Constants, pointsCount);
+            CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix, b, XStart, Constants, pointsCount, expPointsValues);
             calculationResults.Show();
 
         }
@@ -802,7 +848,15 @@ namespace CompModeling
             }
         }
         // Вспомогательный класс для результатов
-        
+
+        public async Task<List<ExperimentalPoints>> GetAllExperimentalPoints()
+        {
+            using (var context = new ApplicationContext())
+            {
+                // Простой асинхронный запрос для получения всех записей из таблицы ExperimentalPoints
+                return await context.ExperimentalPoints.ToListAsync(); // [[5]]
+            }
+        }
 
         public class SystemBuilder
     {
