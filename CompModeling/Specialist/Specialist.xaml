@@ -3,28 +3,105 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CompModeling" xmlns:sys="clr-namespace:System;assembly=netstandard"
+        xmlns:local="clr-namespace:CompModeling" 
+        xmlns:sys="clr-namespace:System;assembly=netstandard"
         mc:Ignorable="d"
-        Title="Специалист" Height="200" Width="350" ResizeMode="NoResize">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
-            <RowDefinition Height="0.3*"/>
-            <RowDefinition Height="0.3*"/>
-            <RowDefinition Height="0.3*"/>
-        </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Метод решения:" VerticalAlignment="Center" Margin="10,0,0,0"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Точность решения:" VerticalAlignment="Center" Grid.Row="1" Margin="10,0,0,0"/>
-        <TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Макс. число итераций:" VerticalAlignment="Center" Height="39" Width="111" Margin="10,0,0,0"/>
-        <ComboBox x:Name="cb_SolutionMethod" DisplayMemberPath="." Text="Метод Ньютона-Рафсона" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" Width="195">
-            <sys:String>Метод Ньютона-Рафсона</sys:String>
-        </ComboBox>
-        <TextBox x:Name="tb_SolutionPrecision" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Margin="129,0,0,0"/>
-        <TextBox x:Name="tb_MaxCountOfIterations" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Margin="129,0,0,0"/>
-        <Button Content="Сохранить" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="81"/>
+        Title="Специалист по математическому обеспечению" Height="350" Width="500" ResizeMode="NoResize">
 
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Первая группа -->
+        <GroupBox Header="Параметры метода решения системы уравнений" Grid.Row="0" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <!-- Строка 1 -->
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Максимальное число итераций вычисления" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Column="1" 
+                           Width="75" 
+                           Margin="10,0,0,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Максимальное изменение решения после выполнения итерации" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Column="1" 
+                           Width="75" 
+                           Margin="10,0,0,0"
+                           HorizontalAlignment="Right" 
+                           VerticalAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Вторая группа -->
+        <GroupBox Header="Параметры метода оптимизации" Grid.Row="1" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <!-- Строка 1 -->
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Максимальное число итераций" 
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Column="1" 
+                           Width="75" 
+                           Margin="10,0,0,0"
+                           HorizontalAlignment="Right" 
+                           VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- Строка 2 -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Максимальное изменение значения целевой функции после выполнения итерации" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Column="1" 
+                           Width="75" 
+                           Margin="10,0,0,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Кнопка -->
+        <Button Content="Сохранить" 
+              Grid.Row="3" 
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Center" 
+              Margin="10,10" 
+              Height="40" 
+              Width="200"/>
     </Grid>
 </Window>
