@@ -527,56 +527,56 @@ namespace CompModeling
             return orderedItems!;
         }
 
-        private List<CalculationResult> InitialConcentrationsFromZDM(List<ConcentrationSummary> concentrationsSum, List<ConcentrationConstant> concentrationConstants,
-            List<FormingForm> formingForms, List<Reaction> reactions)
-        {
-            var results = new List<CalculationResult>();
-            var concentrationDict = concentrationsSum
-                .GroupBy(c => c.PointId)
-                .ToDictionary(g => g.Key, g => g.ToDictionary(c => c.FormName, c => c.TotalConcentration));
+        //private List<CalculationResult> InitialConcentrationsFromZDM(List<ConcentrationSummary> concentrationsSum, List<ConcentrationConstant> concentrationConstants,
+        //    List<FormingForm> formingForms, List<Reaction> reactions)
+        //{
+        //    var results = new List<CalculationResult>();
+        //    var concentrationDict = concentrationsSum
+        //        .GroupBy(c => c.PointId)
+        //        .ToDictionary(g => g.Key, g => g.ToDictionary(c => c.FormName, c => c.TotalConcentration));
 
-            var constantsDict = concentrationConstants.ToDictionary(cc => cc.FormName, cc => cc.Value);
+        //    var constantsDict = concentrationConstants.ToDictionary(cc => cc.FormName, cc => cc.Value);
 
-            // Добавляем список реакций в параметры функции
-            foreach (var point in concentrationsSum.Select(c => c.PointId).Distinct())
-            {
-                var pointConcentrations = concentrationDict[point];
+        //    // Добавляем список реакций в параметры функции
+        //    foreach (var point in concentrationsSum.Select(c => c.PointId).Distinct())
+        //    {
+        //        var pointConcentrations = concentrationDict[point];
 
-                foreach (var form in formingForms)
-                {
-                    if (!constantsDict.TryGetValue(form.Name, out var constant)) continue;
+        //        foreach (var form in formingForms)
+        //        {
+        //            if (!constantsDict.TryGetValue(form.Name, out var constant)) continue;
 
-                    // Найти реакцию, которая образует эту форму
-                    var reaction = reactions.FirstOrDefault(r => r.Prod == form.Name);
-                    if (reaction == null) continue;
+        //            // Найти реакцию, которая образует эту форму
+        //            var reaction = reactions.FirstOrDefault(r => r.Prod == form.Name);
+        //            if (reaction == null) continue;
 
-                    // Собрать компоненты с коэффициентами
-                    var componentsWithCoeffs = new List<(string Component, int Coefficient)>
-                        {
-                            (form.Component1, reaction.KInp1 ?? 0),
-                            (form.Component2, reaction.KInp2 ?? 0),
-                            (form.Component3, reaction.KInp3 ?? 0)
-                        }
-                    .Where(x => !string.IsNullOrEmpty(x.Component));
+        //            // Собрать компоненты с коэффициентами
+        //            var componentsWithCoeffs = new List<(string Component, int Coefficient)>
+        //                {
+        //                    (form.Component1, reaction.KInp1 ?? 0),
+        //                    (form.Component2, reaction.KInp2 ?? 0),
+        //                    (form.Component3, reaction.KInp3 ?? 0)
+        //                }
+        //            .Where(x => !string.IsNullOrEmpty(x.Component));
 
-                    // Вычислить произведение с учетом степеней
-                    double product = constant;
-                    foreach (var (component, coeff) in componentsWithCoeffs)
-                    {
-                        if (pointConcentrations.TryGetValue(component, out var conc))
-                            product *= Math.Pow(conc, coeff);
-                    }
+        //            // Вычислить произведение с учетом степеней
+        //            double product = constant;
+        //            foreach (var (component, coeff) in componentsWithCoeffs)
+        //            {
+        //                if (pointConcentrations.TryGetValue(component, out var conc))
+        //                    product *= Math.Pow(conc, coeff);
+        //            }
 
-                    results.Add(new CalculationResult
-                    {
-                        PointId = point,
-                        FormName = form.Name,
-                        CalculatedValue = product
-                    });
-                }
-            }
-            return results;
-        }
+        //            results.Add(new CalculationResult
+        //            {
+        //                PointId = point,
+        //                FormName = form.Name,
+        //                CalculatedValue = product
+        //            });
+        //        }
+        //    }
+        //    return results;
+        //}
         
         private async Task<List<ConcentrationConstant>> GetConstantsForMechanismAsync(Mechanisms selectedMechanism, int ConstantsCount)
         {
@@ -689,9 +689,11 @@ namespace CompModeling
 
             ComponentMatrix = BuildComponentMatrix(reactions, baseForms);
 
-            List<double> Constants = new List<double>();
+            List<double> Constants = new List<double> ();
 
             Constants.Clear();
+
+            Constants.AddRange(new List<double> { 1, 1, 1, 1, 1 });
 
             foreach (var child in ug_Constants_Inputs_Panel.Children)
             {
@@ -719,7 +721,7 @@ namespace CompModeling
 
             concentrationConstants.Reverse();
 
-            List<CalculationResult> initalConcentrations = InitialConcentrationsFromZDM(concentrationsSum, concentrationConstants, formingForms, reactions);
+            //List<CalculationResult> initalConcentrations = InitialConcentrationsFromZDM(concentrationsSum, concentrationConstants, formingForms, reactions);
 
 //            var builder = new SystemBuilder(
 //                                concentrationsSum,
@@ -731,37 +733,6 @@ namespace CompModeling
 //            var system = builder.BuildEquations();
 
             List<List<double>> b = new List<List<double>>();
-            //List<List<double>> XStart = new List<List<double>>
-            //        {
-            //            new List<double> { 0.019, 1.07, 2.34 * Math.Pow(10,-3), 1.60, 9.98 * Math.Pow(10, -7)},
-
-            //            new List<double> { 0.019, 1.41, -8.60 * Math.Pow(10,-3), 1.43, 9.98 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.02, 1.85, 1.73 * Math.Pow(10,-3), 1.25, 9.98 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.02, 2.29, 1.55 * Math.Pow(10,-3), 1.11, 9.98 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.02, 2.92, 1.38 * Math.Pow(10,-3), 0.95, 9.98 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.02, 3.60, 1.25 * Math.Pow(10,-3), 0.83, 9.98 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.02, 4.211, 1.167 * Math.Pow(10,-3), 0.74, 9.997 * Math.Pow(10, -7) },
-
-            //            new List<double> { 0.02, 4.67, 1.11 * Math.Pow(10,-3), 0.69, 9.99 * Math.Pow(10, -7) },
-            //            // ... продолжайте для остальных 6 списков
-            //        };
-
-            List<List<double>> XStart = new List<List<double>>
-                    {
-                        new List<double> { 0.7298, 2.1994, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                        new List<double> { 1.01689, 3.06067, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                        new List<double> { 1.33965, 4.02895, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                        new List<double> { 1.63832, 4.92496, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                        new List<double> { 2.0355, 6.1165, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                        new List<double> { 2.43588, 7.31764, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                        new List<double> { 2.78477, 8.36431, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                        new List<double> { 3.03833, 9.12499, 0.01, 3.661, 1 * Math.Pow(10, -6)},
-                    };
 
             List<double> concentrat = new List<double>();
             foreach (var conc in concentrationsSum)
@@ -783,26 +754,11 @@ namespace CompModeling
                 b.Add(reordered);
             }
 
-            //foreach (var innerList in b)
-            //{
-            //    XStart.Add(new List<double>(innerList)); // Создаём новый список с элементами из innerList
-            //}
-
-            List<double> inputK = new List<double> { 1, 1, 1, 1, 1, 0.03, 0, 19.95,
-            0.0004, 0.001, 1.372, 100.69, 0.1566, 0.981, 0.239};
-            //foreach(var value in concentrationConstants)
-            //{
-            //    inputK.Add(value.Value);
-            //}
-            // Вывод для точки 1
-            //foreach (var eq in system[1])
-            //{
-            //    MessageBox.Show(($"{eq.Key}: {eq.Value}"));
-            //}
+            List<List<double>> XStart = b;
 
             var pointsCount = await GetPointsCountPerMechanismAsync(selectedMechanism);
 
-            CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix, b, XStart, inputK, pointsCount);
+            CalculationResults calculationResults = new CalculationResults(baseForms, formingForms, ComponentMatrix, b, XStart, Constants, pointsCount);
             calculationResults.Show();
 
         }
@@ -871,74 +827,74 @@ namespace CompModeling
             this.formingForms = formingForms;
         }
 
-        public Dictionary<int, Dictionary<string, string>> BuildEquations()
-        {
-            var equationSystem = new Dictionary<int, Dictionary<string, string>>();
+        //public Dictionary<int, Dictionary<string, string>> BuildEquations()
+        //{
+        //    var equationSystem = new Dictionary<int, Dictionary<string, string>>();
 
-            // Словарь: FormName → Константа K
-            var constantsDict = concentrationConstants
-                .ToDictionary(cc => cc.FormName, cc => cc.Value);
+        //    // Словарь: FormName → Константа K
+        //    var constantsDict = concentrationConstants
+        //        .ToDictionary(cc => cc.FormName, cc => cc.Value);
 
-            // Словарь: FormName → Реакция
-            var reactionForForm = formingForms
-                .ToDictionary(
-                    ff => ff.Name,
-                    ff => reactions.FirstOrDefault(r => r.Prod == ff.Name)
-                );
+        //    // Словарь: FormName → Реакция
+        //    var reactionForForm = formingForms
+        //        .ToDictionary(
+        //            ff => ff.Name,
+        //            ff => reactions.FirstOrDefault(r => r.Prod == ff.Name)
+        //        );
 
-            // Для каждой точки
-            foreach (var point in concentrationsSum
-                .Select(c => c.PointId)
-                .Distinct())
-            {
-                var pointConcentrations = concentrationsSum
-                    .Where(c => c.PointId == point)
-                    .ToDictionary(c => c.FormName, c => c.TotalConcentration);
+        //    // Для каждой точки
+        //    foreach (var point in concentrationsSum
+        //        .Select(c => c.PointId)
+        //        .Distinct())
+        //    {
+        //        var pointConcentrations = concentrationsSum
+        //            .Where(c => c.PointId == point)
+        //            .ToDictionary(c => c.FormName, c => c.TotalConcentration);
 
-                var equationsForPoint = new Dictionary<string, string>();
+        //        var equationsForPoint = new Dictionary<string, string>();
 
-                // Для каждой базовой формы
-                foreach (var baseForm in baseForms)
-                {
-                    var formName = baseForm.Name;
-                    var equation = $"[{formName}] = ";
+        //        // Для каждой базовой формы
+        //        foreach (var baseForm in baseForms)
+        //        {
+        //            var formName = baseForm.Name;
+        //            var equation = $"[{formName}] = ";
 
-                    // Суммируем вклады всех реакций, где форма участвует
-                    var terms = new List<string>();
-                    foreach (var reaction in reactions)
-                    {
-                        // Проверяем, участвует ли форма как входной компонент
-                        if (reaction.Inp1 == formName || reaction.Inp2 == formName || reaction.Inp3 == formName)
-                        {
-                            // Получаем коэффициенты компонентов
-                            var components = new[]
-                            {
-                            (reaction.Inp1, reaction.KInp1),
-                            (reaction.Inp2, reaction.KInp2),
-                            (reaction.Inp3, reaction.KInp3)
-                        };
+        //            // Суммируем вклады всех реакций, где форма участвует
+        //            var terms = new List<string>();
+        //            foreach (var reaction in reactions)
+        //            {
+        //                // Проверяем, участвует ли форма как входной компонент
+        //                if (reaction.Inp1 == formName || reaction.Inp2 == formName || reaction.Inp3 == formName)
+        //                {
+        //                    // Получаем коэффициенты компонентов
+        //                    var components = new[]
+        //                    {
+        //                    (reaction.Inp1, reaction.KInp1),
+        //                    (reaction.Inp2, reaction.KInp2),
+        //                    (reaction.Inp3, reaction.KInp3)
+        //                };
 
-                            // Формируем член уравнения
-                            var term = $"{constantsDict[reaction.Prod]}";
-                            foreach (var (component, coeff) in components)
-                            {
-                                if (string.IsNullOrEmpty(component) || coeff == null || coeff == 0)
-                                    continue;
-                                term += $" * [{component}]^{coeff.Value}";
-                            }
-                            terms.Add($"({term})");
-                        }
-                    }
+        //                    // Формируем член уравнения
+        //                    var term = $"{constantsDict[reaction.Prod]}";
+        //                    foreach (var (component, coeff) in components)
+        //                    {
+        //                        if (string.IsNullOrEmpty(component) || coeff == null || coeff == 0)
+        //                            continue;
+        //                        term += $" * [{component}]^{coeff.Value}";
+        //                    }
+        //                    terms.Add($"({term})");
+        //                }
+        //            }
 
-                    equation += string.Join(" + ", terms);
-                    equationsForPoint[formName] = equation;
-                }
+        //            equation += string.Join(" + ", terms);
+        //            equationsForPoint[formName] = equation;
+        //        }
 
-                equationSystem[point] = equationsForPoint;
-            }
+        //        equationSystem[point] = equationsForPoint;
+        //    }
 
-            return equationSystem;
-        }
+        //    return equationSystem;
+        //}
     }
 
         public class ConcentrationSummary
@@ -950,95 +906,7 @@ namespace CompModeling
 
         
 
-        public class NonlinearSolver
-        {
-            public Vector<double> SolveSystem(Vector<double> initialGuess, Vector<double> K, Vector<double> b, double tolerance = 1e-6, int maxIterations = 100)
-            {
-                Vector<double> x = initialGuess.Clone();
-                int iteration = 0;
-                double residualNorm;
-
-                do
-                {
-                    // Вычисление вектора невязок
-                    Vector<double> F = ComputeResiduals(x, K, b);
-
-                    // Вычисление матрицы Якоби
-                    Matrix<double> J = ComputeJacobian(x, K, b);
-
-                    // Решение линейной системы J * Δx = -F
-                    Vector<double> deltaX = J.Solve(-F);
-
-                    // Обновление решения
-                    x += deltaX;
-
-                    residualNorm = F.L2Norm();
-                    iteration++;
-                }
-                while (residualNorm > tolerance && iteration < maxIterations);
-
-                return x;
-            }
-
-            private Vector<double> ComputeResiduals(Vector<double> x, Vector<double> K, Vector<double> b)
-            {
-                Vector<double> residuals = Vector<double>.Build.Dense(5);
-
-                // Уравнение 1
-                residuals[0] =  b[0]/ (1 + K[7] * x[1] + 
-                                           K[12] * Math.Pow(x[1], 3) * Math.Pow(x[3], 3) +
-                                           K[13] * Math.Pow(x[1], 3) * Math.Pow(x[3], 4));
-
-                // Уравнение 2
-                residuals[1] = b[1] / (1 +
-                    K[5] * x[2] +
-                    K[6] * x[4] +
-                    K[7] * x[0] +
-                    K[8] * Math.Pow(x[3], 2) * x[4] +
-                    3 * K[9] * Math.Pow(x[1], 2) * Math.Pow(x[2], 3) * x[3] +
-                    K[10] * x[2] * x[3] +
-                    2 * K[11] * x[1] * Math.Pow(x[2], 2) * x[3] +
-                    3 * K[12] * x[0] * Math.Pow(x[1], 2) * Math.Pow(x[3], 3) +
-                    3 * K[13] * x[0] * Math.Pow(x[1], 2) * Math.Pow(x[3], 4));
-
-                // Уравнение 3
-                residuals[2] = b[2] / (1 +
-                    K[5] * x[1] +
-                    K[9] * Math.Pow(x[1], 3) * Math.Pow(x[2], 2) * x[3] +
-                    K[10] * x[1] * x[3] +
-                    2 * K[11] * Math.Pow(x[1], 2) * x[2] * x[3]);
-
-                // Уравнение 4
-                residuals[3] = b[3] / (1 +
-                    2 * K[8] * x[1] * x[3] * x[4] +
-                    K[9] * Math.Pow(x[1], 3) * Math.Pow(x[2], 3) +
-                    K[10] * x[1] * x[2] +
-                    K[11] * Math.Pow(x[1], 2) * Math.Pow(x[2], 2) +
-                    3 * K[12] * x[0] * Math.Pow(x[1], 3) * Math.Pow(x[3], 2) +
-                    4 * K[13] * x[0] * Math.Pow(x[1], 3) * Math.Pow(x[3], 3) +
-                    2 * K[14] * x[3]);
-
-                // Уравнение 5
-                residuals[4] = b[4] / (1 +
-                    K[6] * x[1] +
-                    K[8] * x[1] * Math.Pow(x[3], 2));
-
-                return residuals;
-            }
-
-            private Matrix<double> ComputeJacobian(Vector<double> x, Vector<double> K, Vector<double> b)
-            {
-                Matrix<double> J = Matrix<double>.Build.Dense(5, 5);
-                // Реализация вычисления частных производных для каждого уравнения
-                // (требуется ручной расчет производных для каждой компоненты)
-                // Пример для первого уравнения:
-                J[0, 0] = 1 + K[7] * x[1] + K[12] * Math.Pow(x[1], 3);
-                J[0, 1] = K[7] * x[0] + 3 * K[12] * x[0] * Math.Pow(x[1], 2);
-                // ... и т.д. для всех элементов матрицы
-
-                return J;
-            }
-        }
+       
         public class CalculationResult
         {
             public int PointId { get; set; }
